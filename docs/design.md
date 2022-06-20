@@ -22,16 +22,14 @@
 
 |変数名|タイプ|内容|
 |---|---|---|
-|doctorName|String|医者の名前|
 |patientName|String|患者の名前|
 |bloodYype|String|血液型|
 |lastUpdate|String|最終更新日時(yyyy/mm/dd HH:mm:ss形式)|
 |MedicalInsDatas|Struct|最終更新日時、最終更新医療機関|
 |medicalData|Struct|患者の医療データ用のStruct型の変数|
 |medicalMap|(address ⇨ medicalData)|患者のアドレスと医療データを紐付けるMap|
-|patientMap|(address → String)|患者のアドレスと名前を紐づけるMap|
 |doctorMap|(address → String)|医者のアドレスと名前を紐づけるMap|
-|doctorRoleMap|(address → boolean)|アドレスが医者であることを紐づけるMap|
+|doctorRoleMap|(address → bool)|アドレスが医者であることを紐づけるMap|
 |doctors|[address]|医療機関に所属する医者のアドレスを格納する|
 |approveMap|(address ⇨ (address ⇨ boolean))|患者のデータに対して医者側が閲覧権限を所有しているか保持するためのMap|
 |requireMap|(address ⇨ (address ⇨ boolean))|患者のデータに対して医者側が閲覧権限を要求している状態を保持するためのMap|

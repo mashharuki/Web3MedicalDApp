@@ -1,0 +1,1783 @@
+{
+  "contractName": "MedicalData",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "approve",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "changeStatus",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "createMedicalData",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "editMedicalData",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "deleteMedicalData",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "selectMedicalData",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "selectPatientMedicalData",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"changeStatus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"createMedicalData\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"deleteMedicalData\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"editMedicalData\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"selectMedicalData\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"selectPatientMedicalData\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"approve()\":{\"notice\":\"\\u533b\\u8005\\u5074\\u306b\\u95b2\\u89a7\\u30fb\\u7de8\\u96c6\\u6a29\\u9650\\u3092\\u4ed8\\u4e0e\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"changeStatus()\":{\"notice\":\"\\u95b2\\u89a7\\u30fb\\u7de8\\u96c6\\u6a29\\u9650\\u3092\\u505c\\u6b62\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"constructor\":{\"notice\":\"\\u30b3\\u30f3\\u30b9\\u30c8\\u30e9\\u30af\\u30bf\\u30fc\"},\"createMedicalData()\":{\"notice\":\"\\u533b\\u7642\\u30c7\\u30fc\\u30bf\\u3092\\u65b0\\u898f\\u3067\\u767b\\u9332\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"deleteMedicalData()\":{\"notice\":\"\\u533b\\u7642\\u30c7\\u30fc\\u30bf\\u3092\\u524a\\u9664\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"editMedicalData()\":{\"notice\":\"\\u533b\\u7642\\u30c7\\u30fc\\u30bf\\u3092\\u7de8\\u96c6\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"selectMedicalData()\":{\"notice\":\"\\u81ea\\u5206\\u306e\\u533b\\u7642\\u30c7\\u30fc\\u30bf\\u3092\\u53d6\\u5f97\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"selectPatientMedicalData()\":{\"notice\":\"\\u60a3\\u8005\\u306e\\u533b\\u7642\\u30c7\\u30fc\\u30bf\\u3092\\u53d6\\u5f97\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/MedicalData.sol\":\"MedicalData\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/MedicalData.sol\":{\"keccak256\":\"0xde73b93d352e7d24d4e4feb21b850c092027e97fda1f91a8be04a681c1d10478\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1ccc0936ab64b1626245df8b765c7ddeefb7b3f4820f1c8646182cd48999b6ad\",\"dweb:/ipfs/QmR5EAkAXeKYkKTyGuc1u2i1rPQc1um4YLZcxKkNQSso5r\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060f38061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060725760003560e01c80633c48c1061160535780633c48c10614608f578063455ee8ff1460975780638cdca43314609f57806390c1e6381460a7576072565b8063085634ec14607757806312424e3f14607f5780631c7013b2146087575b600080fd5b607d60af565b005b608560b1565b005b608d60b3565b005b609560b5565b005b609d60b7565b005b60a560b9565b005b60ad60bb565b005b565b565b565b565b565b565b56fea26469706673582212209814e92eb31c93893c31ba9b20a2a1f3c5f0cde33ace5b9568bf721470a4cb8d64736f6c63430008000033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060725760003560e01c80633c48c1061160535780633c48c10614608f578063455ee8ff1460975780638cdca43314609f57806390c1e6381460a7576072565b8063085634ec14607757806312424e3f14607f5780631c7013b2146087575b600080fd5b607d60af565b005b608560b1565b005b608d60b3565b005b609560b5565b005b609d60b7565b005b60a560b9565b005b60ad60bb565b005b565b565b565b565b565b565b56fea26469706673582212209814e92eb31c93893c31ba9b20a2a1f3c5f0cde33ace5b9568bf721470a4cb8d64736f6c63430008000033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "58:2349:0:-:0;;;1351:29;;;;;;;;;;58:2349;;;;;;",
+  "deployedSourceMap": "58:2349:0:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1564:37;;;:::i;:::-;;1462:32;;;:::i;:::-;;1826:134;;;:::i;:::-;;2352:53;;;:::i;:::-;;2024:136;;;:::i;:::-;;1674:88;;;:::i;:::-;;2233:46;;;:::i;:::-;;1564:37;:::o;1462:32::-;:::o;1826:134::-;:::o;2352:53::-;:::o;2024:136::-;:::o;1674:88::-;:::o;2233:46::-;:::o",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.8.0;\n\ncontract MedicalData {\n\n  // 医療機関に関する構造体の定義\n  struct MedicalInsData {\n    // 最終更新日時\n    uint256 lastUpdate;\n    // 最終更新医療機関(の先生)\n    string doctorName;\n  }\n\n  // 患者の医療データの構造体の定義\n  struct MedicalData {\n    // 患者名\n    string patientName;\n    // 血液型\n    string bloodType;\n    // 最終更新日時\n    string lastUpdate;\n    //  MedicalInsData型のデータ\n    MedicalInsData medicalInsData;\n  }\n\n  // 患者のアドレスと医療データを紐付けるMap\n  mapping (address => MedicalData) medicalMap;\n  // 医者のアドレスと名前を紐づけるMap\n  mapping (address => string) doctorMap;\n  // アドレスが医者であることを紐づけるMap\n  mapping (address => bool) doctorRoleMap;\n  // 医療機関に所属する医者のアドレスを格納する配列\n  address[] doctors;\n  // 患者のデータに対して医者側が閲覧権限を所有しているか保持するためのMap\n  mapping (address => mapping (address => bool)) approveMap;\n  // 患者のデータに対して医者側が閲覧権限を要求している状態を保持するためのMap\n  mapping (address => mapping (address => bool)) requireMap;\n\n  /**\n   * コンストラクター\n   */\n  constructor() public {\n  \n  }\n\n  /**\n   * 医者側に閲覧・編集権限を付与するメソッド\n   */\n  function approve() public {\n\n  }\n\n  /**\n   * 閲覧・編集権限を停止するメソッド\n   */\n  function changeStatus() public {\n\n  }\n\n  /**\n   * 医療データを新規で登録するメソッド\n   */\n  function createMedicalData() public {\n    // 医者であることの確認する。\n  }\n\n  /**\n   * 医療データを編集するメソッド\n   */\n  function editMedicalData() public {\n    // 医者であることを確認と患者から承認されているかを確認する。\n  }\n\n  /**\n   * 医療データを削除するメソッド\n   */\n  function deleteMedicalData() public {\n    // 医者であることを確認と患者から承認されているかを確認する。\n  }\n\n  /**\n   * 自分の医療データを取得するメソッド\n   */\n  function selectMedicalData() public {\n    \n  }\n\n  /**\n   * 患者の医療データを取得するメソッド\n   */\n  function selectPatientMedicalData() public {\n    \n  }\n}\n",
+  "sourcePath": "/Users/harukikondo/git/Web3MedicalDApp/backend/contracts/MedicalData.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/MedicalData.sol",
+    "exportedSymbols": {
+      "MedicalData": [
+        85
+      ]
+    },
+    "id": 86,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:24:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 85,
+        "linearizedBaseContracts": [
+          85
+        ],
+        "name": "MedicalData",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "MedicalData.MedicalInsData",
+            "id": 6,
+            "members": [
+              {
+                "constant": false,
+                "id": 3,
+                "mutability": "mutable",
+                "name": "lastUpdate",
+                "nodeType": "VariableDeclaration",
+                "scope": 6,
+                "src": "186:18:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 2,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "186:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5,
+                "mutability": "mutable",
+                "name": "doctorName",
+                "nodeType": "VariableDeclaration",
+                "scope": 6,
+                "src": "253:17:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 4,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "253:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "MedicalInsData",
+            "nodeType": "StructDefinition",
+            "scope": 85,
+            "src": "132:143:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "MedicalData.MedicalData",
+            "id": 16,
+            "members": [
+              {
+                "constant": false,
+                "id": 8,
+                "mutability": "mutable",
+                "name": "patientName",
+                "nodeType": "VariableDeclaration",
+                "scope": 16,
+                "src": "372:18:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 7,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "372:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 10,
+                "mutability": "mutable",
+                "name": "bloodType",
+                "nodeType": "VariableDeclaration",
+                "scope": 16,
+                "src": "413:16:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 9,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "413:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 12,
+                "mutability": "mutable",
+                "name": "lastUpdate",
+                "nodeType": "VariableDeclaration",
+                "scope": 16,
+                "src": "461:17:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 11,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "461:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 15,
+                "mutability": "mutable",
+                "name": "medicalInsData",
+                "nodeType": "VariableDeclaration",
+                "scope": 16,
+                "src": "522:29:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_MedicalInsData_$6_storage_ptr",
+                  "typeString": "struct MedicalData.MedicalInsData"
+                },
+                "typeName": {
+                  "id": 14,
+                  "nodeType": "UserDefinedTypeName",
+                  "pathNode": {
+                    "id": 13,
+                    "name": "MedicalInsData",
+                    "nodeType": "IdentifierPath",
+                    "referencedDeclaration": 6,
+                    "src": "522:14:0"
+                  },
+                  "referencedDeclaration": 6,
+                  "src": "522:14:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_MedicalInsData_$6_storage_ptr",
+                    "typeString": "struct MedicalData.MedicalInsData"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "MedicalData",
+            "nodeType": "StructDefinition",
+            "scope": 85,
+            "src": "330:226:0",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 21,
+            "mutability": "mutable",
+            "name": "medicalMap",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "623:43:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_MedicalData_$16_storage_$",
+              "typeString": "mapping(address => struct MedicalData.MedicalData)"
+            },
+            "typeName": {
+              "id": 20,
+              "keyType": {
+                "id": 17,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "632:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "623:32:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_MedicalData_$16_storage_$",
+                "typeString": "mapping(address => struct MedicalData.MedicalData)"
+              },
+              "valueType": {
+                "id": 19,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 18,
+                  "name": "MedicalData",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 16,
+                  "src": "643:11:0"
+                },
+                "referencedDeclaration": 16,
+                "src": "643:11:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_MedicalData_$16_storage_ptr",
+                  "typeString": "struct MedicalData.MedicalData"
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 25,
+            "mutability": "mutable",
+            "name": "doctorMap",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "724:37:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_string_storage_$",
+              "typeString": "mapping(address => string)"
+            },
+            "typeName": {
+              "id": 24,
+              "keyType": {
+                "id": 22,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "733:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "724:27:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_string_storage_$",
+                "typeString": "mapping(address => string)"
+              },
+              "valueType": {
+                "id": 23,
+                "name": "string",
+                "nodeType": "ElementaryTypeName",
+                "src": "744:6:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 29,
+            "mutability": "mutable",
+            "name": "doctorRoleMap",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "825:39:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+              "typeString": "mapping(address => bool)"
+            },
+            "typeName": {
+              "id": 28,
+              "keyType": {
+                "id": 26,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "834:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "825:25:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+                "typeString": "mapping(address => bool)"
+              },
+              "valueType": {
+                "id": 27,
+                "name": "bool",
+                "nodeType": "ElementaryTypeName",
+                "src": "845:4:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 32,
+            "mutability": "mutable",
+            "name": "doctors",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "943:17:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_address_$dyn_storage",
+              "typeString": "address[]"
+            },
+            "typeName": {
+              "baseType": {
+                "id": 30,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "943:7:0",
+                "stateMutability": "nonpayable",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "id": 31,
+              "nodeType": "ArrayTypeName",
+              "src": "943:9:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                "typeString": "address[]"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 38,
+            "mutability": "mutable",
+            "name": "approveMap",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "1072:57:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_bool_$_$",
+              "typeString": "mapping(address => mapping(address => bool))"
+            },
+            "typeName": {
+              "id": 37,
+              "keyType": {
+                "id": 33,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "1081:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1072:46:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_bool_$_$",
+                "typeString": "mapping(address => mapping(address => bool))"
+              },
+              "valueType": {
+                "id": 36,
+                "keyType": {
+                  "id": 34,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1101:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "1092:25:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+                  "typeString": "mapping(address => bool)"
+                },
+                "valueType": {
+                  "id": 35,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1112:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 44,
+            "mutability": "mutable",
+            "name": "requireMap",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "1247:57:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_bool_$_$",
+              "typeString": "mapping(address => mapping(address => bool))"
+            },
+            "typeName": {
+              "id": 43,
+              "keyType": {
+                "id": 39,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "1256:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1247:46:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_bool_$_$",
+                "typeString": "mapping(address => mapping(address => bool))"
+              },
+              "valueType": {
+                "id": 42,
+                "keyType": {
+                  "id": 40,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1276:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "1267:25:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+                  "typeString": "mapping(address => bool)"
+                },
+                "valueType": {
+                  "id": 41,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1287:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 48,
+              "nodeType": "Block",
+              "src": "1372:8:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 45,
+              "nodeType": "StructuredDocumentation",
+              "src": "1309:39:0",
+              "text": " コンストラクター"
+            },
+            "id": 49,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 46,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1362:2:0"
+            },
+            "returnParameters": {
+              "id": 47,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1372:0:0"
+            },
+            "scope": 85,
+            "src": "1351:29:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 53,
+              "nodeType": "Block",
+              "src": "1488:6:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 50,
+              "nodeType": "StructuredDocumentation",
+              "src": "1384:75:0",
+              "text": " 医者側に閲覧・編集権限を付与するメソッド"
+            },
+            "functionSelector": "12424e3f",
+            "id": 54,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "approve",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 51,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1478:2:0"
+            },
+            "returnParameters": {
+              "id": 52,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1488:0:0"
+            },
+            "scope": 85,
+            "src": "1462:32:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 58,
+              "nodeType": "Block",
+              "src": "1595:6:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 55,
+              "nodeType": "StructuredDocumentation",
+              "src": "1498:63:0",
+              "text": " 閲覧・編集権限を停止するメソッド"
+            },
+            "functionSelector": "085634ec",
+            "id": 59,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "changeStatus",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 56,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1585:2:0"
+            },
+            "returnParameters": {
+              "id": 57,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1595:0:0"
+            },
+            "scope": 85,
+            "src": "1564:37:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 63,
+              "nodeType": "Block",
+              "src": "1710:52:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 60,
+              "nodeType": "StructuredDocumentation",
+              "src": "1605:66:0",
+              "text": " 医療データを新規で登録するメソッド"
+            },
+            "functionSelector": "8cdca433",
+            "id": 64,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createMedicalData",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 61,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1700:2:0"
+            },
+            "returnParameters": {
+              "id": 62,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1710:0:0"
+            },
+            "scope": 85,
+            "src": "1674:88:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 68,
+              "nodeType": "Block",
+              "src": "1860:100:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 65,
+              "nodeType": "StructuredDocumentation",
+              "src": "1766:57:0",
+              "text": " 医療データを編集するメソッド"
+            },
+            "functionSelector": "1c7013b2",
+            "id": 69,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "editMedicalData",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 66,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1850:2:0"
+            },
+            "returnParameters": {
+              "id": 67,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1860:0:0"
+            },
+            "scope": 85,
+            "src": "1826:134:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 73,
+              "nodeType": "Block",
+              "src": "2060:100:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 70,
+              "nodeType": "StructuredDocumentation",
+              "src": "1964:57:0",
+              "text": " 医療データを削除するメソッド"
+            },
+            "functionSelector": "455ee8ff",
+            "id": 74,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "deleteMedicalData",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 71,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2050:2:0"
+            },
+            "returnParameters": {
+              "id": 72,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2060:0:0"
+            },
+            "scope": 85,
+            "src": "2024:136:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 78,
+              "nodeType": "Block",
+              "src": "2269:10:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 75,
+              "nodeType": "StructuredDocumentation",
+              "src": "2164:66:0",
+              "text": " 自分の医療データを取得するメソッド"
+            },
+            "functionSelector": "90c1e638",
+            "id": 79,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "selectMedicalData",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 76,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2259:2:0"
+            },
+            "returnParameters": {
+              "id": 77,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2269:0:0"
+            },
+            "scope": 85,
+            "src": "2233:46:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 83,
+              "nodeType": "Block",
+              "src": "2395:10:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 80,
+              "nodeType": "StructuredDocumentation",
+              "src": "2283:66:0",
+              "text": " 患者の医療データを取得するメソッド"
+            },
+            "functionSelector": "3c48c106",
+            "id": 84,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "selectPatientMedicalData",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 81,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2385:2:0"
+            },
+            "returnParameters": {
+              "id": 82,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2395:0:0"
+            },
+            "scope": 85,
+            "src": "2352:53:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 86,
+        "src": "58:2349:0"
+      }
+    ],
+    "src": "32:2376:0"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/MedicalData.sol",
+    "exportedSymbols": {
+      "MedicalData": [
+        85
+      ]
+    },
+    "id": 86,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:24:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 85,
+        "linearizedBaseContracts": [
+          85
+        ],
+        "name": "MedicalData",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "MedicalData.MedicalInsData",
+            "id": 6,
+            "members": [
+              {
+                "constant": false,
+                "id": 3,
+                "mutability": "mutable",
+                "name": "lastUpdate",
+                "nodeType": "VariableDeclaration",
+                "scope": 6,
+                "src": "186:18:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 2,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "186:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 5,
+                "mutability": "mutable",
+                "name": "doctorName",
+                "nodeType": "VariableDeclaration",
+                "scope": 6,
+                "src": "253:17:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 4,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "253:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "MedicalInsData",
+            "nodeType": "StructDefinition",
+            "scope": 85,
+            "src": "132:143:0",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "MedicalData.MedicalData",
+            "id": 16,
+            "members": [
+              {
+                "constant": false,
+                "id": 8,
+                "mutability": "mutable",
+                "name": "patientName",
+                "nodeType": "VariableDeclaration",
+                "scope": 16,
+                "src": "372:18:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 7,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "372:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 10,
+                "mutability": "mutable",
+                "name": "bloodType",
+                "nodeType": "VariableDeclaration",
+                "scope": 16,
+                "src": "413:16:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 9,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "413:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 12,
+                "mutability": "mutable",
+                "name": "lastUpdate",
+                "nodeType": "VariableDeclaration",
+                "scope": 16,
+                "src": "461:17:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 11,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "461:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 15,
+                "mutability": "mutable",
+                "name": "medicalInsData",
+                "nodeType": "VariableDeclaration",
+                "scope": 16,
+                "src": "522:29:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_MedicalInsData_$6_storage_ptr",
+                  "typeString": "struct MedicalData.MedicalInsData"
+                },
+                "typeName": {
+                  "id": 14,
+                  "nodeType": "UserDefinedTypeName",
+                  "pathNode": {
+                    "id": 13,
+                    "name": "MedicalInsData",
+                    "nodeType": "IdentifierPath",
+                    "referencedDeclaration": 6,
+                    "src": "522:14:0"
+                  },
+                  "referencedDeclaration": 6,
+                  "src": "522:14:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_MedicalInsData_$6_storage_ptr",
+                    "typeString": "struct MedicalData.MedicalInsData"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "MedicalData",
+            "nodeType": "StructDefinition",
+            "scope": 85,
+            "src": "330:226:0",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 21,
+            "mutability": "mutable",
+            "name": "medicalMap",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "623:43:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_MedicalData_$16_storage_$",
+              "typeString": "mapping(address => struct MedicalData.MedicalData)"
+            },
+            "typeName": {
+              "id": 20,
+              "keyType": {
+                "id": 17,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "632:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "623:32:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_MedicalData_$16_storage_$",
+                "typeString": "mapping(address => struct MedicalData.MedicalData)"
+              },
+              "valueType": {
+                "id": 19,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 18,
+                  "name": "MedicalData",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 16,
+                  "src": "643:11:0"
+                },
+                "referencedDeclaration": 16,
+                "src": "643:11:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_MedicalData_$16_storage_ptr",
+                  "typeString": "struct MedicalData.MedicalData"
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 25,
+            "mutability": "mutable",
+            "name": "doctorMap",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "724:37:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_string_storage_$",
+              "typeString": "mapping(address => string)"
+            },
+            "typeName": {
+              "id": 24,
+              "keyType": {
+                "id": 22,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "733:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "724:27:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_string_storage_$",
+                "typeString": "mapping(address => string)"
+              },
+              "valueType": {
+                "id": 23,
+                "name": "string",
+                "nodeType": "ElementaryTypeName",
+                "src": "744:6:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 29,
+            "mutability": "mutable",
+            "name": "doctorRoleMap",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "825:39:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+              "typeString": "mapping(address => bool)"
+            },
+            "typeName": {
+              "id": 28,
+              "keyType": {
+                "id": 26,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "834:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "825:25:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+                "typeString": "mapping(address => bool)"
+              },
+              "valueType": {
+                "id": 27,
+                "name": "bool",
+                "nodeType": "ElementaryTypeName",
+                "src": "845:4:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 32,
+            "mutability": "mutable",
+            "name": "doctors",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "943:17:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_address_$dyn_storage",
+              "typeString": "address[]"
+            },
+            "typeName": {
+              "baseType": {
+                "id": 30,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "943:7:0",
+                "stateMutability": "nonpayable",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "id": 31,
+              "nodeType": "ArrayTypeName",
+              "src": "943:9:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                "typeString": "address[]"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 38,
+            "mutability": "mutable",
+            "name": "approveMap",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "1072:57:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_bool_$_$",
+              "typeString": "mapping(address => mapping(address => bool))"
+            },
+            "typeName": {
+              "id": 37,
+              "keyType": {
+                "id": 33,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "1081:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1072:46:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_bool_$_$",
+                "typeString": "mapping(address => mapping(address => bool))"
+              },
+              "valueType": {
+                "id": 36,
+                "keyType": {
+                  "id": 34,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1101:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "1092:25:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+                  "typeString": "mapping(address => bool)"
+                },
+                "valueType": {
+                  "id": 35,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1112:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 44,
+            "mutability": "mutable",
+            "name": "requireMap",
+            "nodeType": "VariableDeclaration",
+            "scope": 85,
+            "src": "1247:57:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_bool_$_$",
+              "typeString": "mapping(address => mapping(address => bool))"
+            },
+            "typeName": {
+              "id": 43,
+              "keyType": {
+                "id": 39,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "1256:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1247:46:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_mapping$_t_address_$_t_bool_$_$",
+                "typeString": "mapping(address => mapping(address => bool))"
+              },
+              "valueType": {
+                "id": 42,
+                "keyType": {
+                  "id": 40,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1276:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "1267:25:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
+                  "typeString": "mapping(address => bool)"
+                },
+                "valueType": {
+                  "id": 41,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1287:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 48,
+              "nodeType": "Block",
+              "src": "1372:8:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 45,
+              "nodeType": "StructuredDocumentation",
+              "src": "1309:39:0",
+              "text": " コンストラクター"
+            },
+            "id": 49,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 46,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1362:2:0"
+            },
+            "returnParameters": {
+              "id": 47,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1372:0:0"
+            },
+            "scope": 85,
+            "src": "1351:29:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 53,
+              "nodeType": "Block",
+              "src": "1488:6:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 50,
+              "nodeType": "StructuredDocumentation",
+              "src": "1384:75:0",
+              "text": " 医者側に閲覧・編集権限を付与するメソッド"
+            },
+            "functionSelector": "12424e3f",
+            "id": 54,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "approve",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 51,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1478:2:0"
+            },
+            "returnParameters": {
+              "id": 52,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1488:0:0"
+            },
+            "scope": 85,
+            "src": "1462:32:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 58,
+              "nodeType": "Block",
+              "src": "1595:6:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 55,
+              "nodeType": "StructuredDocumentation",
+              "src": "1498:63:0",
+              "text": " 閲覧・編集権限を停止するメソッド"
+            },
+            "functionSelector": "085634ec",
+            "id": 59,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "changeStatus",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 56,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1585:2:0"
+            },
+            "returnParameters": {
+              "id": 57,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1595:0:0"
+            },
+            "scope": 85,
+            "src": "1564:37:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 63,
+              "nodeType": "Block",
+              "src": "1710:52:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 60,
+              "nodeType": "StructuredDocumentation",
+              "src": "1605:66:0",
+              "text": " 医療データを新規で登録するメソッド"
+            },
+            "functionSelector": "8cdca433",
+            "id": 64,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createMedicalData",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 61,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1700:2:0"
+            },
+            "returnParameters": {
+              "id": 62,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1710:0:0"
+            },
+            "scope": 85,
+            "src": "1674:88:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 68,
+              "nodeType": "Block",
+              "src": "1860:100:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 65,
+              "nodeType": "StructuredDocumentation",
+              "src": "1766:57:0",
+              "text": " 医療データを編集するメソッド"
+            },
+            "functionSelector": "1c7013b2",
+            "id": 69,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "editMedicalData",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 66,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1850:2:0"
+            },
+            "returnParameters": {
+              "id": 67,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1860:0:0"
+            },
+            "scope": 85,
+            "src": "1826:134:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 73,
+              "nodeType": "Block",
+              "src": "2060:100:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 70,
+              "nodeType": "StructuredDocumentation",
+              "src": "1964:57:0",
+              "text": " 医療データを削除するメソッド"
+            },
+            "functionSelector": "455ee8ff",
+            "id": 74,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "deleteMedicalData",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 71,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2050:2:0"
+            },
+            "returnParameters": {
+              "id": 72,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2060:0:0"
+            },
+            "scope": 85,
+            "src": "2024:136:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 78,
+              "nodeType": "Block",
+              "src": "2269:10:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 75,
+              "nodeType": "StructuredDocumentation",
+              "src": "2164:66:0",
+              "text": " 自分の医療データを取得するメソッド"
+            },
+            "functionSelector": "90c1e638",
+            "id": 79,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "selectMedicalData",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 76,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2259:2:0"
+            },
+            "returnParameters": {
+              "id": 77,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2269:0:0"
+            },
+            "scope": 85,
+            "src": "2233:46:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 83,
+              "nodeType": "Block",
+              "src": "2395:10:0",
+              "statements": []
+            },
+            "documentation": {
+              "id": 80,
+              "nodeType": "StructuredDocumentation",
+              "src": "2283:66:0",
+              "text": " 患者の医療データを取得するメソッド"
+            },
+            "functionSelector": "3c48c106",
+            "id": 84,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "selectPatientMedicalData",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 81,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2385:2:0"
+            },
+            "returnParameters": {
+              "id": 82,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2395:0:0"
+            },
+            "scope": 85,
+            "src": "2352:53:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 86,
+        "src": "58:2349:0"
+      }
+    ],
+    "src": "32:2376:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.0+commit.c7dfd78e.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-06-20T13:35:51.638Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "approve()": {
+        "notice": "医者側に閲覧・編集権限を付与するメソッド"
+      },
+      "changeStatus()": {
+        "notice": "閲覧・編集権限を停止するメソッド"
+      },
+      "constructor": {
+        "notice": "コンストラクター"
+      },
+      "createMedicalData()": {
+        "notice": "医療データを新規で登録するメソッド"
+      },
+      "deleteMedicalData()": {
+        "notice": "医療データを削除するメソッド"
+      },
+      "editMedicalData()": {
+        "notice": "医療データを編集するメソッド"
+      },
+      "selectMedicalData()": {
+        "notice": "自分の医療データを取得するメソッド"
+      },
+      "selectPatientMedicalData()": {
+        "notice": "患者の医療データを取得するメソッド"
+      }
+    },
+    "version": 1
+  }
+}
