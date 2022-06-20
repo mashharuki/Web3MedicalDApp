@@ -1,6 +1,7 @@
 const path = require("path");
 require('dotenv').config();
 const HDWalletProvider = require('truffle-hdwallet-provider');
+// .envファイルから読み込み
 const { 
   MNEMONIC, 
   ALCHEMY_APIKEY,
@@ -8,8 +9,9 @@ const {
 } = process.env;
 
 module.exports = {
-
-  // contracts_build_directory: path.join(__dirname, "client/src/contracts"),
+  // ビルドしたABIファイルの出力先
+  contracts_build_directory: path.join(__dirname, "client/src/contracts"),
+  // 各種ネットワークの設定
   networks: {
     development: {
       host: "127.0.0.1",
@@ -38,6 +40,19 @@ module.exports = {
       },
       network_id: 5,
       gas: 5500000,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    },
+    shibuya: {
+      provider: () => {
+        return new HDWalletProvider(
+          MNEMONIC,
+          `https://shibuya.public.blastapi.io`
+        );
+      },
+      network_id: 81,
+      gas: 500000,
       confirmations: 2,
       timeoutBlocks: 200,
       skipDryRun: true
