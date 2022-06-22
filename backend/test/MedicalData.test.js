@@ -43,5 +43,11 @@ contract ("MedicalData Contract tests!!", accounts => {
             console.log("owner address:", ownerAddress);
             assert.equal(ownerAddress, owner, "owner address should match");
         });
+        it ("confirm doctor's address", async () => {
+            const doctorAddress1 = await medicalData.doctors(0);
+            const doctorAddress2 = await medicalData.doctors(1);
+            assert.equal(doctorAddress1, _doctorAddrs[0], "doctor address should match");
+            assert.equal(doctorAddress2, _doctorAddrs[1], "doctor address should match");
+        });
     });
 });

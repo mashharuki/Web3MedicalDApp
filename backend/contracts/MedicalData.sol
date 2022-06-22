@@ -26,17 +26,17 @@ contract MedicalData {
   // コントラクトの管理者のアドレスを保有する変数
   address public owner;
   // 患者のアドレスと医療データを紐付けるMap
-  mapping (address => PatientMedicalData) medicalMap;
+  mapping (address => PatientMedicalData) public medicalMap;
   // 医者のアドレスと名前を紐づけるMap
-  mapping (address => string) doctorMap;
+  mapping (address => string) public doctorMap;
   // アドレスが医者であることを紐づけるMap
-  mapping (address => bool) doctorRoleMap;
+  mapping (address => bool) public doctorRoleMap;
   // 医療機関に所属する医者のアドレスを格納する配列
-  address[] doctors;
+  address[] public doctors;
   // 患者のデータに対して医者側が閲覧権限を所有しているか保持するためのMap
-  mapping (address => mapping (address => bool)) approveMap;
+  mapping (address => mapping (address => bool)) public approveMap;
   // 患者のデータに対して医者側が閲覧権限を要求している状態を保持するためのMap
-  mapping (address => mapping (address => bool)) requireMap;
+  mapping (address => mapping (address => bool)) public requireMap;
 
   /**
    * コンストラクター
