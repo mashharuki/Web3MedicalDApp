@@ -51,7 +51,9 @@ contract MedicalData {
   }
 
   // 各種メソッドが呼び出された時に発するイベントの定義
-
+  event approved(address patient, address doctor);
+  event changedStatus(address patient, address doctor);
+  event registedDoctor(address doctorAddress, string doctorName);
 
   /**
    * コンストラクター
@@ -80,6 +82,7 @@ contract MedicalData {
   function approve(address patient, address doctor) public onlyPatient {
     // 権限を付与する。
     approveMap[patient][doctor] = true;
+    emit approved(patient, doctor);
   }
 
   /**
@@ -90,12 +93,14 @@ contract MedicalData {
   function changeStatus(address patient, address doctor) public onlyPatient {
     // 権限を剥奪する。
     approveMap[patient][doctor] = false;
+    emit changedStatus(patient, doctor);
   }
 
   /**
    * 医療データを新規で登録するメソッド
    */
   function createMedicalData() public onlyDoctor {
+    
   }
 
   /**
@@ -140,5 +145,6 @@ contract MedicalData {
     doctorMap[doctorAddress] = doctorName;
     // 医者のアドレスと権限を登録
     doctorRoleMap[doctorAddress] = true;
+    emit registedDoctor(doctorAddress, doctorName);
   }
 }
