@@ -25,18 +25,33 @@ contract MedicalData {
 
   // コントラクトの管理者のアドレスを保有する変数
   address public owner;
+  // 医療機関に所属する医者のアドレスを格納する配列
+  address[] public doctors;
   // 患者のアドレスと医療データを紐付けるMap
   mapping (address => PatientMedicalData) public medicalMap;
   // 医者のアドレスと名前を紐づけるMap
   mapping (address => string) public doctorMap;
   // アドレスが医者であることを紐づけるMap
   mapping (address => bool) public doctorRoleMap;
-  // 医療機関に所属する医者のアドレスを格納する配列
-  address[] public doctors;
   // 患者のデータに対して医者側が閲覧権限を所有しているか保持するためのMap
   mapping (address => mapping (address => bool)) public approveMap;
   // 患者のデータに対して医者側が閲覧権限を要求している状態を保持するためのMap
   mapping (address => mapping (address => bool)) public requireMap;
+
+  // 呼び出し元が医者ではないことを確認する修飾子。
+  modifier onlyPatient() {
+    require(doctorRoleMap[msg.sender] == false, "msg.sendder must have patient role!!");
+    _;
+  }
+
+  // 呼び出し元が医者であることを確認する修飾子
+  modifier onlyDoctor() {
+    require(doctorRoleMap[msg.sender] == true, "msg.sendder must have doctor role!!");
+    _;
+  }
+
+  // 各種メソッドが呼び出された時に発するイベントの定義
+
 
   /**
    * コンストラクター
@@ -59,36 +74,41 @@ contract MedicalData {
 
   /**
    * 医者側に閲覧・編集権限を付与するメソッド
+   * patient 患者のアドレス
+   * doctor 権限を付与する医者のアドレス
    */
-  function approve() public {
-
+  function approve(address patient, address doctor) public onlyPatient {
+    // 権限を付与する。
+    approveMap[patient][doctor] = true;
   }
 
   /**
    * 閲覧・編集権限を停止するメソッド
+   * patient 患者のアドレス
+   * doctor 権限を剥奪する医者のアドレス
    */
-  function changeStatus() public {
-
+  function changeStatus(address patient, address doctor) public onlyPatient {
+    // 権限を剥奪する。
+    approveMap[patient][doctor] = false;
   }
 
   /**
    * 医療データを新規で登録するメソッド
    */
-  function createMedicalData() public {
-    // 医者であることの確認する。
+  function createMedicalData() public onlyDoctor {
   }
 
   /**
    * 医療データを編集するメソッド
    */
-  function editMedicalData() public {
-    // 医者であることを確認と患者から承認されているかを確認する。
+  function editMedicalData() public onlyDoctor {
+    // 患者から承認されているかを確認する。
   }
 
   /**
    * 医療データを削除するメソッド
    */
-  function deleteMedicalData() public {
+  function deleteMedicalData() public onlyDoctor {
     // 医者であることを確認と患者から承認されているかを確認する。
   }
 

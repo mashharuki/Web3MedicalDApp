@@ -51,6 +51,7 @@ contract ("MedicalData Contract tests!!", accounts => {
         });
         // 登録した医者のアドレスが想定のものと同じになっているか確認するシナリオ
         it ("confirm doctor's address", async () => {
+            // 医者のアドレスを取得する。
             const doctorAddress1 = await medicalData.doctors(0);
             const doctorAddress2 = await medicalData.doctors(1);
             // チェック
@@ -59,6 +60,7 @@ contract ("MedicalData Contract tests!!", accounts => {
         });
         // 登録した医者の名前が想定のものと同じになっているか確認するシナリオ
         it ("confirm doctor's name", async () => {
+            // 医者の名前を取得する。
             const doctorAddress1 = await medicalData.doctors(0);
             const doctorName1 = await medicalData.doctorMap(doctorAddress1);
             const doctorAddress2 = await medicalData.doctors(1);
@@ -72,7 +74,7 @@ contract ("MedicalData Contract tests!!", accounts => {
     /**
      * 医者を新規で追加する際のテストシナリオ
      */
-     describe ("add a new doctor", () => {
+    describe ("add a new doctor", () => {
         // 正常系
         it ("confirm doctor's address and name", async () => {
             // 新しく追加する医者の情報
