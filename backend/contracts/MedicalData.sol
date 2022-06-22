@@ -76,31 +76,29 @@ contract MedicalData {
 
   /**
    * 医者側に閲覧・編集権限を付与するメソッド
-   * patient 患者のアドレス
    * doctor 権限を付与する医者のアドレス
    */
-  function approve(address patient, address doctor) public onlyPatient {
+  function approve(address doctor) public onlyPatient {
     // 権限を付与する。
-    approveMap[patient][doctor] = true;
-    emit approved(patient, doctor);
+    approveMap[msg.sender][doctor] = true;
+    emit approved(msg.sender, doctor);
   }
 
   /**
    * 閲覧・編集権限を停止するメソッド
-   * patient 患者のアドレス
    * doctor 権限を剥奪する医者のアドレス
    */
-  function changeStatus(address patient, address doctor) public onlyPatient {
+  function changeStatus(address doctor) public onlyPatient {
     // 権限を剥奪する。
-    approveMap[patient][doctor] = false;
-    emit changedStatus(patient, doctor);
+    approveMap[msg.sender][doctor] = false;
+    emit changedStatus(msg.sender, doctor);
   }
 
   /**
    * 医療データを新規で登録するメソッド
    */
   function createMedicalData() public onlyDoctor {
-    
+
   }
 
   /**

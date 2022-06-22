@@ -99,5 +99,52 @@ contract ("MedicalData Contract tests!!", accounts => {
                 medicalData.registDoctor(newDoctorAddress, newDoctorName, {from: accounts[1]})
             );
         });
-     });
+    });
+
+    /**
+     * 権限付与及び剥奪メソッドの確認
+     */
+    describe ("approve method tests", () => {
+        // 権限付与の正常系
+        it ("approve", async () => {
+            // 医者のアドレスを用意する。
+            const doctor = _doctorAddrs[0];
+            // approveメソッドを呼び出す。
+            await medicalData.approve(doctor);
+            // 権限状態を取得する。
+            const isApproved = await medicalData.approveMap(accounts[0], doctor);
+            console.log("isApproved:", isApproved)
+            // チェック
+            assert.equal(isApproved, true, "role should match");
+        });
+        // 権限剥奪の正常系
+        it ("chageStatus", async () => {
+            // 医者のアドレスを用意する。
+            const doctor = _doctorAddrs[0];
+            // approveメソッドを呼び出す。
+            await medicalData.changeStatus(doctor);
+            // 権限状態を取得する。
+            const isApproved = await medicalData.approveMap(accounts[0], doctor);
+            // チェック
+            assert.equal(isApproved, false, "role should match");
+        });
+        // 権限付与の異常系
+        it ("hould revert when contract is called from invalid role address", async () => {
+            // 医者のアドレスを用意する。
+            const doctor = _doctorAddrs[0];
+            // 医者の権限を持つアドレスから呼び出した時に処理失敗することを確認する。
+            await truffleAssert.reverts(
+                medicalData.approve(doctor, {from: _doctorAddrs[1]})
+            );
+        });
+        // 権限剥奪の異常系
+        it ("hould revert when contract is called from invalid role address", async () => {
+            // 医者のアドレスを用意する。
+            const doctor = _doctorAddrs[0];
+            // 医者の権限を持つアドレスから呼び出した時に処理失敗することを確認する。
+            await truffleAssert.reverts(
+                medicalData.changeStatus(doctor, {from: _doctorAddrs[1]})
+            );
+        });
+    });
 });
