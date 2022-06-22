@@ -56,12 +56,20 @@ contract MedicalData {
     _;
   }
 
+  // 患者からの承認を得ているかを確認する修飾子
+  modifier isApproved(address patient) {
+    require(approveMap[patient][msg.sender] == true, "you must be approved by patient!!");
+    _;
+  }
+
   // 各種メソッドが呼び出された時に発するイベントの定義
   event Approved(address patient, address doctor);
   event ChangedStatus(address patient, address doctor);
   event RegistedDoctor(address doctorAddress, string doctorName);
   event ClaimedApprove(address doctor, address patient);
   event CreateMedicalData(address patientAddr, string patientName, string bloodType, string lastUpDate, string doctorName);
+  event EditMedicalData(address patientAddr, string patientName, string bloodType, string lastUpDate, string doctorName);
+  event DeleteMedicalData(address patientAddr);
 
   /**
    * コンストラクター
@@ -145,20 +153,47 @@ contract MedicalData {
  
   /**
    * 医療データを編集するメソッド
+   * @param patientAddr 患者のアドレス
+   * @param patientName 患者の名前
+   * @param bloodType 血液型
+   * @param lastUpDate 最終更新日時
+   * @param doctorName 医者(医療機関)の名前
    */
-  function editMedicalData() public onlyDoctor {
-    // 患者から承認されているかを確認する。
+  function editMedicalData(
+    address patientAddr,
+    string memory patientName, 
+    string memory bloodType,
+    string memory lastUpDate,
+    string memory doctorName
+  ) public onlyDoctor isApproved(patientAddr) {
+    // 医療機関に関するStruct変数を生成
+    MedicalInsData memory newMedicalInsData = MedicalInsData(lastUpDate, doctorName);
+    // 患者の医療データに関するStruct変数を生成する。
+    PatientMedicalData memory newPatientMedicalData = PatientMedicalData(patientName, bloodType, lastUpDate, newMedicalInsData);
+    // 患者の医療データとアドレスを紐付けて新しい医療データとして登録する。(更新)
+    medicalMap[patientAddr] = newPatientMedicalData;
+
+    emit EditMedicalData(patientAddr, patientName, bloodType, lastUpDate, doctorName);
   }
 
   /**
    * 医療データを削除するメソッド
+   * @param patient 患者のアドレス
    */
-  function deleteMedicalData() public onlyDoctor {
-    // 医者であることを確認と患者から承認されているかを確認する。
+  function deleteMedicalData(address patient) public onlyDoctor isApproved(patient) {
+    // 医療データを削除する。
+    delete medicalMap[patient];
+    // 全ての医師から承認権限を剥奪する。
+    for(uint i = 0; i < doctors.length; i++) {
+      approveMap[patient][doctors[i]] = false;
+    }
+
+    emit DeleteMedicalData(patient);
   }
 
   /**
    * 自分の医療データを取得するメソッド
+   
    */
   function selectMedicalData() public view onlyPatient returns (PatientMedicalData memory) {
     // 呼び出し元のアドレスに紐づく医療データを返却する。
@@ -169,9 +204,13 @@ contract MedicalData {
    * 患者の医療データを取得するメソッド
    * @param patient 患者のアドレス
    */
-  function selectPatientMedicalData(address patient) public view onlyDoctor returns (PatientMedicalData memory) {
-    // 閲覧権限が付与されているか確認する。
-    require(approveMap[patient][msg.sender] == true, "you must be approved by patient!!");
+  function selectPatientMedicalData(address patient) 
+    public 
+    view 
+    onlyDoctor 
+    isApproved(patient)
+    returns (PatientMedicalData memory) 
+  {
     // 患者のアドレスに紐づく医療データを取得する。
     return medicalMap[patient];
   }

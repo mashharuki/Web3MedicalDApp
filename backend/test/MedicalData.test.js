@@ -273,4 +273,225 @@ contract ("MedicalData Contract tests!!", accounts => {
              );
         });
     });
+
+    /**
+     * 患者のデータを更新するテスト
+     */
+    describe ("update a medical data!!", () => {
+        // 更新処理の正常系
+        it("edit", async() => {
+            // まず医療データを登録する。
+            // 患者のアドレス、名前、血液型、最終更新日時を用意する。
+            const patientAddr = accounts[3];
+            const patientName = "tester2"; 
+            const bloodType = "O";
+            // 医者のアドレスと名前を用意する。
+            const doctorAddr = _doctorAddrs[1];
+            const doctorName = _doctorNames[1];
+
+            // 現在の時刻を取得する。
+            var date = new Date();
+            // yyyy/mm/dd形式に変換する
+            var lastUpDate = formatDate(date, "yyyy/MM/dd");
+
+            // createMedicalDataメソッドを呼び出す。
+            await medicalData.createMedicalData(patientAddr, patientName, bloodType, lastUpDate, doctorName, {from: doctorAddr});
+            // 閲覧権限を要求する。
+            await medicalData.claimApprove(patientAddr, {from: doctorAddr}); 
+            // 医師に権限を付与する。
+            await medicalData.approve(doctorAddr, {from: patientAddr});
+
+            // 更新後の患者の医療データを用意する。
+            const patientName2 = "tester2"; 
+            const bloodType2 = "A";
+            // 更新後の医者の名前を用意する。
+            const doctorName2 = "mash3";
+            // 更新後の時刻を取得する。
+            date = new Date();
+            // yyyy/mm/dd形式に変換する。
+            lastUpDate = formatDate(date, "yyyy/MM/dd");
+            // editMedicalDataメソッドを呼び出す。
+            await medicalData.editMedicalData(patientAddr, patientName2, bloodType2, lastUpDate, doctorName2, {from: doctorAddr});
+            
+            // 更新後のデータを取得する。
+            const result = await medicalData.selectPatientMedicalData(patientAddr, {from: doctorAddr});
+            // 更新後のデータが想定通りのものになっているかチェックする。
+            assert.equal(result.patientName , patientName2, "name should match");
+            assert.equal(result.bloodType , bloodType2, "bloodType should match");
+            assert.equal(result.lastUpdate , lastUpDate, "lastupDate should match");
+            assert.equal(result.medicalInsData.doctorName , doctorName2, "doctorName should match");
+            assert.equal(result.medicalInsData.lastUpdate , lastUpDate, "lastUpDate should match");
+        });
+        // 更新処理の異常系(医師の権限を持たないアドレスから更新しようとした場合)
+        it("should revert when contract is called from invalid role address", async() => {
+            // まず医療データを登録する。
+            // 患者のアドレス、名前、血液型、最終更新日時を用意する。
+            const patientAddr = accounts[3];
+            const patientName = "tester2"; 
+            const bloodType = "O";
+            // 医者のアドレスと名前を用意する。
+            const doctorAddr = _doctorAddrs[1];
+            const doctorName = _doctorNames[1];
+
+            // 現在の時刻を取得する。
+            var date = new Date();
+            // yyyy/mm/dd形式に変換する
+            var lastUpDate = formatDate(date, "yyyy/MM/dd");
+
+            // createMedicalDataメソッドを呼び出す。
+            await medicalData.createMedicalData(patientAddr, patientName, bloodType, lastUpDate, doctorName, {from: doctorAddr});
+            // 閲覧権限を要求する。
+            await medicalData.claimApprove(patientAddr, {from: doctorAddr}); 
+            // 医師に権限を付与する。
+            await medicalData.approve(doctorAddr, {from: patientAddr});
+
+            // 更新後の患者の医療データを用意する。
+            const patientName2 = "tester2"; 
+            const bloodType2 = "A";
+            // 更新後の医者の名前を用意する。
+            const doctorName2 = "mash3";
+            // 更新後の時刻を取得する。
+            date = new Date();
+            // yyyy/mm/dd形式に変換する。
+            lastUpDate = formatDate(date, "yyyy/MM/dd");
+
+            // editMedicalDataメソッドを呼び出してエラーになることを確認する。
+            await truffleAssert.reverts(
+                medicalData.editMedicalData(patientAddr, patientName2, bloodType2, lastUpDate, doctorName2)
+            )
+        });
+        // 更新処理の異常系(患者から承認を得ていないアドレスから更新しようとした場合)
+        it("should revert when contract is called from invalid role address", async() => {
+            // まず医療データを登録する。
+            // 患者のアドレス、名前、血液型、最終更新日時を用意する。
+            const patientAddr = accounts[3];
+            const patientName = "tester2"; 
+            const bloodType = "O";
+            // 医者のアドレスと名前を用意する。
+            const doctorAddr = _doctorAddrs[1];
+            const doctorName = _doctorNames[1];
+
+            // 現在の時刻を取得する。
+            var date = new Date();
+            // yyyy/mm/dd形式に変換する
+            var lastUpDate = formatDate(date, "yyyy/MM/dd");
+
+            // createMedicalDataメソッドを呼び出す。
+            await medicalData.createMedicalData(patientAddr, patientName, bloodType, lastUpDate, doctorName, {from: doctorAddr});
+            
+            // 更新後の患者の医療データを用意する。
+            const patientName2 = "tester2"; 
+            const bloodType2 = "A";
+            // 更新後の医者の名前を用意する。
+            const doctorName2 = "mash3";
+            // 更新後の時刻を取得する。
+            date = new Date();
+            // yyyy/mm/dd形式に変換する。
+            lastUpDate = formatDate(date, "yyyy/MM/dd");
+
+            // editMedicalDataメソッドを呼び出してエラーになることを確認する。
+            await truffleAssert.reverts(
+                medicalData.editMedicalData(patientAddr, patientName2, bloodType2, lastUpDate, doctorName2)
+            )
+        });
+    });
+
+    /**
+     * 患者のデータを削除するテスト
+     */
+    describe ("delete a medical data!!", () => {
+        // 削除処理の正常系
+        it("delete", async() => {
+            // まず医療データを登録する。
+            // 患者のアドレス、名前、血液型、最終更新日時を用意する。
+            const patientAddr = accounts[3];
+            const patientName = "tester2"; 
+            const bloodType = "O";
+            // 医者のアドレスと名前を用意する。
+            const doctorAddr = _doctorAddrs[1];
+            const doctorName = _doctorNames[1];
+
+            // 現在の時刻を取得する。
+            var date = new Date();
+            // yyyy/mm/dd形式に変換する
+            var lastUpDate = formatDate(date, "yyyy/MM/dd");
+
+            // createMedicalDataメソッドを呼び出す。
+            await medicalData.createMedicalData(patientAddr, patientName, bloodType, lastUpDate, doctorName, {from: doctorAddr});
+            // 閲覧権限を要求する。
+            await medicalData.claimApprove(patientAddr, {from: doctorAddr}); 
+            // 医師に権限を付与する。
+            await medicalData.approve(doctorAddr, {from: patientAddr});
+            // deleteMedicalDataメソッドを呼び出す。
+            await medicalData.deleteMedicalData(patientAddr, {from: doctorAddr});
+            // 削除後のデータを取得する。
+            const result = await medicalData.selectMedicalData({from: patientAddr});
+
+            // 削除後のデータが想定したものと一致しているかチェックする。
+            assert.equal(result.patientName , "", "name should match");
+            assert.equal(result.bloodType , "", "bloodType should match");
+            assert.equal(result.lastUpdate , "", "lastupDate should match");
+            assert.equal(result.medicalInsData.doctorName , "", "doctorName should match");
+            assert.equal(result.medicalInsData.lastUpdate , "", "lastUpDate should match");
+            
+            // 削除処理後の閲覧権限を取得する。
+            const isApproved = await medicalData.approveMap(patientAddr, _doctorAddrs[0]);
+            const isApproved2 = await medicalData.approveMap(patientAddr, _doctorAddrs[1]);
+            // 閲覧権限が全て削除されていることを確認する。
+            assert.equal(isApproved , false, "approvement should match");
+            assert.equal(isApproved2 , false, "approvement should match");
+        });
+        // 削除処理の異常系(患者から承認を得ていないアドレスから更新しようとした場合)
+        it("should revert when contract is called from invalid role address", async() => {
+            // まず医療データを登録する。
+            // 患者のアドレス、名前、血液型、最終更新日時を用意する。
+            const patientAddr = accounts[3];
+            const patientName = "tester2"; 
+            const bloodType = "O";
+            // 医者のアドレスと名前を用意する。
+            const doctorAddr = _doctorAddrs[1];
+            const doctorName = _doctorNames[1];
+
+            // 現在の時刻を取得する。
+            var date = new Date();
+            // yyyy/mm/dd形式に変換する
+            var lastUpDate = formatDate(date, "yyyy/MM/dd");
+
+            // createMedicalDataメソッドを呼び出す。
+            await medicalData.createMedicalData(patientAddr, patientName, bloodType, lastUpDate, doctorName, {from: doctorAddr});
+
+            // deleteMedicalDataメソッドを呼び出してエラーになることを確認する。
+            await truffleAssert.reverts(
+                medicalData.deleteMedicalData(patientAddr, {from: doctorAddr})
+            )
+        });
+        // 削除処理の異常系(患者から承認を得ていないアドレスから更新しようとした場合)
+        it("should revert when contract is called from invalid role address", async() => {
+            // まず医療データを登録する。
+            // 患者のアドレス、名前、血液型、最終更新日時を用意する。
+            const patientAddr = accounts[3];
+            const patientName = "tester2"; 
+            const bloodType = "O";
+            // 医者のアドレスと名前を用意する。
+            const doctorAddr = _doctorAddrs[1];
+            const doctorName = _doctorNames[1];
+
+            // 現在の時刻を取得する。
+            var date = new Date();
+            // yyyy/mm/dd形式に変換する
+            var lastUpDate = formatDate(date, "yyyy/MM/dd");
+
+            // createMedicalDataメソッドを呼び出す。
+            await medicalData.createMedicalData(patientAddr, patientName, bloodType, lastUpDate, doctorName, {from: doctorAddr});
+            // 閲覧権限を要求する。
+            await medicalData.claimApprove(patientAddr, {from: doctorAddr}); 
+            // 医師に権限を付与する。
+            await medicalData.approve(doctorAddr, {from: patientAddr});
+
+            // deleteMedicalDataメソッドを呼び出してエラーになることを確認する。
+            await truffleAssert.reverts(
+                medicalData.deleteMedicalData(patientAddr)
+            )
+        });
+    });
 });

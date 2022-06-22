@@ -8,6 +8,10 @@
  1. <a href="./docs/design.md">概要設計書</a>
  2. <a href="./docs/page.md">画面設計書</a>
 
+### テスト結果
+
+スマートコントラクトのテスト結果は、<a href="./docs/testResult.md">こちら</a>
+
 ### クリアすべき課題
 
 1. Ethereum,Polygon,Solanaのいずれかのネットワークにデプロイすること。
