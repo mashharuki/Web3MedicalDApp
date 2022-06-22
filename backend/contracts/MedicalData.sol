@@ -6,7 +6,7 @@ contract MedicalData {
   // 医療機関に関する構造体の定義
   struct MedicalInsData {
     // 最終更新日時
-    uint256 lastUpdate;
+    string lastUpdate;
     // 最終更新医療機関(の先生)
     string doctorName;
   }
@@ -50,11 +50,18 @@ contract MedicalData {
     _;
   }
 
+  // 呼び出し元がownerであることを確認する修飾子
+  modifier onlyOwner() {
+    require(owner == msg.sender, "msg.sender must be owner's address !!");
+    _;
+  }
+
   // 各種メソッドが呼び出された時に発するイベントの定義
   event Approved(address patient, address doctor);
   event ChangedStatus(address patient, address doctor);
   event RegistedDoctor(address doctorAddress, string doctorName);
   event ClaimedApprove(address doctor, address patient);
+  event CreateMedicalData(address patientAddr, string patientName, string bloodType, string lastUpDate, string doctorName);
 
   /**
    * コンストラクター
@@ -112,11 +119,30 @@ contract MedicalData {
 
   /**
    * 医療データを新規で登録するメソッド
+   * @param patientAddr 患者のアドレス
+   * @param patientName 患者の名前
+   * @param bloodType 血液型
+   * @param lastUpDate 最終更新日時
+   * @param doctorName 医者(医療機関)の名前
    */
-  function createMedicalData() public onlyDoctor {
+  function createMedicalData(
+    address patientAddr,
+    string memory patientName, 
+    string memory bloodType,
+    string memory lastUpDate,
+    string memory doctorName
+  ) public onlyDoctor {
 
+    // 医療機関に関するStruct変数を生成
+    MedicalInsData memory medicalInsData = MedicalInsData(lastUpDate, doctorName);
+    // 患者の医療データに関するStruct変数を生成する。
+    PatientMedicalData memory patientMedicalData = PatientMedicalData(patientName, bloodType, lastUpDate, medicalInsData);
+    // 患者の医療データとアドレスを紐付けて登録する。
+    medicalMap[patientAddr] = patientMedicalData;
+
+    emit CreateMedicalData(patientAddr, patientName, bloodType, lastUpDate, doctorName);
   }
-
+ 
   /**
    * 医療データを編集するメソッド
    */
@@ -134,15 +160,20 @@ contract MedicalData {
   /**
    * 自分の医療データを取得するメソッド
    */
-  function selectMedicalData() public {
-    
+  function selectMedicalData() public view onlyPatient returns (PatientMedicalData memory) {
+    // 呼び出し元のアドレスに紐づく医療データを返却する。
+    return medicalMap[msg.sender];
   }
 
   /**
    * 患者の医療データを取得するメソッド
+   * @param patient 患者のアドレス
    */
-  function selectPatientMedicalData() public {
-    
+  function selectPatientMedicalData(address patient) public view onlyDoctor returns (PatientMedicalData memory) {
+    // 閲覧権限が付与されているか確認する。
+    require(approveMap[patient][msg.sender] == true, "you must be approved by patient!!");
+    // 患者のアドレスに紐づく医療データを取得する。
+    return medicalMap[patient];
   }
 
   /**
@@ -150,9 +181,7 @@ contract MedicalData {
    * @param doctorAddress 医者のアドレス
    * @param doctorName 医者の名前
    */
-  function registDoctor(address doctorAddress, string memory doctorName) public {
-    // メソッドの呼び出し元がownerであることを確認する。
-    require(owner == msg.sender, "msg.sender must be owner's address !!");
+  function registDoctor(address doctorAddress, string memory doctorName) public onlyOwner {
     // アドレスを格納する。
     doctors.push(doctorAddress);
     // 医者のアドレスと名前を登録

@@ -27,6 +27,18 @@ contract ("MedicalData Contract tests!!", accounts => {
     // コントラクトを格納する変数
     var medicalData;
 
+    // 共通の関数を定義する。
+    function formatDate (date, format) {
+        format = format.replace(/yyyy/g, date.getFullYear());
+        format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
+        format = format.replace(/dd/g, ('0' + date.getDate()).slice(-2));
+        format = format.replace(/HH/g, ('0' + date.getHours()).slice(-2));
+        format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
+        format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
+        format = format.replace(/SSS/g, ('00' + date.getMilliseconds()).slice(-3));
+        return format;
+    };
+
     /**
      * テスト実行前の準備　
      */
@@ -113,7 +125,6 @@ contract ("MedicalData Contract tests!!", accounts => {
             await medicalData.approve(doctor);
             // 権限状態を取得する。
             const isApproved = await medicalData.approveMap(accounts[0], doctor);
-            console.log("isApproved:", isApproved)
             // チェック
             assert.equal(isApproved, true, "role should match");
         });
@@ -129,7 +140,7 @@ contract ("MedicalData Contract tests!!", accounts => {
             assert.equal(isApproved, false, "role should match");
         });
         // 権限付与の異常系
-        it ("hould revert when contract is called from invalid role address", async () => {
+        it ("should revert when contract is called from invalid role address", async () => {
             // 医者のアドレスを用意する。
             const doctor = _doctorAddrs[0];
             // 医者の権限を持つアドレスから呼び出した時に処理失敗することを確認する。
@@ -138,7 +149,7 @@ contract ("MedicalData Contract tests!!", accounts => {
             );
         });
         // 権限剥奪の異常系
-        it ("hould revert when contract is called from invalid role address", async () => {
+        it ("should revert when contract is called from invalid role address", async () => {
             // 医者のアドレスを用意する。
             const doctor = _doctorAddrs[0];
             // 医者の権限を持つアドレスから呼び出した時に処理失敗することを確認する。
@@ -164,13 +175,102 @@ contract ("MedicalData Contract tests!!", accounts => {
             assert.equal(isRequiered , true, "status should match");
         });
         // 閲覧要求の異常系
-        it ("hould revert when contract is called from invalid role address", async () => {
+        it ("should revert when contract is called from invalid role address", async () => {
             // 患者のアドレスを用意する。
             const patient = accounts[1];
             // 医者の権限を持たないアドレスからの呼び出し時にエラーが発生することを確認する。
             await truffleAssert.reverts(
                 medicalData.claimApprove(patient)
             );
+        });
+    });
+
+    /**
+     * 患者のデータを新規で登録するテスト
+     */
+    describe ("create a new medical data!!", () => {
+        // 新規登録の正常系
+        it("create", async() => {
+            // 患者のアドレス、名前、血液型を用意する。
+            const patientAddr = accounts[2];
+            const patientName = "tester"; 
+            const bloodType = "O";
+            // 医者のアドレスと名前を用意する。
+            const doctorAddr = _doctorAddrs[0];
+            const doctorName = _doctorNames[0];
+            // 現在の時刻を取得する。
+            var date = new Date();
+            // yyyy/mm/dd形式に変換する
+            var lastUpDate = formatDate(date, "yyyy/MM/dd");
+            // createMedicalDataメソッドを呼び出す。
+            await medicalData.createMedicalData(patientAddr, patientName, bloodType, lastUpDate, doctorName, {from: doctorAddr});
+            // 登録したデータを取得する。
+            const result = await medicalData.selectMedicalData({from: patientAddr});
+            // 登録したデータが想定通りのものになっているかチェックする。
+            assert.equal(result.patientName , patientName, "name should match");
+            assert.equal(result.bloodType , bloodType, "bloodType should match");
+            assert.equal(result.lastUpdate , lastUpDate, "lastupDate should match");
+            assert.equal(result.medicalInsData.doctorName , doctorName, "doctorName should match");
+            assert.equal(result.medicalInsData.lastUpdate , lastUpDate, "lastUpDate should match");
+        });
+        // 医療データ取得の異常系(患者から承認権限を得ていないのに取得しようとした場合)
+        it("should revert when contract is called from invalid role address", async() => {
+            // 患者のアドレス、名前、血液型、最終更新日時を用意する。
+            const patientAddr = accounts[2];
+            // 医者のアドレスと名前を用意する。
+            const doctorAddr = _doctorAddrs[0];
+            // 承認を得ていないのに呼び出し時にエラーが発生することを確認する。
+            await truffleAssert.reverts(
+                medicalData.selectPatientMedicalData(patientAddr, {from: doctorAddr})
+            );
+        });
+        // 医療データ取得の正常系
+        it("get patient's medical data", async() => {
+            // 患者のアドレス、名前、血液型、最終更新日時を用意する。
+            const patientAddr = accounts[2];
+            const patientName = "tester"; 
+            const bloodType = "O";
+            // 医者のアドレスと名前を用意する。
+            const doctorAddr = _doctorAddrs[0];
+            const doctorName = _doctorNames[0];
+
+            // 現在の時刻を取得する。
+            var date = new Date();
+            // yyyy/mm/dd形式に変換する
+            var lastUpDate = formatDate(date, "yyyy/MM/dd");
+
+            // createMedicalDataメソッドを呼び出す。
+            await medicalData.createMedicalData(patientAddr, patientName, bloodType, lastUpDate, doctorName, {from: doctorAddr});
+            // 閲覧権限を要求する。
+            await medicalData.claimApprove(patientAddr, {from: doctorAddr}); 
+            // 医師に権限を付与する。
+            await medicalData.approve(doctorAddr, {from: patientAddr});
+            // 登録したデータを取得する。
+            const result = await medicalData.selectPatientMedicalData(patientAddr, {from: doctorAddr});
+            // 登録したデータが想定通りのものになっているかチェックする。
+            assert.equal(result.patientName , patientName, "name should match");
+            assert.equal(result.bloodType , bloodType, "bloodType should match");
+            assert.equal(result.lastUpdate , lastUpDate, "lastupDate should match");
+            assert.equal(result.medicalInsData.doctorName , doctorName, "doctorName should match");
+            assert.equal(result.medicalInsData.lastUpdate , lastUpDate, "lastUpDate should match");
+        });
+        // 新規登録の異常系(医師の権限を持たないアドレスから登録しようとした場合)
+        it("should revert when contract is called from invalid role address", async() => {
+             // 患者のアドレス、名前、血液型を用意する。
+             const patientAddr = accounts[2];
+             const patientName = "tester"; 
+             const bloodType = "O";
+             // 医者のアドレスと名前を用意する。
+             const doctorAddr = _doctorAddrs[0];
+             const doctorName = _doctorNames[0];
+             // 現在の時刻を取得する。
+             var date = new Date();
+             // yyyy/mm/dd形式に変換する
+             var lastUpDate = formatDate(date, "yyyy/MM/dd");
+             // 医師の権限を持たないアドレスから登録しようとした場合にエラーが発生すること。
+             await truffleAssert.reverts(
+                medicalData.createMedicalData(patientAddr, patientName, bloodType, lastUpDate, doctorName)
+             );
         });
     });
 });
