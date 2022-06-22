@@ -23,3 +23,19 @@
     - 最終更新日時
     - 最終更新日時、最終更新医療機関
 9. 患者は自身の医療データへのアクセス権限を一度承認した医療提供者から再度制限できる(患者の医療提供者が変更になった場合等に備えて)
+
+### 開発用のアドレス
+
+```cmd
+Accounts:
+(0) 0x70987afd66e39048c418d80bbe35be76658f466f
+(1) 0xf3b1722f0a83d4c9c32fd8c786aaedf0169c6b4f
+(2) 0x40f9dd1894f353cd6a5cc48b4d848c90657e7f1a
+(3) 0x9a9122c7f57fca0a5ad82a931b742dca4751b2b6
+(4) 0x81f32e72d72e1c754d5ce8157241989f4a7b595b
+(5) 0xaee844d6e496c1f17ed265b5311be2f116fcabd3
+(6) 0xbf1f0a1a4159c632149d09e19f83d4f8b9260c3c
+(7) 0x6cb527d3c940f0189b0635d4eaff6547fccb9ba0
+(8) 0x32ce44da56ade22d062a2c73e67abbddc9bb4326
+(9) 0x88508c0ebf47c5d35e86be7b8eebded98d97833d
+```

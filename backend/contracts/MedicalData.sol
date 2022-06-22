@@ -12,7 +12,7 @@ contract MedicalData {
   }
 
   // 患者の医療データの構造体の定義
-  struct MedicalData {
+  struct PatientMedicalData {
     // 患者名
     string patientName;
     // 血液型
@@ -26,7 +26,7 @@ contract MedicalData {
   // コントラクトの管理者のアドレスを保有する変数
   address public owner;
   // 患者のアドレスと医療データを紐付けるMap
-  mapping (address => MedicalData) medicalMap;
+  mapping (address => PatientMedicalData) medicalMap;
   // 医者のアドレスと名前を紐づけるMap
   mapping (address => string) doctorMap;
   // アドレスが医者であることを紐づけるMap
@@ -49,7 +49,7 @@ contract MedicalData {
 
     for(uint i = 0; i < _doctorAddrs.length; i++) {
       // アドレスを格納する。
-      doctors[i] = _doctorAddrs[i];
+      doctors.push(_doctorAddrs[i]);
       // 医者のアドレスと名前を登録
       doctorMap[_doctorAddrs[i]] = _doctorNames[i];
       // 医者のアドレスと権限を登録
