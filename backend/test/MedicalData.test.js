@@ -28,6 +28,7 @@ contract ("MedicalData Contract tests!!", accounts => {
      * テスト実行前の準備　
      */
     beforeEach (async () => {
+        // Medicalコントラストのインスタンスを生成
         medicalData = await MedicalData.new(_doctorAddrs, _doctorNames, {
             from: accounts[0],
             gas: 5000000
@@ -35,19 +36,33 @@ contract ("MedicalData Contract tests!!", accounts => {
     });
 
     /**
-     * 呼び出し元の確認
+     * コントラクト初期化関連のテストシナリオ
      */
     describe ("initialization", () => {
+        // ownerアドレスを取得し想定したものになっているか確認するシナリオ
         it ("confirm owner address", async () => {
             const ownerAddress = await medicalData.owner();
             console.log("owner address:", ownerAddress);
+            // チェック
             assert.equal(ownerAddress, owner, "owner address should match");
         });
+        // 登録した医者のアドレスが想定のものと同じになっているか確認するシナリオ
         it ("confirm doctor's address", async () => {
             const doctorAddress1 = await medicalData.doctors(0);
             const doctorAddress2 = await medicalData.doctors(1);
+            // チェック
             assert.equal(doctorAddress1, _doctorAddrs[0], "doctor address should match");
             assert.equal(doctorAddress2, _doctorAddrs[1], "doctor address should match");
+        });
+        // 登録した医者の名前が想定のものと同じになっているか確認するシナリオ
+        it ("confirm doctor's name", async () => {
+            const doctorAddress1 = await medicalData.doctors(0);
+            const doctorName1 = await medicalData.doctorMap(doctorAddress1);
+            const doctorAddress2 = await medicalData.doctors(1);
+            const doctorName2 = await medicalData.doctorMap(doctorAddress2);
+            // チェック
+            assert.equal(doctorName1, _doctorNames[0], "doctor name should match");
+            assert.equal(doctorName2, _doctorNames[1], "doctor name should match");
         });
     });
 });
