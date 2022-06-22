@@ -2,6 +2,9 @@
  *  MedicalDataコントラクト用のテストスクリプトファイル
  */
 
+// モジュールのインポート
+const truffleAssert = require("truffle-assertions");
+
 // コントラクトの読み込み
 const MedicalData = artifacts.require("MedicalData");
 
@@ -70,6 +73,7 @@ contract ("MedicalData Contract tests!!", accounts => {
      * 医者を新規で追加する際のテストシナリオ
      */
      describe ("add a new doctor", () => {
+        // 正常系
         it ("confirm doctor's address and name", async () => {
             // 新しく追加する医者の情報
             const newDoctorAddress = "0x0b80dC45ea6E7cC8eAffd6564C8164dEE1494838";
@@ -82,6 +86,16 @@ contract ("MedicalData Contract tests!!", accounts => {
             // チェック
             assert.equal(doctorAddress3, newDoctorAddress, "doctor address should match");
             assert.equal(doctorName3, newDoctorName, "doctor name should match");
+        });
+        // 異常系
+        it ("Should revert when contract is called from invalid address", async () => {
+            // 新しく追加する医者の情報
+            const newDoctorAddress = "0x0b80dC45ea6E7cC8eAffd6564C8164dEE1494838";
+            const newDoctorName = "mash3";
+            // registDoctorメソッドをowner以外のアドレスから呼び出そうとした時に失敗することを確認する。
+            await truffleAssert.reverts(
+                medicalData.registDoctor(newDoctorAddress, newDoctorName, {from: accounts[1]})
+            );
         });
      });
 });
