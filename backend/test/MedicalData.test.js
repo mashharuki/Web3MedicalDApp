@@ -41,8 +41,8 @@ contract ("MedicalData Contract tests!!", accounts => {
     describe ("initialization", () => {
         // ownerアドレスを取得し想定したものになっているか確認するシナリオ
         it ("confirm owner address", async () => {
+            // ownerアドレスを取得する。
             const ownerAddress = await medicalData.owner();
-            console.log("owner address:", ownerAddress);
             // チェック
             assert.equal(ownerAddress, owner, "owner address should match");
         });
@@ -65,4 +65,23 @@ contract ("MedicalData Contract tests!!", accounts => {
             assert.equal(doctorName2, _doctorNames[1], "doctor name should match");
         });
     });
+
+    /**
+     * 医者を新規で追加する際のテストシナリオ
+     */
+     describe ("add a new doctor", () => {
+        it ("confirm doctor's address and name", async () => {
+            // 新しく追加する医者の情報
+            const newDoctorAddress = "0x0b80dC45ea6E7cC8eAffd6564C8164dEE1494838";
+            const newDoctorName = "mash3";
+            // 医者の情報を新しくコントラクトに追加します。
+            await medicalData.registDoctor(newDoctorAddress, newDoctorName);
+            // 登録した医者のアドレスと名前を取得する。
+            const doctorAddress3 = await medicalData.doctors(2);
+            const doctorName3 = await medicalData.doctorMap(doctorAddress3);
+            // チェック
+            assert.equal(doctorAddress3, newDoctorAddress, "doctor address should match");
+            assert.equal(doctorName3, newDoctorName, "doctor name should match");
+        });
+     });
 });
