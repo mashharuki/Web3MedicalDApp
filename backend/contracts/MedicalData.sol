@@ -23,6 +23,8 @@ contract MedicalData {
     MedicalInsData medicalInsData;
   }
 
+  // コントラクトの管理者のアドレスを保有する変数
+  address public owner;
   // 患者のアドレスと医療データを紐付けるMap
   mapping (address => MedicalData) medicalMap;
   // 医者のアドレスと名前を紐づけるMap
@@ -38,9 +40,21 @@ contract MedicalData {
 
   /**
    * コンストラクター
+   * _doctorAddrs 初期で登録される医者のアドレスの配列
+   * _doctorNames 初期で登録される医者の名前の配列
    */
-  constructor() public {
-  
+  constructor(address[] memory _doctorAddrs, string[] memory _doctorNames) public {
+    // ownerのアドレスを登録する。
+    owner = msg.sender;
+
+    for(uint i = 0; i < _doctorAddrs.length; i++) {
+      // アドレスを格納する。
+      doctors[i] = _doctorAddrs[i];
+      // 医者のアドレスと名前を登録
+      doctorMap[_doctorAddrs[i]] = _doctorNames[i];
+      // 医者のアドレスと権限を登録
+      doctorRoleMap[_doctorAddrs[i]] = true;
+    }
   }
 
   /**
@@ -90,5 +104,21 @@ contract MedicalData {
    */
   function selectPatientMedicalData() public {
     
+  }
+
+  /**
+   * 医者のデータを新たに登録するメソッド
+   * doctorAddress 医者のアドレス
+   * doctorName 医者の名前
+   */
+  function registDoctor(address doctorAddress, string memory doctorName) public {
+    // メソッドの呼び出し元がownerであることを確認する。
+    require(owner == msg.sender, "msg.sender must be owner's address !!");
+    // アドレスを格納する。
+    doctors.push(doctorAddress);
+    // 医者のアドレスと名前を登録
+    doctorMap[doctorAddress] = doctorName;
+    // 医者のアドレスと権限を登録
+    doctorRoleMap[doctorAddress] = true;
   }
 }
