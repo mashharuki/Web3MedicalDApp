@@ -147,4 +147,30 @@ contract ("MedicalData Contract tests!!", accounts => {
             );
         });
     });
+
+    /**
+     * 閲覧権限を要求するメソッドの確認
+     */
+    describe ("claim approve method tests", () => {
+        // 閲覧要求の正常系
+        it ("require approvement", async () => {
+            // 患者のアドレスを用意する。
+            const patient = accounts[1];
+            // claimApproveメソッドを呼び出す。
+            await medicalData.claimApprove(patient, {from: _doctorAddrs[0]});
+            // 権限状態を取得する。
+            const isRequiered = await medicalData.requireMap(_doctorAddrs[0], patient);
+            // チェック
+            assert.equal(isRequiered , true, "status should match");
+        });
+        // 閲覧要求の異常系
+        it ("hould revert when contract is called from invalid role address", async () => {
+            // 患者のアドレスを用意する。
+            const patient = accounts[1];
+            // 医者の権限を持たないアドレスからの呼び出し時にエラーが発生することを確認する。
+            await truffleAssert.reverts(
+                medicalData.claimApprove(patient)
+            );
+        });
+    });
 });

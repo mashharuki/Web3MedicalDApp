@@ -51,14 +51,15 @@ contract MedicalData {
   }
 
   // 各種メソッドが呼び出された時に発するイベントの定義
-  event approved(address patient, address doctor);
-  event changedStatus(address patient, address doctor);
-  event registedDoctor(address doctorAddress, string doctorName);
+  event Approved(address patient, address doctor);
+  event ChangedStatus(address patient, address doctor);
+  event RegistedDoctor(address doctorAddress, string doctorName);
+  event ClaimedApprove(address doctor, address patient);
 
   /**
    * コンストラクター
-   * _doctorAddrs 初期で登録される医者のアドレスの配列
-   * _doctorNames 初期で登録される医者の名前の配列
+   * @param _doctorAddrs 初期で登録される医者のアドレスの配列
+   * @param _doctorNames 初期で登録される医者の名前の配列
    */
   constructor(address[] memory _doctorAddrs, string[] memory _doctorNames) public {
     // ownerのアドレスを登録する。
@@ -76,22 +77,37 @@ contract MedicalData {
 
   /**
    * 医者側に閲覧・編集権限を付与するメソッド
-   * doctor 権限を付与する医者のアドレス
+   * @param doctor 権限を付与する医者のアドレス
    */
   function approve(address doctor) public onlyPatient {
     // 権限を付与する。
     approveMap[msg.sender][doctor] = true;
-    emit approved(msg.sender, doctor);
+    // 権限付与を要求するマップをfalseにする。
+    requireMap[doctor][msg.sender] = false;
+
+    emit Approved(msg.sender, doctor);
   }
 
   /**
    * 閲覧・編集権限を停止するメソッド
-   * doctor 権限を剥奪する医者のアドレス
+   * @param doctor 権限を剥奪する医者のアドレス
    */
   function changeStatus(address doctor) public onlyPatient {
     // 権限を剥奪する。
     approveMap[msg.sender][doctor] = false;
-    emit changedStatus(msg.sender, doctor);
+
+    emit ChangedStatus(msg.sender, doctor);
+  }
+
+  /**
+   * 患者に対して医師が閲覧権限を要求できるメソッド
+   * @param patient 閲覧権限を要求する患者のアドレス
+   */
+  function claimApprove(address patient) public onlyDoctor {
+    // 要求していることを登録する。
+    requireMap[msg.sender][patient] = true;
+
+    emit ClaimedApprove(msg.sender, patient);
   }
 
   /**
@@ -131,8 +147,8 @@ contract MedicalData {
 
   /**
    * 医者のデータを新たに登録するメソッド
-   * doctorAddress 医者のアドレス
-   * doctorName 医者の名前
+   * @param doctorAddress 医者のアドレス
+   * @param doctorName 医者の名前
    */
   function registDoctor(address doctorAddress, string memory doctorName) public {
     // メソッドの呼び出し元がownerであることを確認する。
@@ -143,6 +159,7 @@ contract MedicalData {
     doctorMap[doctorAddress] = doctorName;
     // 医者のアドレスと権限を登録
     doctorRoleMap[doctorAddress] = true;
-    emit registedDoctor(doctorAddress, doctorName);
+
+    emit RegistedDoctor(doctorAddress, doctorName);
   }
 }

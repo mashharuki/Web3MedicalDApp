@@ -48,3 +48,4 @@
 |selectMedicalData|自分の医療データを取得するメソッド|
 |selectPatientMedicalData|患者の医療データを取得するメソッド|
 |registDoctor|医師のデータを新たに登録するメソッド|
+|claimApprove|患者に対して医師が閲覧権限を要求できるメソッド|
