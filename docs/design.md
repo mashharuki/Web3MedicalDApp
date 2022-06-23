@@ -8,18 +8,10 @@
 
 ## 想定フロー図
 
+[![](https://mermaid.ink/img/pako:eNpt0L2qAjEQBeBXGad19wVSKILC1dY2zZAc3XDzozFBRHx3s-vaeaqB-U4g82STLFjxDdeKaLB1cs4SdKSWjXcG_Wq1PKQhKvqD94nGuaMh3Uky6JHquuWn_0gjcVQ0QDIFzHTc9Y32U6e97T7tjvZTY9KttvjN93QCPJ0zpMzkG-44IAdxtn3rOe40lwEBmlUbreR_zTq-mqsXKwU760rKrE7ib-hYaknHRzSsSq74ovkus3q9AXa1YmI)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNpt0L2qAjEQBeBXGad19wVSKILC1dY2zZAc3XDzozFBRHx3s-vaeaqB-U4g82STLFjxDdeKaLB1cs4SdKSWjXcG_Wq1PKQhKvqD94nGuaMh3Uky6JHquuWn_0gjcVQ0QDIFzHTc9Y32U6e97T7tjvZTY9KttvjN93QCPJ0zpMzkG-44IAdxtn3rOe40lwEBmlUbreR_zTq-mqsXKwU760rKrE7ib-hYaknHRzSsSq74ovkus3q9AXa1YmI)
+
  ```
- sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts <br/>prevail!
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
+
  ```
 
 ## 機能一覧表
