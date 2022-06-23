@@ -48,7 +48,7 @@ const Web3Menu = () => {
                         aria-haspopup="true"
                         onClick={handleClick}
                   >
-                        <MenuIcon />
+                        <MenuIcon/>
                   </IconButton>
                   <Menu
                         id="web3.0-menu"
