@@ -6,6 +6,22 @@
 ## ポンチ絵(イメージ図)
 <img src="./assets/アプリイメージ.png">
 
+## 想定フロー図
+
+ ```
+ sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail!
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+ ```
+
 ## 機能一覧表
 
 |機能名|説明|
