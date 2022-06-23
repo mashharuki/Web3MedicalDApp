@@ -10,7 +10,7 @@ const {
 
 module.exports = {
   // ビルドしたABIファイルの出力先
-  contracts_build_directory: path.join(__dirname, "client/src/contracts"),
+  contracts_build_directory: path.join(__dirname, "./../client/src/contracts"),
   // 各種ネットワークの設定
   networks: {
     development: {
