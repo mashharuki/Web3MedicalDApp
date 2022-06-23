@@ -76,7 +76,7 @@ contract MedicalData {
    * @param _doctorAddrs 初期で登録される医者のアドレスの配列
    * @param _doctorNames 初期で登録される医者の名前の配列
    */
-  constructor(address[] memory _doctorAddrs, string[] memory _doctorNames) public {
+  constructor(address[] memory _doctorAddrs, string[] memory _doctorNames) {
     // ownerのアドレスを登録する。
     owner = msg.sender;
 

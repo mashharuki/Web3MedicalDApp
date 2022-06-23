@@ -12,6 +12,52 @@
 
 スマートコントラクトのテスト結果は、<a href="./docs/testResult.md">こちら</a>
 
+### マイグレーションの結果
+
+ローカルでマイグレーションした時の結果
+
+```cmd
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+
+Starting migrations...
+======================
+> Network name:    'development'
+> Network id:      5778
+> Block gas limit: 6721975 (0x6691b7)
+
+
+1_deploy_medicalData.js
+=======================
+
+   Deploying 'MedicalData'
+   -----------------------
+   > transaction hash:    0xa2840106c5efab01e8ffedfd5f68239d59753f40d4be75a9c0ebd769d5209efb
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x2cBd11686a3877c634910d8eEaB539d52c1daB38
+   > block number:        814
+   > block timestamp:     1655965417
+   > account:             0x69273f3CF93e244Cd58449Df5aa8a1eC7b52A019
+   > balance:             83.78739006
+   > gas used:            2590937 (0x2788d9)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.05181874 ETH
+
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.05181874 ETH
+
+
+Summary
+=======
+> Total deployments:   1
+> Final cost:          0.05181874 ETH
+```
+
 ### クリアすべき課題
 
 1. Ethereum,Polygon,Solanaのいずれかのネットワークにデプロイすること。
