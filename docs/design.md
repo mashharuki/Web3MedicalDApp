@@ -8,9 +8,27 @@
 
 ## 想定フロー図
 
-[![](https://mermaid.ink/img/pako:eNpt0L2qAjEQBeBXGad19wVSKILC1dY2zZAc3XDzozFBRHx3s-vaeaqB-U4g82STLFjxDdeKaLB1cs4SdKSWjXcG_Wq1PKQhKvqD94nGuaMh3Uky6JHquuWn_0gjcVQ0QDIFzHTc9Y32U6e97T7tjvZTY9KttvjN93QCPJ0zpMzkG-44IAdxtn3rOe40lwEBmlUbreR_zTq-mqsXKwU760rKrE7ib-hYaknHRzSsSq74ovkus3q9AXa1YmI)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNpt0L2qAjEQBeBXGad19wVSKILC1dY2zZAc3XDzozFBRHx3s-vaeaqB-U4g82STLFjxDdeKaLB1cs4SdKSWjXcG_Wq1PKQhKvqD94nGuaMh3Uky6JHquuWn_0gjcVQ0QDIFzHTc9Y32U6e97T7tjvZTY9KttvjN93QCPJ0zpMzkG-44IAdxtn3rOe40lwEBmlUbreR_zTq-mqsXKwU760rKrE7ib-hYaknHRzSsSq74ovkus3q9AXa1YmI)
+[![](https://mermaid.ink/img/pako:eNqlVM1Kw0AYfJWyV-sL5FAQqjdR8JrLknxqsEnqZqtIEdos_lQriIhSitpi0XpQVAqCtfRhlvz05Cu4mlbStNVWcwrZmW9mmC-bRYqpApKQBesZMBRIaniFYF02YuJZ2DSATCcSU_OgagpOJTHFUoyzPc7OObvndu39bdfZv3DKl16p2Sk-R2hzxDToTDotxZxi08_t8PyD3245B5UAze0T_ybvPtkBrYceECSwolk0aSrUJJxVud3ijHFWcB6u_GoxPEL9wvRLu_Z1IC08eCX7y_0bt9tCPWx6pLpCAFMIffrZQhpTDQw6ED8iPVZwC1Kg0LGlQ8Bf5dunzlGD50vcPuS5IT66MYZyq3Wv9hrhhmIHJQwyRQO1gltufKcPRoxurnP27N_cihXzXuqd8q5bv-uUjiPsoeb7-0thTRcHxNyAP1QXqLpsx6k8iQjCv3v2OG6BeBzZCZd2gs1ZDAL9f4F-shPdJBRHOhAda6q4VrKfg2VEV0EHGUniVcVkTUaysS1wmbQqfq1ZVRP5kbSMUxbEEc5Qc2nLUJBESQZ6oO691EVtfwBulEW-)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNqlVM1Kw0AYfJWyV-sL5FAQqjdR8JrLknxqsEnqZqtIEdos_lQriIhSitpi0XpQVAqCtfRhlvz05Cu4mlbStNVWcwrZmW9mmC-bRYqpApKQBesZMBRIaniFYF02YuJZ2DSATCcSU_OgagpOJTHFUoyzPc7OObvndu39bdfZv3DKl16p2Sk-R2hzxDToTDotxZxi08_t8PyD3245B5UAze0T_ybvPtkBrYceECSwolk0aSrUJJxVud3ijHFWcB6u_GoxPEL9wvRLu_Z1IC08eCX7y_0bt9tCPWx6pLpCAFMIffrZQhpTDQw6ED8iPVZwC1Kg0LGlQ8Bf5dunzlGD50vcPuS5IT66MYZyq3Wv9hrhhmIHJQwyRQO1gltufKcPRoxurnP27N_cihXzXuqd8q5bv-uUjiPsoeb7-0thTRcHxNyAP1QXqLpsx6k8iQjCv3v2OG6BeBzZCZd2gs1ZDAL9f4F-shPdJBRHOhAda6q4VrKfg2VEV0EHGUniVcVkTUaysS1wmbQqfq1ZVRP5kbSMUxbEEc5Qc2nLUJBESQZ6oO691EVtfwBulEW-)
 
  ```
+sequenceDiagram
+    Owner->>+MedicalData: デプロイ＆初回登録
+    Owner->>+FrontApp: 医者の追加登録を要求
+    FrontApp->>+MedicalData: registDoctorメソッド実行要求
+    doctor->>+FrontApp: 患者の医療データを登録
+    FrontApp->>+MedicalData: createMedicalDataメソッド実行要求
+    patient->>+FrontApp: 医療データを要求
+    FrontApp->>+MedicalData: selectMedicalDataメソッド実行要求
+    MedicalData->>+FrontApp: 医療データを返却する。
+    FrontApp->>+patient: 医療データを表示する。
+    patient->>+doctor: 医療データの変更を要求する
+    doctor->>+FrontApp: 閲覧＆編集権限を要求する。
+    FrontApp->>+MedicalData: claimApproveメソッド実行要求
+    patient->>+FrontApp: 権限情報の更新を要求
+    FrontApp->>+MedicalData: approveメソッド実行要求
+    doctor->>+FrontApp: 患者の医療データを要求
+    FrontApp->>+MedicalData: selectPatientMedicalDataメソッド実行要求
+    MedicalData->>+FrontApp: 患者の医療データを返却する。
 
  ```
 
