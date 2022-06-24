@@ -29,7 +29,6 @@ sequenceDiagram
     doctor->>+FrontApp: 患者の医療データを要求
     FrontApp->>+MedicalData: selectPatientMedicalDataメソッド実行要求
     MedicalData->>+FrontApp: 患者の医療データを返却する。
-
  ```
 
 ## 機能一覧表
