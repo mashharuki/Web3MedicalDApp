@@ -1,3 +1,9 @@
+/**
+ * ============================
+ * Truffle用の設定ファイル
+ * ============================
+ */
+
 const path = require("path");
 require('dotenv').config();
 const HDWalletProvider = require('truffle-hdwallet-provider');
