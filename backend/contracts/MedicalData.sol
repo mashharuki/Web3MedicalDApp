@@ -37,6 +37,9 @@ contract MedicalData {
   mapping (address => mapping (address => bool)) public approveMap;
   // 患者のデータに対して医者側が閲覧権限を要求している状態を保持するためのMap
   mapping (address => mapping (address => bool)) public requireMap;
+  // 空データチェック用のダミー医療データ
+  MedicalInsData private dummyData = MedicalInsData('', '');
+  PatientMedicalData private dummyMedicalData = PatientMedicalData('', '', '', dummyData);
 
   // 呼び出し元が医者ではないことを確認する修飾子。
   modifier onlyPatient() {
@@ -139,8 +142,7 @@ contract MedicalData {
     string memory bloodType,
     string memory lastUpDate,
     string memory doctorName
-  ) public onlyDoctor {
-
+  ) public onlyDoctor isApproved(patientAddr) {
     // 医療機関に関するStruct変数を生成
     MedicalInsData memory medicalInsData = MedicalInsData(lastUpDate, doctorName);
     // 患者の医療データに関するStruct変数を生成する。
