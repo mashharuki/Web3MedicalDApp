@@ -8,7 +8,7 @@ const Home = () => {
     return(
         <header className="App-header">
             <p>
-            Edit <code>src/App.js</code> and save to reload.
+                Connect Wallet成功!
             </p>
             <a
             className="App-link"

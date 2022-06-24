@@ -98,6 +98,7 @@ function App() {
     setIsLoading(true);
     checkIfWalletIsConnected();
   }, []);
+
   // 副作用フック2 (アカウント切り替え時)
   useEffect(() => {
     checkIfWalletIsConnected();
@@ -130,10 +131,16 @@ function App() {
             </Toolbar>
           </AppBar>
           { isLoading ?? <LoadingIndicator/>}
-          <Routes>
-            <Route path="/" exact element={ <Home/> } />
-            <Route path="/home" exact element={ <Home/> } />
-          </Routes>
+          { currentAccount === null ? (
+            <header className="App-header">
+              <p>Please Connect Your Wallet!!</p>
+            </header>
+          ) : (
+            <Routes>
+              <Route path="/" exact element={ <Home/> } />
+              <Route path="/home" exact element={ <Home/> } />
+            </Routes>
+          )}
         </div>
       </Router>
     </>
