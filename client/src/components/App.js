@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Web3Menu from "./common/Web3Menu";
 import LoadingIndicator from "./common/LoadingIndicator";
 import Home from './Home';
@@ -109,11 +109,13 @@ function App() {
       <GlobalStyles styles={{ body: { margin: 0, padding: 0 } }} />
       <Router>
         <div sx={{ flexGrow: 1 }}>
+        { /* 画面上部に表示するAppBarコンポーネント */ }
           <AppBar position="static" color="transparent">
             <Toolbar>
               <Typography variant="h6" color="white" sx={{ flexGrow: 1 }}>
                 <strong>Web3 Medical DApp</strong>
               </Typography>
+              { /* ウォレットに接続していなければログインアイコンを表示する。 */ }
               <Typography variant="h6" color="inherit">
                 {currentAccount === null ? (
                   <IconButton 
@@ -125,17 +127,21 @@ function App() {
                     <StartIcon />
                   </IconButton>
                 ) :
+                  /* 各画面に遷移するためのWeb3Menuコンポーネントを表示する。 */
                   <Web3Menu/>
                 }
               </Typography>
             </Toolbar>
           </AppBar>
-          { isLoading ?? <LoadingIndicator/>}
+          { /* ローディング中に表示するプログレスバー */ }
+          { isLoading ? <LoadingIndicator/> : <></>}
+          { /* ウォレットに接続し、アカウント情報が取得できていなければウォレットへの接続を促す。 */ }
           { currentAccount === null ? (
             <header className="App-header">
               <p>Please Connect Your Wallet!!</p>
             </header>
           ) : (
+            /* ルーティングに従い、各ページのコンポーネントを描画する。 */ 
             <Routes>
               <Route path="/" exact element={ <Home/> } />
               <Route path="/home" exact element={ <Home/> } />
