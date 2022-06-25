@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Web3Menu from "./common/Web3Menu";
 import LoadingIndicator from "./common/LoadingIndicator";
 import Home from './Home';
+import Regist from './Regist';
+import DoctorInfo from './DoctorInfo';
 // mui関連をインポートする。
 import AppBar  from '@mui/material/AppBar';
 import Toolbar  from '@mui/material/Toolbar';
@@ -11,7 +13,6 @@ import Typography  from '@mui/material/Typography';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import IconButton from '@mui/material/IconButton';
 import StartIcon from '@mui/icons-material/Start';
-
 
 /**
  * Appコンポーネント
@@ -145,6 +146,8 @@ function App() {
             <Routes>
               <Route path="/" exact element={ <Home/> } />
               <Route path="/home" exact element={ <Home/> } />
+              <Route path="/regist" exact element={ <Regist/> } />
+              <Route path="/doctorInfo" exact element={ <DoctorInfo/> } />
             </Routes>
           )}
         </div>
