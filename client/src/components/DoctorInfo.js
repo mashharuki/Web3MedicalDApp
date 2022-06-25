@@ -20,13 +20,16 @@ import Paper from "@mui/material/Paper";
  * DoctorInfoコンポーネント
  */
 function DoctorInfo() {
-    // ステート変数
-    // 必要なもの
-    // コントラクト用
-    // アカウント用
-    // Web3オブジェクト用
-    // 医者の権限を管理するフラグ
-    // 編集モードへの切り替えを管理するフラグ
+    // コントラクト用のステート変数
+    const [contract, setContract] = useState(null); 
+    // アカウント用のステート変数
+    const [account, setAccount] = useState(null);
+    // Web3オブジェクト用のステート変数
+    const [ethWeb3, setEthWeb3] = useState(null);
+    // 医者の権限を管理するフラグのステート変数
+    const [isDoctor, setIsDoctor] = useState(false);
+    // 編集モードへの切り替えを管理するフラグのステート変数
+    const [isEditer, setEditer] = useState(false);
     // 患者の医療データ用の変数
 
     /**
@@ -42,7 +45,7 @@ function DoctorInfo() {
     // 副作用フック
     useEffect(() => {
         init();
-    });
+    }, []);
 
     return(
         <p>テスト</p>
