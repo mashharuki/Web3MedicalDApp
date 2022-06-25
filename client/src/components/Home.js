@@ -45,6 +45,11 @@ const Home = () => {
     const viewAction = async () => {};
 
     /**
+     * 「Require」ボタンを押した時の処理
+     */
+    const requireAction = async () => {};
+
+    /**
      * 「Update」ボタンを押した時の処理
      */
     const updateAction = async () => {};

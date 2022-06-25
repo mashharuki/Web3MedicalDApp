@@ -19,11 +19,10 @@ const ITEM_HEIGHT = 48;
  * Web3Menuコンポーネント
  */
 const Web3Menu = () => {
+      // ステート変数
       const [anchorEl, setAnchorEl] = useState(null);
       // メニュー用の変数
       const open = Boolean(anchorEl);
-      // スタイルシートを適用するためのコンポーネント読み込み
-      //const classes = UseStyles();
 
       /**
        * メニューアイコンをクリックした時の処理
@@ -69,6 +68,7 @@ const Web3Menu = () => {
                   >
                         {options.map((option) => (
                               <MenuItem key={option} selected={option === 'Home'} onClick={handleClose}>
+                                    {/* 各画面へのリンク */}
                                     <NavLink className="navLink" to={{ pathname: `/${option}` }}>{option}</NavLink>
                               </MenuItem>
                         ))}
