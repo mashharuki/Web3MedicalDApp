@@ -29,14 +29,18 @@ function Regist() {
     const [contract, setContract] = useState(null); 
     // アカウント用のステート変数
     const [account, setAccount] = useState(null);
-    // Web3オブジェクト用のステート変数
-    const [ethWeb3, setEthWeb3] = useState(null);
     // ownerであるかのフラグ用のステート変数
     const [isOwner, setIsOwner] = useState(null);
     // 医者のアドレス用
     const [doctorAddr, setDoctorAddr] = useState(null);
     // 医者の名前用
     const [doctorName, setDoctorName] = useState(null);
+    // トランザクションが正常に処理された場合のフラグ
+    const [successFlg, setSuccessFlg] = useState(false);
+    // トランザクションが異常終了した場合のフラグ
+    const [failFlg, setFailFlg] = useState(false);
+    // ポップアップの表示を管理するフラグ
+    const [showToast, setShowToast] = useState(false);
 
     /**
      * コンポーネントが描画されたタイミングで実行する初期化関数
@@ -62,7 +66,6 @@ function Regist() {
             if(ownerAddr == web3Accounts[0]) setIsOwner(true);
             // コントラクトとWeb3オブジェクト、アカウントの情報をステート変数に格納する。
             setContract(instance);
-            setEthWeb3(web3); 
             setAccount(web3Accounts[0]);
         } catch (error) {
             alert(`Failed to load web3, accounts, or contract. Check console for details.`,);
@@ -74,7 +77,32 @@ function Regist() {
      * 「Regist」ボタンを押した時の処理
      */
     const registAction = async() => {
+        try {
+            // registDoctorメソッドを呼び出して医師を新しく登録する。
+            await contract.methods.registDoctor(doctorAddr, doctorName).send({
+                from: account,
+                gas: 500000
+            });
+            // ステート変数を更新する。
+            setSuccessFlg(true);
+            setShowToast(true);
+            // 5秒後に非表示にする。
+            setTimeout(() => {
+                setSuccessFlg(false);
+                setShowToast(false);
+            }, 5000);
 
+        } catch (error) {
+            console.error("regist err:", error);
+            // ステート変数を更新する。
+            setFailFlg(true);
+            setShowToast(true);
+            // 5秒後に非表示にする。
+            setTimeout(() => {
+                setFailFlg(false);
+                setShowToast(false);
+            }, 5000);
+        }
     }
 
     // 副作用フック
@@ -102,7 +130,7 @@ function Regist() {
                                     m: 1,
                                 }}
                             >
-                                <p>Please etner a new doctor's address & name</p>
+                                <p><strong>Please etner a new doctor's address & name</strong></p>
                             </Grid>
                             <Paper
                                 elevation={0}
@@ -169,6 +197,18 @@ function Regist() {
                 <div className="App-header">
                     {/* Owner以外には表示しない */}
                     <p>You don't have owner role....</p>
+                </div>
+            )}
+            {successFlg && (
+                /* 成功時のポップアップ */
+                <div id="toast" className={showToast ? "zero-show" : ""}>
+                    <div id="secdesc">Regist Trasaction Successful!!</div>
+                </div>
+            )}
+            {failFlg && (
+                /* 失敗時のポップアップ */
+                <div id="toast" className={showToast ? "zero-show" : ""}>
+                    <div id="desc">fail.. Please check address & name</div>
                 </div>
             )}
         </Grid>
