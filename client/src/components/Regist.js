@@ -3,12 +3,12 @@ import Web3 from 'web3';
 import React, { useState, useEffect } from "react";
 import detectEthereumProvider from '@metamask/detect-provider';
 import MedicalDataContract from "./../contracts/MedicalData.json";
+import ActionButton from './common/ActionButton';
 // muiコンポーネント
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 
 /** 
@@ -185,11 +185,7 @@ function Regist() {
                                 marginTop: 4
                             }}
                         >
-                            <Grid sx={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 3}}>
-                                <Button color='error' variant="outlined" sx={{borderRadius: 4}} onClick={registAction}>
-                                    Regist
-                                </Button>
-                            </Grid>
+                            <ActionButton buttonName="Regist" color="error" clickAction={registAction} />
                         </Grid> 
                     </StyledPaper>
                 </Box>
