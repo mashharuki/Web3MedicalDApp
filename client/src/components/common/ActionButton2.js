@@ -10,9 +10,6 @@ const ActionButton2 = (props) => {
     // propsからボタンの色と実行する関数の要素を取り出す。
     const { buttonName, color, clickAction, element } = props;
 
-    // onClick用の変数
-    var func = `(function(){let val = ${element};${clickAction}(val);})();`;
-
     // 描画する内容
     return (
         <Grid sx={{marginLeft: 'auto', marginRight: 'auto'}}>

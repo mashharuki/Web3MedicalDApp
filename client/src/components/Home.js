@@ -232,7 +232,9 @@ const Home = () => {
             // 接続中のアドレスが医者の場合
             if(isDoctor) {
                 // 患者の医療データを取得する。
-                result = await contract.methods.selectPatientMedicalData(patientAddr).call();
+                result = await contract.methods.selectPatientMedicalData(patientAddr).call({
+                    from: account
+                });
             }
             // 最終更新日時を取得する。
             var lastUpdate = result.lastUpdate;
