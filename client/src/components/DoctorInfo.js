@@ -16,6 +16,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { rejects } from 'assert';
 
 /**
  * 表の最上位ヘッダー部の配列
@@ -52,6 +53,8 @@ function DoctorInfo() {
     const [doctorNames, setDoctorNames] = useState([]);
     // 権限状態を格納するためのステート変数
     const [isApproveds, setIsApproveds] = useState([]);
+    // 権限要求状態を格納するためのステート変数
+    const [isRequires, setIsRequires] = useState([]);
     // トランザクションが正常に処理された場合のフラグ
     const [successFlg, setSuccessFlg] = useState(false);
     // トランザクションが異常終了した場合のフラグ
@@ -89,7 +92,7 @@ function DoctorInfo() {
             setContract(instance);
             setAccount(web3Accounts[0]);
             // 医師に関するデータを取得する。
-            getDoctorsInfo(instance);
+            await getDoctorsInfo(instance, web3Accounts[0]);
         } catch (error) {
             alert(`Failed to load web3, accounts, or contract. Check console for details.`,);
             console.error(error);
@@ -99,24 +102,30 @@ function DoctorInfo() {
     /**
      * 医師に関する情報を取得する関数
      * @param instance コントラクトのインスタンス
+     * @param accountAddr 現在接続中のアカウント
      */
-    const getDoctorsInfo = async (instance) => {
+    const getDoctorsInfo = async (instance, accountAddr) => {
         // 登録済みの医師のアドレスを全て取得する。
         var result = await instance.methods.getDoctors().call();
         // ステート変数に格納する。
         setDoctors(result);
 
         //  取得した医師それぞの名前と承認状態を取得してステート変数に格納していく。
-        for(let i = 0;i < result.length; i++) {
+        for (let i = 0;i < result.length; i++) {
             // 医師の名前を取得する。
             var name = await instance.methods.doctorMap(result[i]).call();
+            console.log("name", name);
             setDoctorNames([...doctorNames, name]);
-
             // 承認状態を取得する。(接続中のアドレスが患者の場合のみ)
+            /*
             if(!isDoctor) {
-                var isApproved = await instance.methods.approveMap(account, result[i]).call();
+                var isApproved = await instance.methods.approveMap(accountAddr, result[i]).call();
                 setIsApproveds([...isApproveds, isApproved]);
+                // 医者から承認を要求されているか確認する。
+                var isRequired = await instance.methods.requireMap(result[i], accountAddr).call();
+                setIsRequires([...isRequires, isRequired]);
             }
+            */
         }
     };
 
@@ -186,6 +195,25 @@ function DoctorInfo() {
             }, 5000);
         }
     };
+
+    /**
+     * Statusコンポーネント
+     * @param i インデックス
+     * @param value アドレス
+     */
+    const renderStatus = (i, value) => {
+        // 医者から承認が要求されている場合には、メッセージを表示させる。
+        if(isRequires[i]) {
+            return (
+                <>
+                    <ActionButton2 buttonName="Approve" color="success" clickAction={(e) => {approveAction(value); init();}} />
+                    You are required.
+                </>
+            );
+        } else {
+            return <ActionButton2 buttonName="Approve" color="success" clickAction={(e) => {approveAction(value); init();}} />;
+        }
+    } 
 
     /**
      * ページングするための関数
@@ -259,33 +287,41 @@ function DoctorInfo() {
                                                             {i + 1}
                                                         </TableCell>
                                                     );
-                                                } else if(column.label === "Address") {
+                                                }
+                                                if(column.label === "Address") {
                                                     return (
                                                         <TableCell key={column.id} align={column.align}>
                                                             {value}
                                                         </TableCell>
                                                     );
-                                                } else if(column.label === "Name") {
+                                                }
+                                                /* NameとStatusについては個別に条件が異なってくるので別関数で条件を整理して描画する。 */
+                                                if(column.label === "Name") {
                                                     return (
                                                         <TableCell key={column.id} align={column.align}>
                                                             {doctorNames[i]}
                                                         </TableCell>
                                                     )
-                                                } else if(column.label === "Status") {
-                                                    /* 医者の場合は表示しない */
-                                                    if(!isDoctor) {
+                                                } 
+                                                /* 医者の場合は表示しない */
+                                                if(!isDoctor) {
+                                                    if(column.label === "Status") {
                                                         return (
                                                             <TableCell key={column.id} align={column.align}>
                                                                 {/* 承認状態によって表示するボタンを変更する。 */}
                                                                 {isApproveds[i] ? 
-                                                                    <ActionButton2 buttonName="Deprive" color="secondary" clickAction={(e) => {depriveAction(value); init();}}/>
+                                                                    renderStatus()
                                                                 :
-                                                                    <ActionButton2 buttonName="Approve" color="success" clickAction={(e) => approveAction(value)} />
+                                                                    <ActionButton2 buttonName="Deprive" color="secondary" clickAction={(e) => {depriveAction(value); init();}} />
                                                                 }
                                                             </TableCell>
                                                         )
                                                     }
-                                                }               
+                                                } else {
+                                                    if(column.label === "Status") {
+                                                        return <></>;
+                                                    }
+                                                }          
                                             })}
                                         </TableRow>
                                     );

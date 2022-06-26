@@ -23,6 +23,18 @@ contract MedicalData {
     MedicalInsData medicalInsData;
   }
 
+  // 医者と患者に関するデータの構造体の定義
+  struct DoctorInfo {
+    // 医者のアドレス
+    address doctorAddr;
+    // 医者の名前
+    string doctorName;
+    // 要求状況
+    bool isRequire;
+    // 承認状況
+    bool isApprove;
+  }
+
   // コントラクトの管理者のアドレスを保有する変数
   address public owner;
   // 医療機関に所属する医者のアドレスを格納する配列
@@ -37,9 +49,6 @@ contract MedicalData {
   mapping (address => mapping (address => bool)) public approveMap;
   // 患者のデータに対して医者側が閲覧権限を要求している状態を保持するためのMap
   mapping (address => mapping (address => bool)) public requireMap;
-  // 空データチェック用のダミー医療データ
-  MedicalInsData private dummyData = MedicalInsData('', '');
-  PatientMedicalData private dummyMedicalData = PatientMedicalData('', '', '', dummyData);
 
   // 呼び出し元が医者ではないことを確認する修飾子。
   modifier onlyPatient() {
@@ -238,5 +247,29 @@ contract MedicalData {
    */
   function getDoctors() public view returns (address[] memory) {
     return doctors;
+  }
+
+  /**
+   * 患者に紐づく全て医師の情報を取得するメソッド
+   */
+  function getDoctorInfo() public view returns (DoctorInfo[] memory result) {
+    // 配列の大きさを定義する。
+    uint256 size = doctors.length;
+    // 改めて配列を定義する。
+    result = new DoctorInfo[](size);
+    // 全ての医者に関する情報をDoctorInfo型の変数にして詰めていく。
+    for(uint i = 0; i < size; i++) {
+      // 医者の名前を取得する。
+      string memory doctorName = doctorMap[doctors[i]];
+      // 要求状況を取得する。
+      bool isRequired = requireMap[doctors[i]][msg.sender];
+      // 承認権限付与状況を確認する。
+      bool approved = approveMap[msg.sender][doctors[i]];
+      // DoctorInfo型の変数を生成して配列に詰める。
+      DoctorInfo memory res = DoctorInfo(doctors[i], doctorName, isRequired, approved);
+      result[i] = res;
+    }
+
+    return result;
   }
 }

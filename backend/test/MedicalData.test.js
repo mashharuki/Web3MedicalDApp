@@ -84,6 +84,25 @@ contract ("MedicalData Contract tests!!", accounts => {
     });
 
     /**
+     * 医者の情報を取得する関数のテストシナリオ
+     */
+    describe ("get doctor info tests", () => {
+        // 正常系
+        it ("get doctor info", async () => {
+            // getDoctorInfoメソッドを呼び出して情報を取得する。
+            const result = await medicalData.getDoctorInfo();
+            // 取得したデータが想定したものになっているかどうかチェックする。
+            assert.equal(_doctorAddrs[0], result[0].doctorAddr, "doctor address should match");
+            assert.equal(_doctorAddrs[1], result[1].doctorAddr, "doctor address should match");
+            assert.equal(_doctorNames[0], result[0].doctorName, "doctor name should match");
+            assert.equal(_doctorNames[1], result[1].doctorName, "doctor name should match");
+            assert.equal(false, result[0].isRequire, "required status should match");
+            assert.equal(false, result[1].isRequire, "required status should match");
+            assert.equal(false, result[0].isApprove, "approved status should match");
+            assert.equal(false, result[1].isApprove, "approved status should match");
+        });
+    });
+    /**
      * 医者を新規で追加する際のテストシナリオ
      */
     describe ("add a new doctor", () => {

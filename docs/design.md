@@ -40,6 +40,7 @@ sequenceDiagram
 |医療データ編集機能|医療従事者はその患者の医療データを編集する機能|
 |閲覧権限変更機能|医療データへのアクセス権限を一度承認した医療提供者から再度制限できる機能|
 |医師情報登録機能|医者の情報を新たに登録できる機能|
+|医師情報確認機能|医者又は患者が医師の情報を確認できる機能|
 
 ## 変数一覧
 
@@ -51,6 +52,7 @@ sequenceDiagram
 |lastUpdate|String|最終更新日時(yyyy/mm/dd HH:mm:ss形式)|
 |MedicalInsDatas|Struct|最終更新日時、最終更新医療機関|
 |medicalData|Struct|患者の医療データ用のStruct型の変数|
+|doctorInfo|Struct|患者が持つ医者についてのデータを保管するStruct型の変数|
 |medicalMap|(address ⇨ medicalData)|患者のアドレスと医療データを紐付けるMap|
 |doctorMap|(address → String)|医者のアドレスと名前を紐づけるMap|
 |doctorRoleMap|(address → bool)|アドレスが医者であることを紐づけるMap|
@@ -72,3 +74,4 @@ sequenceDiagram
 |registDoctor|医師のデータを新たに登録するメソッド|
 |claimApprove|患者に対して医師が閲覧権限を要求できるメソッド|
 |getDoctors|現在登録中の全ての医師のアドレスを取得するメソッド|
+|getDoctorInfo|患者に紐づく全て医師の情報を取得するメソッド|
