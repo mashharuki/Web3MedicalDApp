@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
+import detectEthereumProvider from '@metamask/detect-provider';
 import MedicalDataContract from "./../contracts/MedicalData.json";
 import Web3 from "web3";
 // muiコンポーネント
@@ -24,13 +25,10 @@ function DoctorInfo() {
     const [contract, setContract] = useState(null); 
     // アカウント用のステート変数
     const [account, setAccount] = useState(null);
-    // Web3オブジェクト用のステート変数
-    const [ethWeb3, setEthWeb3] = useState(null);
     // 医者の権限を管理するフラグのステート変数
     const [isDoctor, setIsDoctor] = useState(false);
     // 編集モードへの切り替えを管理するフラグのステート変数
     const [isEditer, setEditer] = useState(false);
-    // 患者の医療データ用の変数
 
     /**
      * コンポーネントが描画されたタイミングで実行する初期化関数
@@ -41,6 +39,11 @@ function DoctorInfo() {
      * 「Approve」ボタンを押した時の処理
      */
     const approveAction = async () => {};
+
+    /**
+     * 「Deprive」ボタンを押した時の処理
+     */
+    const depriveAction = async () => {};
 
     // 副作用フック
     useEffect(() => {
