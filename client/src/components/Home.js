@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 import detectEthereumProvider from '@metamask/detect-provider';
 import MedicalDataContract from "./../contracts/MedicalData.json";
 import Web3 from "web3";
+import ActionButton from './common/ActionButton';
 // mui関連のコンポーネントのインポート
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import { TextField } from '@mui/material';
-import Button from '@mui/material/Button';
 
 
 /** 
@@ -113,19 +113,25 @@ const Home = () => {
      * 「View」ボタンを押した時の処理
      */
     const viewAction = async () => {
-        // 閲覧権限を患者から承認されているか確認する。
-        var approved = await contract.methods.approveMap(patientAddr, account).call();
-        // 承認されていれば医療データを取得し、そうでなければ未承認フラグをfalseにする。
-        if (approved) {
-            // getMedicalDataメソッドを呼び出す。
+        try {
+            // 閲覧権限を患者から承認されているか確認する。
+            var approved = await contract.methods.approveMap(patientAddr, account).call();
+            // 承認されていれば医療データを取得し、そうでなければ未承認フラグをfalseにする。
+            if (approved) {
+                // getMedicalDataメソッドを呼び出す。
+                getMedicalData();
+            } else {
+                setIsApproved(false);
+            }
+            // 編集モードをONにする。
+            setEditer(true);
+            // getMedicalDataメソッドの呼び出し
             getMedicalData();
-        } else {
-            setIsApproved(false);
+        } catch (error) {
+            console.error("fail:", error);
+            // popUpメソッドの呼び出し
+            popUp(false, "failed....");
         }
-        // 編集モードをONにする。
-        setEditer(true);
-        // getMedicalDataメソッドの呼び出し
-        getMedicalData();
     };
 
     /**
@@ -302,9 +308,94 @@ const Home = () => {
      *  医者の場合に表示するコンポーネント
      */
     const doctorRender = () => { 
-        return (
-            <>医者</>
-        );
+        // 編集モードのフラグの状態によって表示を切り替える。
+        if (isEditer) {
+            // 患者からの承認を得ているかチェックする。
+            if(isApproved) {
+                return (
+                    <>
+                        承認ずみ
+                    </>
+                );
+            } else {
+                // 承認を得ていない場合は、メッセージと承認を要求するボタンを描画する。
+                return (
+                    <>
+                        <Grid 
+                            container
+                            justifyContent="center"
+                            sx={{ 
+                                alignItems: 'center', 
+                                m: 1,
+                            }}
+                        >
+                            <p><strong>You don't have role to view...</strong></p>
+                        </Grid>
+                        <Grid 
+                            container 
+                            justifyContent="center"
+                            sx={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                m: 1,
+                                marginTop: 4
+                            }}
+                        >
+                            <ActionButton buttonName="Require" color="success" clickAction={requireAction} />
+                        </Grid> 
+                    </>
+                );
+            }
+        } else { // 初期表示
+            // 患者の医療データを検索するためのフォームを描画する。
+            return (
+                <>
+                    <Grid 
+                        container
+                        justifyContent="center"
+                        sx={{ 
+                            alignItems: 'center', 
+                            m: 1,
+                        }}
+                    >
+                        <p><strong>Please enter patinet's address!</strong></p>
+                    </Grid>
+                    <Paper
+                        elevation={0}
+                        sx={{ 
+                            p: '2px 4px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            backgroundColor: '#fde9e8',
+                            width: 400, 
+                            marginTop: 4
+                        }}
+                    >  
+                        <label>address：　</label>
+                        <TextField 
+                            id="patientAddress" 
+                            placeholder="patient address" 
+                            margin="normal" 
+                            onChange={ (e) => setPatientAddr(e.target.value) } 
+                            variant="outlined" 
+                            inputProps={{ 'aria-label': 'patientAddress' }} 
+                        />
+                    </Paper>
+                    <Grid 
+                        container 
+                        justifyContent="center"
+                        sx={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            m: 1,
+                            marginTop: 4
+                        }}
+                    >
+                        <ActionButton buttonName="View" color="primary" clickAction={viewAction} />
+                    </Grid> 
+                </>
+            );
+        }
     }
 
     /**
@@ -419,6 +510,10 @@ const Home = () => {
     useEffect(() => {
         init();
     }, []);
+    // 副作用フック2
+    useEffect(() => {
+        init();
+    }, [account]);
 
     return(
         <Grid
