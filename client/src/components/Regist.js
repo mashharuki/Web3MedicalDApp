@@ -91,7 +91,6 @@ function Regist() {
                 setSuccessFlg(false);
                 setShowToast(false);
             }, 5000);
-
         } catch (error) {
             console.error("regist err:", error);
             // ステート変数を更新する。

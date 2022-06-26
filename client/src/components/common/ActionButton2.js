@@ -4,15 +4,18 @@ import Grid from "@mui/material/Grid";
 import Button from '@mui/material/Button';
 
 /**
- * 共通で利用するActionButtonコンポーネント(下にマージンを作りたい場合)
+ * 共通で利用するActionButtonコンポーネント(引数がある場合)
  */
-const ActionButton = (props) => {
+const ActionButton2 = (props) => {
     // propsからボタンの色と実行する関数の要素を取り出す。
-    const { buttonName, color, clickAction } = props;
+    const { buttonName, color, clickAction, element } = props;
+
+    // onClick用の変数
+    var func = `(function(){let val = ${element};${clickAction}(val);})();`;
 
     // 描画する内容
     return (
-        <Grid sx={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 3}}>
+        <Grid sx={{marginLeft: 'auto', marginRight: 'auto'}}>
             <Button color={color} variant="outlined" sx={{borderRadius: 4}} onClick={clickAction}>
                 {buttonName}
             </Button>
@@ -20,4 +23,4 @@ const ActionButton = (props) => {
     );
 };
 
-export default ActionButton;
+export default ActionButton2;

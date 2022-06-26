@@ -87,8 +87,6 @@ const Home = () => {
                 var result = await instance.methods.selectMedicalData().call();
                 // 最終更新日時を取得する。
                 var lastUpdate = result.lastUpdate;
-                console.log("result:", result)
-                console.log("lastUpDate:", lastUpdate)
                 // 最終更新日時が空であればデータ未登録フラグをONにする。
                 if(lastUpdate === '') {
                     setHasData(true);

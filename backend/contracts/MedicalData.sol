@@ -232,4 +232,11 @@ contract MedicalData {
 
     emit RegistedDoctor(doctorAddress, doctorName);
   }
+
+  /**
+   * 現在登録中の医師のアドレス一覧を取得するためのメソッド
+   */
+  function getDoctors() public view returns (address[] memory) {
+    return doctors;
+  }
 }
