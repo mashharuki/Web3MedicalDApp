@@ -16,7 +16,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { rejects } from 'assert';
 
 /**
  * 表の最上位ヘッダー部の配列
@@ -49,6 +48,8 @@ function DoctorInfo() {
     const [isDoctor, setIsDoctor] = useState(false);
     // 医師のアドレスを格納するステート変数
     const [doctors, setDoctors] = useState([]);
+    // 医師の名前を格納するステート変数
+    const [doctorName, setDoctorName] = useState(null);
     // 医師の情報を格納するためのステート変数
     const [doctorInfo, setDoctorInfo] = useState([]);
     // トランザクションが正常に処理された場合のフラグ
@@ -85,9 +86,13 @@ function DoctorInfo() {
             // フラグの情報を更新する。
             if(hasDoctorRole) {
                 setIsDoctor(true);
+                // 医師の名前を取得してステート変数を更新する。
+                const doctorNm = await instance.methods.doctorMap(web3Accounts[0]).call();
+                setDoctorName(doctorNm);
             } else {
                 // 医師に関する情報を取得する。
                 const result = await instance.methods.getDoctorInfo().call();
+                // ステート変数を更新する。
                 setDoctorInfo(result);
             }
             
@@ -219,7 +224,7 @@ function DoctorInfo() {
             <Box sx={{ flexGrow: 1, overflow: "hidden", px: 3, mt: 10}}>
                 <StyledPaper sx={{my: 1, mx: "auto", p: 0, borderRadius: 4, marginTop: 4}}>
                     <Grid container justifyContent="center">
-                         <Grid 
+                        <Grid 
                             container
                             justifyContent="center"
                             sx={{ 
@@ -227,88 +232,140 @@ function DoctorInfo() {
                                 m: 1,
                             }}
                         >
-                            <p><strong>Doctor's Info</strong></p>
+                            <p><strong>{isDoctor ? "Your Info" : "Doctor's Info" }</strong></p>
                         </Grid>
                     </Grid>
-                    {/* 以下、医者の情報を表示する一覧表部分 */}
-                    <TableContainer sx={{ maxHeight: 600 }}>
-                    <Table stickyHeader aria-label="sticky table">
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                                        {column.label}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            { doctorInfo
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, i) => {
-                                    return (
-                                        <TableRow hover role="checkbox" tabIndex={-1}>
-                                            {columns.map((column) => {
-                                                // セルに格納する値用の変数
-                                                let value = row; 
-                                                // カラムの値により、セットする値を変更する。
-                                                if(column.label === "No.") {
-                                                    return (
-                                                        <TableCell key={column.id} align={column.align}>
-                                                            {i + 1}
-                                                        </TableCell>
-                                                    );
-                                                }
-                                                if(column.label === "Address") {
-                                                    return (
-                                                        <TableCell key={column.id} align={column.align}>
-                                                            {value.doctorAddr}
-                                                        </TableCell>
-                                                    );
-                                                }
-                                                /* NameとStatusについては個別に条件が異なってくるので別関数で条件を整理して描画する。 */
-                                                if(column.label === "Name") {
-                                                    return (
-                                                        <TableCell key={column.id} align={column.align}>
-                                                            {value.doctorName}
-                                                        </TableCell>
-                                                    )
-                                                } 
-                                                /* 医者の場合は表示しない */
-                                                if(!isDoctor) {
-                                                    if(column.label === "Status") {
-                                                        return (
-                                                            <TableCell key={column.id} align={column.align}>
-                                                                {/* 承認状態によって表示するボタンを変更する。 */}
-                                                                {value.isApprove ? 
-                                                                    <ActionButton2 buttonName="Deprive" color="secondary" clickAction={(e) => {depriveAction(value); init();}} />
-                                                                :
-                                                                    renderStatus(value.isRequire, value.doctorAddr)
-                                                                }
-                                                            </TableCell>
-                                                        )
-                                                    }
-                                                } else {
-                                                    if(column.label === "Status") {
-                                                        return <></>;
-                                                    }
-                                                }          
-                                            })}
+                    {/* 医者の場合と患者の場合で表示を切り替える。 */}
+                    {isDoctor ? (
+                        <Grid 
+                            container
+                            justifyContent="center" 
+                            direction="row"
+                        >
+                            <Grid 
+                                container
+                                justifyContent="center" 
+                                direction="row"
+                            >
+                                <Paper
+                                    elevation={0}
+                                    sx={{ 
+                                        p: '2px 4px', 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        backgroundColor: '#fde9e8',
+                                        width: 600, 
+                                        marginTop: 1,
+                                        marginBottom: 1
+                                    }}
+                                >  
+                                    address：　{account}
+                                </Paper>
+                            </Grid>
+                            <Grid 
+                                container
+                                justifyContent="center" 
+                                direction="row"
+                            >
+                                <Paper
+                                    elevation={0}
+                                    sx={{ 
+                                        p: '2px 4px', 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        backgroundColor: '#fde9e8',
+                                        width:550, 
+                                        marginTop: 1,
+                                        marginBottom: 4
+                                    }}
+                                >  
+                                    name：　{doctorName}
+                                </Paper>
+                            </Grid>
+                        </Grid>
+                    ) : (
+                        <>
+                            {/* 以下、医者の情報を表示する一覧表部分 */}
+                            <TableContainer sx={{ maxHeight: 600 }}>
+                                <Table stickyHeader aria-label="sticky table">
+                                    <TableHead>
+                                        <TableRow>
+                                            {columns.map((column) => (
+                                                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
+                                                    {column.label}
+                                                </TableCell>
+                                            ))}
                                         </TableRow>
-                                    );
-                            })}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={doctors.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
+                                    </TableHead>
+                                    <TableBody>
+                                        { doctorInfo
+                                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                            .map((row, i) => {
+                                                return (
+                                                    <TableRow hover role="checkbox" tabIndex={-1}>
+                                                        {columns.map((column) => {
+                                                            // セルに格納する値用の変数
+                                                            let value = row; 
+                                                            // カラムの値により、セットする値を変更する。
+                                                            if(column.label === "No.") {
+                                                                return (
+                                                                    <TableCell key={column.id} align={column.align}>
+                                                                        {i + 1}
+                                                                    </TableCell>
+                                                                );
+                                                            }
+                                                            if(column.label === "Address") {
+                                                                return (
+                                                                    <TableCell key={column.id} align={column.align}>
+                                                                        {value.doctorAddr}
+                                                                    </TableCell>
+                                                                );
+                                                            }
+                                                            /* NameとStatusについては個別に条件が異なってくるので別関数で条件を整理して描画する。 */
+                                                            if(column.label === "Name") {
+                                                                return (
+                                                                    <TableCell key={column.id} align={column.align}>
+                                                                        {value.doctorName}
+                                                                    </TableCell>
+                                                                )
+                                                            } 
+                                                            /* 医者の場合は表示しない */
+                                                            if(!isDoctor) {
+                                                                if(column.label === "Status") {
+                                                                    return (
+                                                                        <TableCell key={column.id} align={column.align}>
+                                                                            {/* 承認状態によって表示するボタンを変更する。 */}
+                                                                            {value.isApprove ? 
+                                                                                <ActionButton2 buttonName="Deprive" color="secondary" clickAction={(e) => {depriveAction(value); init();}} />
+                                                                            :
+                                                                                renderStatus(value.isRequire, value.doctorAddr)
+                                                                            }
+                                                                        </TableCell>
+                                                                    )
+                                                                }
+                                                            } else {
+                                                                if(column.label === "Status") {
+                                                                    return <></>;
+                                                                }
+                                                            }          
+                                                        })}
+                                                    </TableRow>
+                                                );
+                                        })}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            <TablePagination
+                                rowsPerPageOptions={[10, 25, 100]}
+                                component="div"
+                                count={doctors.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                            />
+                        </>
+                    )} 
                 </StyledPaper>
             </Box>
             {successFlg && (
