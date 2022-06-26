@@ -49,12 +49,8 @@ function DoctorInfo() {
     const [isDoctor, setIsDoctor] = useState(false);
     // 医師のアドレスを格納するステート変数
     const [doctors, setDoctors] = useState([]);
-    // 医師の名前を格納するステート変数
-    const [doctorNames, setDoctorNames] = useState([]);
-    // 権限状態を格納するためのステート変数
-    const [isApproveds, setIsApproveds] = useState([]);
-    // 権限要求状態を格納するためのステート変数
-    const [isRequires, setIsRequires] = useState([]);
+    // 医師の情報を格納するためのステート変数
+    const [doctorInfo, setDoctorInfo] = useState([]);
     // トランザクションが正常に処理された場合のフラグ
     const [successFlg, setSuccessFlg] = useState(false);
     // トランザクションが異常終了した場合のフラグ
@@ -87,47 +83,22 @@ function DoctorInfo() {
             // 接続中のアドレスが権限情報を取得する。
             const hasDoctorRole = await instance.methods.doctorRoleMap(web3Accounts[0]).call();
             // フラグの情報を更新する。
-            if(hasDoctorRole) setIsDoctor(true);
+            if(hasDoctorRole) {
+                setIsDoctor(true);
+            } else {
+                // 医師に関する情報を取得する。
+                const result = await instance.methods.getDoctorInfo().call();
+                setDoctorInfo(result);
+            }
+            
             // コントラクトとWeb3オブジェクト、アカウントの情報をステート変数に格納する。
             setContract(instance);
             setAccount(web3Accounts[0]);
-            // 医師に関するデータを取得する。
-            await getDoctorsInfo(instance, web3Accounts[0]);
         } catch (error) {
             alert(`Failed to load web3, accounts, or contract. Check console for details.`,);
             console.error(error);
         }
      };
-
-    /**
-     * 医師に関する情報を取得する関数
-     * @param instance コントラクトのインスタンス
-     * @param accountAddr 現在接続中のアカウント
-     */
-    const getDoctorsInfo = async (instance, accountAddr) => {
-        // 登録済みの医師のアドレスを全て取得する。
-        var result = await instance.methods.getDoctors().call();
-        // ステート変数に格納する。
-        setDoctors(result);
-
-        //  取得した医師それぞの名前と承認状態を取得してステート変数に格納していく。
-        for (let i = 0;i < result.length; i++) {
-            // 医師の名前を取得する。
-            var name = await instance.methods.doctorMap(result[i]).call();
-            console.log("name", name);
-            setDoctorNames([...doctorNames, name]);
-            // 承認状態を取得する。(接続中のアドレスが患者の場合のみ)
-            /*
-            if(!isDoctor) {
-                var isApproved = await instance.methods.approveMap(accountAddr, result[i]).call();
-                setIsApproveds([...isApproveds, isApproved]);
-                // 医者から承認を要求されているか確認する。
-                var isRequired = await instance.methods.requireMap(result[i], accountAddr).call();
-                setIsRequires([...isRequires, isRequired]);
-            }
-            */
-        }
-    };
 
     /**
      * 「Approve」ボタンを押した時の処理
@@ -198,20 +169,20 @@ function DoctorInfo() {
 
     /**
      * Statusコンポーネント
-     * @param i インデックス
-     * @param value アドレス
+     * @param value 要求されているかのフラグ情報
+     * @param doctorAddr 医師のアドレス
      */
-    const renderStatus = (i, value) => {
+    const renderStatus = (value, doctorAddr) => {
         // 医者から承認が要求されている場合には、メッセージを表示させる。
-        if(isRequires[i]) {
+        if(value) {
             return (
                 <>
-                    <ActionButton2 buttonName="Approve" color="success" clickAction={(e) => {approveAction(value); init();}} />
+                    <ActionButton2 buttonName="Approve" color="success" clickAction={(e) => approveAction(doctorAddr)} />
                     You are required.
                 </>
             );
         } else {
-            return <ActionButton2 buttonName="Approve" color="success" clickAction={(e) => {approveAction(value); init();}} />;
+            return <ActionButton2 buttonName="Approve" color="success" clickAction={(e) => approveAction(doctorAddr)} />
         }
     } 
 
@@ -272,7 +243,7 @@ function DoctorInfo() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            { doctors
+                            { doctorInfo
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, i) => {
                                     return (
@@ -291,7 +262,7 @@ function DoctorInfo() {
                                                 if(column.label === "Address") {
                                                     return (
                                                         <TableCell key={column.id} align={column.align}>
-                                                            {value}
+                                                            {value.doctorAddr}
                                                         </TableCell>
                                                     );
                                                 }
@@ -299,7 +270,7 @@ function DoctorInfo() {
                                                 if(column.label === "Name") {
                                                     return (
                                                         <TableCell key={column.id} align={column.align}>
-                                                            {doctorNames[i]}
+                                                            {value.doctorName}
                                                         </TableCell>
                                                     )
                                                 } 
@@ -309,10 +280,10 @@ function DoctorInfo() {
                                                         return (
                                                             <TableCell key={column.id} align={column.align}>
                                                                 {/* 承認状態によって表示するボタンを変更する。 */}
-                                                                {isApproveds[i] ? 
-                                                                    renderStatus()
-                                                                :
+                                                                {value.isApprove ? 
                                                                     <ActionButton2 buttonName="Deprive" color="secondary" clickAction={(e) => {depriveAction(value); init();}} />
+                                                                :
+                                                                    renderStatus(value.isRequire, value.doctorAddr)
                                                                 }
                                                             </TableCell>
                                                         )
