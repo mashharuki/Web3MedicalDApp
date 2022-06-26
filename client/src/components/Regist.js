@@ -148,6 +148,7 @@ function Regist() {
                                     id="doctorAddress" 
                                     placeholder="doctor address" 
                                     margin="normal" 
+                                    required
                                     onChange={ (e) => setDoctorAddr(e.target.value) } 
                                     variant="outlined" 
                                     inputProps={{ 'aria-label': 'doctorAddress' }} 
@@ -169,6 +170,7 @@ function Regist() {
                                     id="doctorName" 
                                     placeholder="doctor name" 
                                     margin="normal" 
+                                    required
                                     onChange={ (e) => setDoctorName(e.target.value) } 
                                     variant="outlined" 
                                     inputProps={{ 'aria-label': 'doctoName' }} 

@@ -125,8 +125,6 @@ const Home = () => {
             }
             // 編集モードをONにする。
             setEditer(true);
-            // getMedicalDataメソッドの呼び出し
-            getMedicalData();
         } catch (error) {
             console.error("fail:", error);
             // popUpメソッドの呼び出し
@@ -238,13 +236,20 @@ const Home = () => {
                 // 患者の医療データを取得する。
                 result = await contract.methods.selectPatientMedicalData(patientAddr).call();
             }
-            // 医療データを各ステート変数に格納する。
-            setPatientName(result.patientName);
-            setBloodType(result.bloodType);
-            setDoctorName(result.medicalInsData.doctorName);
-            setLastUpDate(result.lastUpdate);
-            // popUpメソッドを呼び出す。
-            popUp(true, "Trasaction Successful!!");
+            // 最終更新日時を取得する。
+            var lastUpdate = result.lastUpdate;
+            // 最終更新日時が空であればデータ未登録フラグをONにする。
+            if(lastUpdate === '') {
+                setHasData(true);
+            } else {
+                // 医療データを各ステート変数に格納する。
+                setPatientName(result.patientName);
+                setBloodType(result.bloodType);
+                setDoctorName(result.medicalInsData.doctorName);
+                setLastUpDate(result.lastUpdate);
+                // popUpメソッドを呼び出す。
+                popUp(true, "Trasaction Successful!!");
+            }
         } catch (error) {
             console.error("get medical datas fail:", error);
             // popUpメソッドの呼び出し
@@ -314,7 +319,105 @@ const Home = () => {
             if(isApproved) {
                 return (
                     <>
-                        承認ずみ
+                        <Grid 
+                            container
+                            justifyContent="center"
+                            sx={{ 
+                                alignItems: 'center', 
+                                m: 1,
+                            }}
+                        >
+                            <p><strong>Patient's MedicalData</strong></p>
+                        </Grid>
+                        <Paper
+                            elevation={0}
+                            sx={{ 
+                                p: '2px 4px', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                backgroundColor: '#fde9e8',
+                                width: 400, 
+                                marginTop: 1,
+                                marginBottom: 1
+                            }}
+                        >  
+                            <label>address：　</label>
+                            <TextField 
+                                id="patientAddress" 
+                                placeholder="patient address" 
+                                required
+                                margin="normal" 
+                                onChange={ (e) => setPatientAddr(e.target.value) } 
+                                variant="outlined" 
+                                inputProps={{ 'aria-label': 'patientAddress' }} 
+                            />
+                        </Paper>
+                        <Paper
+                            elevation={0}
+                            sx={{ 
+                                p: '2px 4px', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                backgroundColor: '#fde9e8',
+                                width: 400, 
+                                marginTop: 1,
+                                marginBottom: 1
+                            }}
+                        >  
+                            <label>name：　</label>
+                            <TextField 
+                                id="patientName" 
+                                placeholder="patient name" 
+                                margin="normal" 
+                                required
+                                onChange={ (e) => setPatientName(e.target.value) } 
+                                variant="outlined" 
+                                inputProps={{ 'aria-label': 'patientName' }} 
+                            />
+                        </Paper>
+                        <Paper
+                            elevation={0}
+                            sx={{ 
+                                p: '2px 4px', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                backgroundColor: '#fde9e8',
+                                width: 400, 
+                                marginTop: 1,
+                                marginBottom: 1
+                            }}
+                        >  
+                            <label>bloodType：　</label>
+                            <TextField 
+                                id="bloodType" 
+                                placeholder="bloodType" 
+                                required
+                                margin="normal" 
+                                onChange={ (e) => setBloodType(e.target.value) } 
+                                variant="outlined" 
+                                inputProps={{ 'aria-label': 'bloodType' }} 
+                            />
+                        </Paper>
+                        {/* 新規登録か否かでボタンを表示を切り替える。 */}
+                        <Grid 
+                            container 
+                            justifyContent="center"
+                            sx={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                m: 1,
+                                marginTop: 4
+                            }}
+                        >
+                            {hasData ?  (
+                                <ActionButton buttonName="Create" color="success" clickAction={createAction} />
+                            ) : (
+                                <>
+                                    <ActionButton buttonName="Update" color="primary" clickAction={updateAction} />
+                                    <ActionButton buttonName="Delete" color="secondary" clickAction={deleteAction} />
+                                </>
+                            )}
+                        </Grid> 
                     </>
                 );
             } else {
@@ -376,6 +479,7 @@ const Home = () => {
                             id="patientAddress" 
                             placeholder="patient address" 
                             margin="normal" 
+                            required
                             onChange={ (e) => setPatientAddr(e.target.value) } 
                             variant="outlined" 
                             inputProps={{ 'aria-label': 'patientAddress' }} 
@@ -532,8 +636,6 @@ const Home = () => {
                             /* 患者の場合は描画する内容 */
                             patientRender() 
                         )}
-                        {/* 医師の場合で編集モードで描画する内容 */}
-                        {/* 承認されている場合とそうでない場合で描画内容を変更する。 */}
                     </Grid>
                 </StyledPaper>
             </Box>
