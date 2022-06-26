@@ -311,9 +311,108 @@ const Home = () => {
      * 患者の場合に表示するコンポーネント
      */
     const patientRender = () => { 
-        return (
-            <>患者</>
-        );
+        // データ未登録かどうかで表示を切り替える。
+        if (hasData) {
+            // データ未登録の場合
+            return (
+                <Grid 
+                    container
+                    justifyContent="center"
+                    sx={{ 
+                        alignItems: 'center', 
+                        m: 1,
+                    }}
+                >
+                    <p><strong>MedicalData is not registered yet...</strong></p>
+                </Grid>
+            );
+        } else {
+            // データが登録済みの場合は医療データを表示する。
+            return (
+                <>
+                    <Grid 
+                        container
+                        justifyContent="center"
+                        sx={{ 
+                            alignItems: 'center', 
+                            m: 1,
+                        }}
+                    >
+                        <p><strong>Your Medical Data</strong></p>
+                    </Grid>
+                    <Paper
+                        elevation={0}
+                        sx={{ 
+                            p: '2px 4px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            backgroundColor: '#fde9e8',
+                            width: 450, 
+                            marginTop: 1,
+                            marginBottom: 1
+                        }}
+                    >
+                        Address：{account}
+                    </Paper>
+                    <Paper
+                        elevation={0}
+                        sx={{ 
+                            p: '2px 4px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            backgroundColor: '#fde9e8',
+                            width: 450, 
+                            marginTop: 1,
+                            marginBottom: 1
+                        }}
+                    >
+                        Name：{patientName}
+                    </Paper>
+                    <Paper
+                        elevation={0}
+                        sx={{ 
+                            p: '2px 4px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            backgroundColor: '#fde9e8',
+                            width: 450, 
+                            marginTop: 1,
+                            marginBottom: 1
+                        }}
+                    >
+                        BloodType：{bloodType}
+                    </Paper>
+                    <Paper
+                        elevation={0}
+                        sx={{ 
+                            p: '2px 4px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            backgroundColor: '#fde9e8',
+                            width: 450, 
+                            marginTop: 1,
+                            marginBottom: 1
+                        }}
+                    >
+                        Doctor：{doctorName}
+                    </Paper>
+                    <Paper
+                        elevation={0}
+                        sx={{ 
+                            p: '2px 4px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            backgroundColor: '#fde9e8',
+                            width: 450, 
+                            marginTop: 1,
+                            marginBottom: 1
+                        }}
+                    >
+                        lastUpDate：{lastUpDate}
+                    </Paper>
+                </>
+            );
+        }
     }
 
     // 副作用フック
@@ -330,16 +429,17 @@ const Home = () => {
         >
             <Box sx={{ flexGrow: 1, overflow: "hidden", px: 3, mt: 10}}>
                 <StyledPaper sx={{my: 1, mx: "auto", p: 0, borderRadius: 4, marginTop: 4}}>
-                    {isDoctor ? (
-                        /* 医師の場合初期で描画する内容 */
-                        doctorRender()
-                    ) : (
-                        /* 患者の場合は、正常系はデータを表示するだけ */
-                        patientRender() 
-                    )}
-                    {/* 医師の場合で編集モードで描画する内容 */}
-                    {/* 承認されている場合とそうでない場合で描画内容を変更する。 */}
-                    {/* 内容が取得できなければ登録されていないという旨のメッセージを表示する。 */}
+                    <Grid container justifyContent="center">
+                        {isDoctor ? (
+                            /* 医師の場合描画する内容 */
+                            doctorRender()
+                        ) : (
+                            /* 患者の場合は描画する内容 */
+                            patientRender() 
+                        )}
+                        {/* 医師の場合で編集モードで描画する内容 */}
+                        {/* 承認されている場合とそうでない場合で描画内容を変更する。 */}
+                    </Grid>
                 </StyledPaper>
             </Box>
             {successFlg && (
