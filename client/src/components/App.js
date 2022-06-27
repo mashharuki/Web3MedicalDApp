@@ -6,6 +6,7 @@ import LoadingIndicator from "./common/LoadingIndicator";
 import Home from './Home';
 import Regist from './Regist';
 import DoctorInfo from './DoctorInfo';
+import NoPage from './common/NoPage';
 // mui関連をインポートする。
 import AppBar  from '@mui/material/AppBar';
 import Toolbar  from '@mui/material/Toolbar';
@@ -148,6 +149,7 @@ function App() {
               <Route path="/home" exact element={ <Home/> } />
               <Route path="/regist" exact element={ <Regist/> } />
               <Route path="/doctorInfo" exact element={ <DoctorInfo/> } />
+              <Route path="*" exact element={ <NoPage/> } />
             </Routes>
           )}
         </div>
