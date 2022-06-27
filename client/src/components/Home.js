@@ -87,7 +87,9 @@ const Home = () => {
                 // 患者のアドレスをステート変数に格納する。
                 setAccount(web3Accounts[0]);
                 // 患者であればこの時点で医療データを取得し、ステート変数に詰める。
-                var result = await instance.methods.selectMedicalData().call();
+                var result = await instance.methods.selectMedicalData().call({
+                    from: web3Accounts[0]
+                });
                 // 最終更新日時を取得する。
                 var lastUpdate = result.lastUpdate;
                 // 最終更新日時が空であればデータ未登録フラグをONにする。
@@ -375,6 +377,7 @@ const Home = () => {
                                     placeholder="patient name" 
                                     margin="normal" 
                                     required
+                                    value={patientName}
                                     onChange={ (e) => setPatientName(e.target.value) } 
                                     variant="outlined" 
                                     inputProps={{ 'aria-label': 'patientName' }} 
@@ -404,6 +407,7 @@ const Home = () => {
                                     placeholder="bloodType" 
                                     required
                                     margin="normal" 
+                                    value={bloodType}
                                     onChange={ (e) => setBloodType(e.target.value) } 
                                     variant="outlined" 
                                     inputProps={{ 'aria-label': 'bloodType' }} 
@@ -653,11 +657,6 @@ const Home = () => {
     }
 
     // 副作用フック
-    useEffect(() => {
-        init();
-    }, []);
-
-    // 副作用フック2
     useEffect(() => {
         init();
     }, [account]);

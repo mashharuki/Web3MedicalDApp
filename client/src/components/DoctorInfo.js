@@ -91,9 +91,12 @@ function DoctorInfo() {
                 setDoctorName(doctorNm);
             } else {
                 // 医師に関する情報を取得する。
-                const result = await instance.methods.getDoctorInfo().call();
+                const result = await instance.methods.getDoctorInfo().call({
+                    from: web3Accounts[0]
+                });
                 // ステート変数を更新する。
                 setDoctorInfo(result);
+                console.log("result:", result)
             }
             
             // コントラクトとWeb3オブジェクト、アカウントの情報をステート変数に格納する。

@@ -88,7 +88,7 @@ function App() {
       // ステート変数にアカウント情報を格納する。
       setCurrentAccount(accounts[0]);
       // goreliネットワークに接続されていることをチェックする。
-      // checkNetwork();
+      checkNetwork();
     } catch (error) {
       console.log(error);
     }
