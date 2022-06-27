@@ -58,6 +58,54 @@ Summary
 > Final cost:          0.05181874 ETH
 ```
 
+goreliネットワークにデプロイした結果
+
+```cmd
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+
+Starting migrations...
+======================
+> Network name:    'goreli'
+> Network id:      5
+> Block gas limit: 29970705 (0x1c95111)
+
+
+1_deploy_medicalData.js
+=======================
+
+   Deploying 'MedicalData'
+   -----------------------
+   > transaction hash:    0x90cf05a516c99d6aee1a9fa812cc065e3bdee7e703ce5108c7e5602c6138fe53
+   > Blocks: 1            Seconds: 9
+   > contract address:    0xD41E1A91876c237521522DbD5ef2985e6afE1AD9
+   > block number:        7126434
+   > block timestamp:     1656310962
+   > account:             0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072
+   > balance:             73.8605369695272885
+   > gas used:            3085531 (0x2f14db)
+   > gas price:           1.299999998 gwei
+   > value sent:          0 ETH
+   > total cost:          0.004011190293828938 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 7126435)
+   > confirmation number: 2 (block: 7126436)
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.004011190293828938 ETH
+
+
+Summary
+=======
+> Total deployments:   1
+> Final cost:          0.004011190293828938 ETH
+```
+
 ### クリアすべき課題
 
 1. Ethereum,Polygon,Solanaのいずれかのネットワークにデプロイすること。
