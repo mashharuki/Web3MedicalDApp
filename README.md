@@ -4,15 +4,15 @@
 ## 挑戦するSTAR試験
  <a href="https://unchain-shiftbase.notion.site/2-Distributed-medical-database-Japanese-18540901b8114aa787e7ec3aa30d5602">概要はこちら</a>
 
-### 設計書
+## 設計書
  1. <a href="./docs/design.md">概要設計書</a>
  2. <a href="./docs/page.md">画面設計書</a>
 
-### テスト結果
+## テスト結果
 
 スマートコントラクトのテスト結果は、<a href="./docs/testResult.md">こちら</a>
 
-### マイグレーションの結果
+## マイグレーションの結果
 
 ローカルでマイグレーションした時の結果
 
@@ -106,7 +106,7 @@ Summary
 > Final cost:          0.004011190293828938 ETH
 ```
 
-### クリアすべき課題
+## クリアすべき課題
 
 1. Ethereum,Polygon,Solanaのいずれかのネットワークにデプロイすること。
 2. 患者と医療従事者の両方が、自分のウォレットをアプリケーションに接続できる
@@ -122,18 +122,66 @@ Summary
     - 最終更新日時、最終更新医療機関
 9. 患者は自身の医療データへのアクセス権限を一度承認した医療提供者から再度制限できる(患者の医療提供者が変更になった場合等に備えて)
 
-### 開発用のアドレス
+## 各画面のイメージ
 
-```cmd
-Accounts:
-(0) 0x70987afd66e39048c418d80bbe35be76658f466f
-(1) 0xf3b1722f0a83d4c9c32fd8c786aaedf0169c6b4f
-(2) 0x40f9dd1894f353cd6a5cc48b4d848c90657e7f1a
-(3) 0x9a9122c7f57fca0a5ad82a931b742dca4751b2b6
-(4) 0x81f32e72d72e1c754d5ce8157241989f4a7b595b
-(5) 0xaee844d6e496c1f17ed265b5311be2f116fcabd3
-(6) 0xbf1f0a1a4159c632149d09e19f83d4f8b9260c3c
-(7) 0x6cb527d3c940f0189b0635d4eaff6547fccb9ba0
-(8) 0x32ce44da56ade22d062a2c73e67abbddc9bb4326
-(9) 0x88508c0ebf47c5d35e86be7b8eebded98d97833d
-```
+### 1. Connect Wallet画面
+
+ウォレットで接続する前の画面  
+右上のボタンから接続する。
+
+<img src="./docs/assets/connectWallet.png">
+
+### 2. Home画面
+
+この画面は接続したウォレットのアドレスによって描画される内容が変化します。
+
+|No.|パターン|描画される内容|
+|-----|----|---|
+|1|患者で医療データが未登録の場合|メッセージが描画されるだけ|
+|2|患者で医療データが登録されている場合|医療データが描画される|
+|3|医者の場合|初期状態では検索画面が描画される。|
+|4|医者の場合で検索したアドレスから承認権限が付与されていなかった場合|承認権限を要求するボタンを描画する。|
+|5|医者の場合で検索したアドレスから承認権限が付与されて且つ医療データが登録されていなかった場合|医療データ入力フォームと新規登録ボタンを描画する。|
+|6|医者の場合で検索したアドレスから承認権限が付与されて且つ医療データが登録されていた場合|医療データ入力フォームと更新・削除ボタンをを描画する。|
+
+#### Home画面 パターン1
+<img src="./docs/assets/nodata.png">
+
+#### Home画面 パターン2
+<img src="./docs/assets/medicaldata.png">
+
+#### Home画面 パターン3
+<img src="./docs/assets/view2.png">
+
+#### Home画面 パターン4
+<img src="./docs/assets/notapproved.png">
+
+#### Home画面 パターン5
+<img src="./docs/assets/create.png">
+
+#### Home画面 パターン6
+<img src="./docs/assets/update.png">
+
+### 3. Regist画面
+
+この画面は管理者権限専用の画面で新規に医者を登録することができる画面になります。  
+管理者以外がアクセスすると入力フォーム等は描画されません。
+
+#### Regist画面 管理者の場合
+<img src="./docs/assets/owner.png">
+
+#### Regist画面 管理者以外の場合
+<img src="./docs/assets/noowner.png">
+
+### 4. DoctorInfo画面
+
+この画面も患者と医者で画面表記が変化します。  
+医者の場合は自分のアドレスと名前が表示されます。  
+患者の場合は、このコントラクトに登録されている医者の情報と承認権限を付与するボタン・剥奪するボタンが描画されます。(医者から承認権限を要求されている場合にはその旨のメッセージも表示されます。)
+
+#### DoctorInfo画面 医者の場合
+<img src="./docs/assets/doctorInfoforDoc.png">
+
+#### DoctorInfo画面 患者の場合
+<img src="./docs/assets/doctorInfoRequire.png">
+
