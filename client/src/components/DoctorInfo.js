@@ -339,7 +339,7 @@ function DoctorInfo() {
                                                                         <TableCell key={column.id} align={column.align}>
                                                                             {/* 承認状態によって表示するボタンを変更する。 */}
                                                                             {value.isApprove ? 
-                                                                                <ActionButton2 buttonName="Deprive" color="secondary" clickAction={(e) => {depriveAction(value); init();}} />
+                                                                                <ActionButton2 buttonName="Deprive" color="secondary" clickAction={(e) => {depriveAction(value.doctorAddr); init();}} />
                                                                             :
                                                                                 renderStatus(value.isRequire, value.doctorAddr)
                                                                             }
