@@ -117,7 +117,7 @@ function Regist() {
             alignItems="center"
         >
             { isOwner ? (
-                <Box sx={{ flexGrow: 1, overflow: "hidden", px: 3, mt: 10}}>
+                <Box sx={{ flexGrow: 1, overflow: "hidden", px: 3, mt: 10, height: '80vh'}}>
                     {/* ownerである場合に描画する内容 */}
                     <StyledPaper sx={{my: 1, mx: "auto", p: 0, borderRadius: 4, marginTop: 4}}>
                         <Grid container justifyContent="center">

@@ -17,7 +17,7 @@ import { TextField } from '@mui/material';
  */
 const StyledPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(2),
-    maxWidth: 600,
+    maxWidth: 1000,
     backgroundColor: '#fde9e8'
 }));
 
@@ -80,6 +80,9 @@ const Home = () => {
             // フラグの情報を更新する。
             if(hasDoctorRole) {
                 setIsDoctor(true);
+                // 医者の名前を取得する。
+                var doctorNm = await instance.methods.doctorMap(web3Accounts[0]).call();
+                setDoctorName(doctorNm);
             } else {
                 // 患者のアドレスをステート変数に格納する。
                 setAccount(web3Accounts[0]);
@@ -274,7 +277,7 @@ const Home = () => {
         format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
         format = format.replace(/SSS/g, ('00' + date.getMilliseconds()).slice(-3));
         // 返却
-        return format;
+        return format.toString();
     };
 
     /**
@@ -329,75 +332,84 @@ const Home = () => {
                         >
                             <p><strong>Patient's MedicalData</strong></p>
                         </Grid>
-                        <Paper
-                            elevation={0}
-                            sx={{ 
-                                p: '2px 4px', 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                backgroundColor: '#fde9e8',
-                                width: 400, 
-                                marginTop: 1,
-                                marginBottom: 1
-                            }}
-                        >  
-                            <label>address：　</label>
-                            <TextField 
-                                id="patientAddress" 
-                                placeholder="patient address" 
-                                required
-                                margin="normal" 
-                                onChange={ (e) => setPatientAddr(e.target.value) } 
-                                variant="outlined" 
-                                inputProps={{ 'aria-label': 'patientAddress' }} 
-                            />
-                        </Paper>
-                        <Paper
-                            elevation={0}
-                            sx={{ 
-                                p: '2px 4px', 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                backgroundColor: '#fde9e8',
-                                width: 400, 
-                                marginTop: 1,
-                                marginBottom: 1
-                            }}
-                        >  
-                            <label>name：　</label>
-                            <TextField 
-                                id="patientName" 
-                                placeholder="patient name" 
-                                margin="normal" 
-                                required
-                                onChange={ (e) => setPatientName(e.target.value) } 
-                                variant="outlined" 
-                                inputProps={{ 'aria-label': 'patientName' }} 
-                            />
-                        </Paper>
-                        <Paper
-                            elevation={0}
-                            sx={{ 
-                                p: '2px 4px', 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                backgroundColor: '#fde9e8',
-                                width: 400, 
-                                marginTop: 1,
-                                marginBottom: 1
-                            }}
-                        >  
-                            <label>bloodType：　</label>
-                            <TextField 
-                                id="bloodType" 
-                                placeholder="bloodType" 
-                                required
-                                margin="normal" 
-                                onChange={ (e) => setBloodType(e.target.value) } 
-                                variant="outlined" 
-                                inputProps={{ 'aria-label': 'bloodType' }} 
-                            />
-                        </Paper>
+                        <Grid 
+                            container
+                            justifyContent="center" 
+                            direction="row"
+                        >
+                            <Paper
+                                elevation={0}
+                                sx={{ 
+                                    p: '2px 4px', 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    backgroundColor: '#fde9e8',
+                                    width: 600, 
+                                    marginTop: 1,
+                                    marginBottom: 1
+                                }}
+                            >  
+                                address：　{patientAddr}
+                            </Paper>
+                        </Grid>
+                        <Grid 
+                            container
+                            justifyContent="center" 
+                            direction="row"
+                        >
+                            <Paper
+                                elevation={0}
+                                sx={{ 
+                                    p: '2px 4px', 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    backgroundColor: '#fde9e8',
+                                    width: 600, 
+                                    marginTop: 1,
+                                    marginBottom: 1
+                                }}
+                            >  
+                                <label>name：　</label>
+                                <TextField 
+                                    id="patientName" 
+                                    placeholder="patient name" 
+                                    margin="normal" 
+                                    required
+                                    onChange={ (e) => setPatientName(e.target.value) } 
+                                    variant="outlined" 
+                                    inputProps={{ 'aria-label': 'patientName' }} 
+                                />
+                            </Paper>
+                        </Grid>
+                        <Grid 
+                            container
+                            justifyContent="center" 
+                            direction="row"
+                        >
+                            <Paper
+                                elevation={0}
+                                sx={{ 
+                                    p: '2px 4px', 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    backgroundColor: '#fde9e8',
+                                    width: 600, 
+                                    marginTop: 1,
+                                    marginBottom: 1
+                                }}
+                            >  
+                                <label>bloodType：　</label>
+                                <TextField 
+                                    id="bloodType" 
+                                    placeholder="bloodType" 
+                                    required
+                                    margin="normal" 
+                                    onChange={ (e) => setBloodType(e.target.value) } 
+                                    variant="outlined" 
+                                    inputProps={{ 'aria-label': 'bloodType' }} 
+                                />
+                            </Paper>
+                        </Grid>
                         {/* 新規登録か否かでボタンを表示を切り替える。 */}
                         <Grid 
                             container 
@@ -535,76 +547,106 @@ const Home = () => {
                     >
                         <p><strong>Your Medical Data</strong></p>
                     </Grid>
-                    <Paper
-                        elevation={0}
-                        sx={{ 
-                            p: '2px 4px', 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            backgroundColor: '#fde9e8',
-                            width: 450, 
-                            marginTop: 1,
-                            marginBottom: 1
-                        }}
+                    <Grid 
+                        container
+                        justifyContent="center" 
+                        direction="row"
                     >
-                        Address：{account}
-                    </Paper>
-                    <Paper
-                        elevation={0}
-                        sx={{ 
-                            p: '2px 4px', 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            backgroundColor: '#fde9e8',
-                            width: 450, 
-                            marginTop: 1,
-                            marginBottom: 1
-                        }}
+                        <Paper
+                            elevation={0}
+                            sx={{ 
+                                p: '2px 4px', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                backgroundColor: '#fde9e8',
+                                width: 600, 
+                                marginTop: 1,
+                                marginBottom: 1
+                            }}
+                        >
+                            Address：{account}
+                        </Paper>
+                    </Grid>
+                    <Grid 
+                        container
+                        justifyContent="center" 
+                        direction="row"
                     >
-                        Name：{patientName}
-                    </Paper>
-                    <Paper
-                        elevation={0}
-                        sx={{ 
-                            p: '2px 4px', 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            backgroundColor: '#fde9e8',
-                            width: 450, 
-                            marginTop: 1,
-                            marginBottom: 1
-                        }}
+                        <Paper
+                            elevation={0}
+                            sx={{ 
+                                p: '2px 4px', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                backgroundColor: '#fde9e8',
+                                width: 600, 
+                                marginTop: 1,
+                                marginBottom: 1
+                            }}
+                        >
+                            Name：{patientName}
+                        </Paper>
+                    </Grid>
+                    <Grid 
+                        container
+                        justifyContent="center" 
+                        direction="row"
                     >
-                        BloodType：{bloodType}
-                    </Paper>
-                    <Paper
-                        elevation={0}
-                        sx={{ 
-                            p: '2px 4px', 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            backgroundColor: '#fde9e8',
-                            width: 450, 
-                            marginTop: 1,
-                            marginBottom: 1
-                        }}
+                        <Paper
+                            elevation={0}
+                            sx={{ 
+                                p: '2px 4px', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                backgroundColor: '#fde9e8',
+                                width: 600, 
+                                marginTop: 1,
+                                marginBottom: 1
+                            }}
+                        >
+                            BloodType：{bloodType}
+                        </Paper>
+                    </Grid>
+                    <Grid 
+                        container
+                        justifyContent="center" 
+                        direction="row"
                     >
-                        Doctor：{doctorName}
-                    </Paper>
-                    <Paper
-                        elevation={0}
-                        sx={{ 
-                            p: '2px 4px', 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            backgroundColor: '#fde9e8',
-                            width: 450, 
-                            marginTop: 1,
-                            marginBottom: 1
-                        }}
+                        <Paper
+                            elevation={0}
+                            sx={{ 
+                                p: '2px 4px', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                backgroundColor: '#fde9e8',
+                                width: 600, 
+                                marginTop: 1,
+                                marginBottom: 1
+                            }}
+                        >
+                            Doctor：{doctorName}
+                        </Paper>
+                    </Grid>
+                    <Grid 
+                        container
+                        justifyContent="center" 
+                        direction="row"
                     >
-                        lastUpDate：{lastUpDate}
-                    </Paper>
+                        <Paper
+                            elevation={0}
+                            sx={{ 
+                                p: '2px 4px', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                backgroundColor: '#fde9e8',
+                                width: 600, 
+                                marginTop: 1,
+                                marginBottom: 1
+                            }}
+                        >
+                            lastUpDate：{lastUpDate}
+                        </Paper>
+                    </Grid>
                 </>
             );
         }
@@ -614,6 +656,7 @@ const Home = () => {
     useEffect(() => {
         init();
     }, []);
+
     // 副作用フック2
     useEffect(() => {
         init();
@@ -626,7 +669,7 @@ const Home = () => {
             justifyContent="center"
             alignItems="center"
         >
-            <Box sx={{ flexGrow: 1, overflow: "hidden", px: 3, mt: 10}}>
+            <Box sx={{ flexGrow: 1, overflow: "hidden", px: 3, mt: 10, height: '80vh'}}>
                 <StyledPaper sx={{my: 1, mx: "auto", p: 0, borderRadius: 4, marginTop: 4}}>
                     <Grid container justifyContent="center">
                         {isDoctor ? (

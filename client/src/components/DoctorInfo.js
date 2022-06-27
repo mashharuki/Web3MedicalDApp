@@ -32,7 +32,7 @@ const columns = [
  */
  const StyledPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(2),
-    maxWidth: 1200,
+    maxWidth: 1000,
     backgroundColor: '#fde9e8'
 }));
 
@@ -221,7 +221,7 @@ function DoctorInfo() {
             justifyContent="center"
             alignItems="center"
         >
-            <Box sx={{ flexGrow: 1, overflow: "hidden", px: 3, mt: 10}}>
+            <Box sx={{ flexGrow: 1, overflow: "hidden", px: 3, mt: 10, height: '80vh'}}>
                 <StyledPaper sx={{my: 1, mx: "auto", p: 0, borderRadius: 4, marginTop: 4}}>
                     <Grid container justifyContent="center">
                         <Grid 
@@ -274,7 +274,7 @@ function DoctorInfo() {
                                         display: 'flex', 
                                         alignItems: 'center', 
                                         backgroundColor: '#fde9e8',
-                                        width:550, 
+                                        width:600, 
                                         marginTop: 1,
                                         marginBottom: 4
                                     }}
