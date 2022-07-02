@@ -63,7 +63,7 @@ contract SBT is IERC4973, ERC165, ERC721Metadata {
     /**
      * totalSupplyメソッド
      */
-    function totalSuuply() external view returns (uint256) {
+    function totalSupply() external view returns (uint256) {
         return _tokenId.current();
     }
 
