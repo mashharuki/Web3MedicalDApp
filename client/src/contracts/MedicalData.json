@@ -202,8 +202,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -222,8 +221,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -242,8 +240,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -262,8 +259,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -309,8 +305,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -323,8 +318,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -348,8 +342,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -514,8 +507,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -568,8 +560,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -600,8 +591,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -636,8 +626,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"_doctorAddrs\",\"type\":\"address[]\"},{\"internalType\":\"string[]\",\"name\":\"_doctorNames\",\"type\":\"string[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"patient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"doctor\",\"type\":\"address\"}],\"name\":\"Approved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"patient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"doctor\",\"type\":\"address\"}],\"name\":\"ChangedStatus\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"doctor\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"patient\",\"type\":\"address\"}],\"name\":\"ClaimedApprove\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"patientAddr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"patientName\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"bloodType\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"lastUpDate\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"doctorName\",\"type\":\"string\"}],\"name\":\"CreateMedicalData\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"patientAddr\",\"type\":\"address\"}],\"name\":\"DeleteMedicalData\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"patientAddr\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"patientName\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"bloodType\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"lastUpDate\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"doctorName\",\"type\":\"string\"}],\"name\":\"EditMedicalData\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"doctorAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"doctorName\",\"type\":\"string\"}],\"name\":\"RegistedDoctor\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"doctor\",\"type\":\"address\"}],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"approveMap\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"doctor\",\"type\":\"address\"}],\"name\":\"changeStatus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"patient\",\"type\":\"address\"}],\"name\":\"claimApprove\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"patientAddr\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"patientName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"bloodType\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"lastUpDate\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"doctorName\",\"type\":\"string\"}],\"name\":\"createMedicalData\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"patient\",\"type\":\"address\"}],\"name\":\"deleteMedicalData\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"doctorMap\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"doctorRoleMap\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"doctors\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"patientAddr\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"patientName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"bloodType\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"lastUpDate\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"doctorName\",\"type\":\"string\"}],\"name\":\"editMedicalData\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDoctorInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"doctorAddr\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"doctorName\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"isRequire\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"isApprove\",\"type\":\"bool\"}],\"internalType\":\"struct MedicalData.DoctorInfo[]\",\"name\":\"result\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDoctors\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"medicalMap\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"patientName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"bloodType\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"lastUpdate\",\"type\":\"string\"},{\"components\":[{\"internalType\":\"string\",\"name\":\"lastUpdate\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"doctorName\",\"type\":\"string\"}],\"internalType\":\"struct MedicalData.MedicalInsData\",\"name\":\"medicalInsData\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"doctorAddress\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"doctorName\",\"type\":\"string\"}],\"name\":\"registDoctor\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"requireMap\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"selectMedicalData\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"patientName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"bloodType\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"lastUpdate\",\"type\":\"string\"},{\"components\":[{\"internalType\":\"string\",\"name\":\"lastUpdate\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"doctorName\",\"type\":\"string\"}],\"internalType\":\"struct MedicalData.MedicalInsData\",\"name\":\"medicalInsData\",\"type\":\"tuple\"}],\"internalType\":\"struct MedicalData.PatientMedicalData\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"patient\",\"type\":\"address\"}],\"name\":\"selectPatientMedicalData\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"patientName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"bloodType\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"lastUpdate\",\"type\":\"string\"},{\"components\":[{\"internalType\":\"string\",\"name\":\"lastUpdate\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"doctorName\",\"type\":\"string\"}],\"internalType\":\"struct MedicalData.MedicalInsData\",\"name\":\"medicalInsData\",\"type\":\"tuple\"}],\"internalType\":\"struct MedicalData.PatientMedicalData\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"approve(address)\":{\"params\":{\"doctor\":\"\\u6a29\\u9650\\u3092\\u4ed8\\u4e0e\\u3059\\u308b\\u533b\\u8005\\u306e\\u30a2\\u30c9\\u30ec\\u30b9\"}},\"changeStatus(address)\":{\"params\":{\"doctor\":\"\\u6a29\\u9650\\u3092\\u5265\\u596a\\u3059\\u308b\\u533b\\u8005\\u306e\\u30a2\\u30c9\\u30ec\\u30b9\"}},\"claimApprove(address)\":{\"params\":{\"patient\":\"\\u95b2\\u89a7\\u6a29\\u9650\\u3092\\u8981\\u6c42\\u3059\\u308b\\u60a3\\u8005\\u306e\\u30a2\\u30c9\\u30ec\\u30b9\"}},\"constructor\":{\"params\":{\"_doctorAddrs\":\"\\u521d\\u671f\\u3067\\u767b\\u9332\\u3055\\u308c\\u308b\\u533b\\u8005\\u306e\\u30a2\\u30c9\\u30ec\\u30b9\\u306e\\u914d\\u5217\",\"_doctorNames\":\"\\u521d\\u671f\\u3067\\u767b\\u9332\\u3055\\u308c\\u308b\\u533b\\u8005\\u306e\\u540d\\u524d\\u306e\\u914d\\u5217\"}},\"createMedicalData(address,string,string,string,string)\":{\"params\":{\"bloodType\":\"\\u8840\\u6db2\\u578b\",\"doctorName\":\"\\u533b\\u8005(\\u533b\\u7642\\u6a5f\\u95a2)\\u306e\\u540d\\u524d\",\"lastUpDate\":\"\\u6700\\u7d42\\u66f4\\u65b0\\u65e5\\u6642\",\"patientAddr\":\"\\u60a3\\u8005\\u306e\\u30a2\\u30c9\\u30ec\\u30b9\",\"patientName\":\"\\u60a3\\u8005\\u306e\\u540d\\u524d\"}},\"deleteMedicalData(address)\":{\"params\":{\"patient\":\"\\u60a3\\u8005\\u306e\\u30a2\\u30c9\\u30ec\\u30b9\"}},\"editMedicalData(address,string,string,string,string)\":{\"params\":{\"bloodType\":\"\\u8840\\u6db2\\u578b\",\"doctorName\":\"\\u533b\\u8005(\\u533b\\u7642\\u6a5f\\u95a2)\\u306e\\u540d\\u524d\",\"lastUpDate\":\"\\u6700\\u7d42\\u66f4\\u65b0\\u65e5\\u6642\",\"patientAddr\":\"\\u60a3\\u8005\\u306e\\u30a2\\u30c9\\u30ec\\u30b9\",\"patientName\":\"\\u60a3\\u8005\\u306e\\u540d\\u524d\"}},\"registDoctor(address,string)\":{\"params\":{\"doctorAddress\":\"\\u533b\\u8005\\u306e\\u30a2\\u30c9\\u30ec\\u30b9\",\"doctorName\":\"\\u533b\\u8005\\u306e\\u540d\\u524d\"}},\"selectPatientMedicalData(address)\":{\"params\":{\"patient\":\"\\u60a3\\u8005\\u306e\\u30a2\\u30c9\\u30ec\\u30b9\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"approve(address)\":{\"notice\":\"\\u533b\\u8005\\u5074\\u306b\\u95b2\\u89a7\\u30fb\\u7de8\\u96c6\\u6a29\\u9650\\u3092\\u4ed8\\u4e0e\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"changeStatus(address)\":{\"notice\":\"\\u95b2\\u89a7\\u30fb\\u7de8\\u96c6\\u6a29\\u9650\\u3092\\u505c\\u6b62\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"claimApprove(address)\":{\"notice\":\"\\u60a3\\u8005\\u306b\\u5bfe\\u3057\\u3066\\u533b\\u5e2b\\u304c\\u95b2\\u89a7\\u6a29\\u9650\\u3092\\u8981\\u6c42\\u3067\\u304d\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"constructor\":{\"notice\":\"\\u30b3\\u30f3\\u30b9\\u30c8\\u30e9\\u30af\\u30bf\\u30fc\"},\"createMedicalData(address,string,string,string,string)\":{\"notice\":\"\\u533b\\u7642\\u30c7\\u30fc\\u30bf\\u3092\\u65b0\\u898f\\u3067\\u767b\\u9332\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"deleteMedicalData(address)\":{\"notice\":\"\\u533b\\u7642\\u30c7\\u30fc\\u30bf\\u3092\\u524a\\u9664\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"editMedicalData(address,string,string,string,string)\":{\"notice\":\"\\u533b\\u7642\\u30c7\\u30fc\\u30bf\\u3092\\u7de8\\u96c6\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"getDoctorInfo()\":{\"notice\":\"\\u60a3\\u8005\\u306b\\u7d10\\u3065\\u304f\\u5168\\u3066\\u533b\\u5e2b\\u306e\\u60c5\\u5831\\u3092\\u53d6\\u5f97\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"getDoctors()\":{\"notice\":\"\\u73fe\\u5728\\u767b\\u9332\\u4e2d\\u306e\\u533b\\u5e2b\\u306e\\u30a2\\u30c9\\u30ec\\u30b9\\u4e00\\u89a7\\u3092\\u53d6\\u5f97\\u3059\\u308b\\u305f\\u3081\\u306e\\u30e1\\u30bd\\u30c3\\u30c9\"},\"registDoctor(address,string)\":{\"notice\":\"\\u533b\\u8005\\u306e\\u30c7\\u30fc\\u30bf\\u3092\\u65b0\\u305f\\u306b\\u767b\\u9332\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"selectMedicalData()\":{\"notice\":\"\\u81ea\\u5206\\u306e\\u533b\\u7642\\u30c7\\u30fc\\u30bf\\u3092\\u53d6\\u5f97\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"},\"selectPatientMedicalData(address)\":{\"notice\":\"\\u60a3\\u8005\\u306e\\u533b\\u7642\\u30c7\\u30fc\\u30bf\\u3092\\u53d6\\u5f97\\u3059\\u308b\\u30e1\\u30bd\\u30c3\\u30c9\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/MedicalData.sol\":\"MedicalData\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/MedicalData.sol\":{\"keccak256\":\"0x035a7d1ebafcb5ae0e620d3cba2bb5e70209a2cc9bbee35d8090733371a183e6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ed73bf4a0ef92068d41ca42b5fa11e604546a74a4a63843491f70c744a7672f1\",\"dweb:/ipfs/Qmd8xgYfPcYtM4BCnK2wLjcmTSqakSk6VzFz5GJWPr8fqt\"]}},\"version\":1}",
@@ -31302,9 +31291,8 @@
       "transactionHash": "0xcf0fc61f8d7b4b5bcf643a1491321dc2d179522a52f4d8efde61ff52a7ad2bd0"
     }
   },
-  "schemaVersion": "3.4.4",
-  "updatedAt": "2022-06-27T06:23:14.348Z",
-  "networkType": "ethereum",
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2022-07-02T00:06:19.083Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
