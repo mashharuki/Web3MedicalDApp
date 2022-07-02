@@ -68,11 +68,11 @@ module.exports = {
       provider: () => {
         return new HDWalletProvider(
           MNEMONIC,
-          ALCHEMY_MUNBAI_APIKEY
+          `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_MUNBAI_APIKEY}`
         );
       },
       network_id: 80001,
-      gas: 500000,
+      // gas: 500000,
       confirmations: 2,
       timeoutBlocks: 200,
       skipDryRun: true
