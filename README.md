@@ -199,3 +199,11 @@ Summary
 #### DoctorInfo 画面 患者の場合
 
 <img src="./docs/assets/doctorInfoRequire.png">
+
+### SBT を利用して医療データを管理する場合
+
+下記資料が参考になりそうです。
+
+1. <a href="https://www.ieice.org/cs/icn/wp-content/uploads/2022/05/c4a87292de7a9347ea7f0414c8b9a291.pdf">ブロックチェーンを⽤いたデータ共有における個⼈主導のアクセスコントロールの提案</a>
+
+2. <a href="https://www.intellilink.co.jp/column/fintech/2021/052600.aspx">ブロックチェーン テクノロジーコラム　拡張性とプライバシーを備えたオフチェーンデータの管理（後編）</a>
