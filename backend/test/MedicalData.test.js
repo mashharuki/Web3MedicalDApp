@@ -6,6 +6,9 @@
 
 // モジュールのインポート
 const truffleAssert = require("truffle-assertions");
+const chai = require("chai");
+const BN = require("bn.js");
+chai.use(require("chai-bn")(BN));
 // コントラクトの読み込み
 const MedicalData = artifacts.require("MedicalData");
 
@@ -544,5 +547,31 @@ contract ("MedicalData Contract tests!!", accounts => {
                 medicalData.deleteMedicalData(patientAddr)
             )
         });
+    });
+
+    /**
+     * 治療費の支払いに関するテストシナリオ
+     */
+    describe ("test for paying Treatment costs!!", () => {
+        // 支払いテスト
+        it("pay !!", async() => {
+            // 患者のアドレスを用意する。
+            const patientAddr = accounts[3];
+            // 医者のアドレスを用意する。
+            const doctorAddr = _doctorAddrs[1];
+            // 支払い前の治療費を取得する。
+            const beforebalance = await web3.eth.getBalance(patientAddr);
+            // 治療費を定義する。
+            const value = web3.utils.toWei('0.01');
+            // payメソッドの呼び出す。
+            await medicalData.pay(doctorAddr, {
+                from: patientAddr,
+                value: value
+            });
+            // 支払い後の残高を取得する。
+            const afterBalance = await web3.eth.getBalance(patientAddr);
+            // 残高をチェックする。
+            // assert.equal(web3.utils.toWei(afterBalance), web3.utils.toWei(beforebalance - 0.01), "balance should match");
+         });
     });
 });

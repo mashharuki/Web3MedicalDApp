@@ -1,14 +1,9 @@
-import './App.css';
-import React, { useState, useEffect } from "react";
 import detectEthereumProvider from '@metamask/detect-provider';
-import MedicalDataContract from "./../contracts/MedicalData.json";
-import Web3 from "web3";
-import ActionButton2  from './common/ActionButton2';
 // mui関連のコンポーネントのインポート
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,6 +11,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import React, { useEffect, useState } from "react";
+import Web3 from "web3";
+import MedicalDataContract from "./../contracts/MedicalData.json";
+import './App.css';
+import ActionButton2 from './common/ActionButton2';
 
 /**
  * 表の最上位ヘッダー部の配列
@@ -23,8 +23,9 @@ import TableRow from '@mui/material/TableRow';
 const columns = [
     { id: 'no', label: 'No.', minWidth: 20, align: 'center' },
     { id: 'address', label: 'Address', minWidth: 200, align: 'center' },
-    { id: 'name', label: 'Name', minWidth: 200, align: 'center'},
-    { id: 'status', label: 'Status', minWidth: 200, align: 'center'},
+    { id: 'name', label: 'Name', minWidth: 150, align: 'center'},
+    { id: 'status', label: 'Status', minWidth: 150, align: 'center'},
+    { id: 'cost', label: 'Cost', minWidth: 150, align: 'center'},
 ];
 
 /** 
@@ -143,6 +144,28 @@ function DoctorInfo() {
             popUp(true);
         } catch (error) {
             console.error("deprive err:", error);
+            // popUpメソッドの呼び出し
+            popUp(false);
+        }
+    };
+
+    /**
+     * 「0.01ETH Pay」ボタンを押した時の処理 
+     */
+    const payAction = async (doctorAddr) => {
+        try {
+            // 治療費を用意する。
+            const value = Web3.utils.toWei('0.01');
+            // registDoctorメソッドを呼び出して医師を新しく登録する。
+            await contract.methods.pay(doctorAddr).send({
+                from: account,
+                value: value,
+                gas: 300000
+            });
+            // popUpメソッドの呼び出し
+            popUp(true);
+        } catch (error) {
+            console.error("pay err:", error);
             // popUpメソッドの呼び出し
             popUp(false);
         }
@@ -350,7 +373,15 @@ function DoctorInfo() {
                                                                 if(column.label === "Status") {
                                                                     return <></>;
                                                                 }
-                                                            }          
+                                                            }   
+                                                            /* 治療費支払い用のボタン出力する。 */
+                                                            if(column.label === "Cost") {
+                                                                return (
+                                                                    <TableCell key={column.id} align={column.align}>
+                                                                        <ActionButton2 buttonName="0.01ETH Pay" color="primary" clickAction={(e) => {payAction(value.doctorAddr); init();}} />
+                                                                    </TableCell>
+                                                                )
+                                                            }        
                                                         })}
                                                     </TableRow>
                                                 );
@@ -380,7 +411,7 @@ function DoctorInfo() {
             {failFlg && (
                 /* 失敗時のポップアップ */
                 <div id="toast" className={showToast ? "zero-show" : ""}>
-                    <div id="desc">approve failfull....</div>
+                    <div id="desc">Trasaction failfull....</div>
                 </div>
             )}
         </Grid>
