@@ -1,93 +1,105 @@
 # 本アプリ作成に伴う開発メモ
 
 ## 以下、開発に向けての方針メモ
-1. Ethereum,Polygon,Solanaのいずれかのネットワークにデプロイすること。
-   → 一旦は、goerliを利用する方針
+
+1. Ethereum,Polygon,Solana のいずれかのネットワークにデプロイすること。
+   → 一旦は、goerli を利用する方針
 
 2. 患者と医療従事者の両方が、自分のウォレットをアプリケーションに接続できる
-   → Connect Walletボタンを構築する
+   → Connect Wallet ボタンを構築する
 
 3. 患者は、アプリケーションのダッシュボードで、自分の秘密鍵を使って、自分の医療データを閲覧することができる
    → ダッシュボードで確認する。  
-   → データは一つのCardコンポーネントで見れるイメージ!!   
+   → データは一つの Card コンポーネントで見れるイメージ!!  
    → 共通の項目に医者側が情報を記入して更新していくイメージ  
    → 医療データコントラクトを作成して管理するイメージ  
-   → Factoryパターンを利用する！！  
+   → Factory パターンを利用する！！  
    → MedicalDataFactory
 
 4. 患者は自分の医療データを編集することはできない
    → 登録・編集が可能なのは医者側のみ  
-     ※ ただし事前に患者の了承が必要であり、ダッシュボードに表示されるのは承認を得ているもののみ！！
+    ※ ただし事前に患者の了承が必要であり、ダッシュボードに表示されるのは承認を得ているもののみ！！
 
 5. 患者は、医療提供者に自分の医療データへのアクセスを提供することができる
-   → approve機能により実装する？？   
+   → approve 機能により実装する？？
 
 6. 医療従事者は患者の医療データを編集する際、患者に承認を求める必要がある
-   → approve機能により実装する？？
+   → approve 機能により実装する？？
    → 医者から患者に依頼する機能  
-   → 医者と閲覧状態を紐付けるmapが必要？？
+   → 医者と閲覧状態を紐付ける map が必要？？
 
 7. 患者が承認すると、医療従事者はその患者の医療データを編集することができる
-   → edit機能により実現
+   → edit 機能により実現
 
 8. 医療データのフォーマットは以下の通り:
-    - 患者名 patientName string
-    - 患者様の血液型　bloodYype string
-    - 最終更新日時 lastUpdate string (yyyy/mm/dd HH:mm:ss形式)
-    - 最終更新日時、最終更新医療機関 Struct MedicalInsDatas
-      [lastUpdate, MedicalInstitution]
 
-    → 最低限必要な変数は上記の通り用意する。
+   - 患者名 patientName string
+   - 患者様の血液型　 bloodYype string
+   - 最終更新日時 lastUpdate string (yyyy/mm/dd HH:mm:ss 形式)
+   - 最終更新日時、最終更新医療機関 Struct MedicalInsDatas
+     [lastUpdate, MedicalInstitution]
+
+   → 最低限必要な変数は上記の通り用意する。
 
 9. 患者は自身の医療データへのアクセス権限を一度承認した医療提供者から再度制限できる(患者の医療提供者が変更になった場合等に備えて)
    → アクセス権限付与状況を管理する画面を用意する？？
 
 ### 必要な画面メモ
- 1. ダッシュボード画面
+
+1.  ダッシュボード画面
     患者と医者で表示を切り替える？？
     → 医者の場合には、検索バーを表示させ任意の患者名を入力し医療データを確認する。  
-      → 閲覧可能であればデータを表示させる。編集ボタンをつける。
+     → 閲覧可能であればデータを表示させる。編集ボタンをつける。
     → 患者の場合には、自分の医療データを表示させる。 → 閲覧権限付与ボタンを用意して任意のアドレスに対して閲覧権限を付与する。
- 2. アクセス権限付与確認画面
-    患者がアクセス権限をどの医者に対して付与したか確認できる表を表示する。 
+2.  アクセス権限付与確認画面
+    患者がアクセス権限をどの医者に対して付与したか確認できる表を表示する。
     カラムは、No.、医者名、最終更新日時、最終更新医療機関名を表示する様にする。
     その他、閲覧権限付与、閲覧停止ボタンを表示する。
- 3. 医療データ新規登録画面
+3.  医療データ新規登録画面
 
 ### スマートコントラクトに必要な変数と関数
 
-|変数名|タイプ|内容|
-|---|---|---|
-|doctorName|String|医者の名前|
-|patientName|String|患者の名前|
-|bloodYype|String|血液型|
-|lastUpdate|String|最終更新日時(yyyy/mm/dd HH:mm:ss形式)|
-|MedicalInsDatas|Struct|最終更新日時、最終更新医療機関|
-|medicalData|Struct|患者の医療データ用のStruct型の変数|
-|medicalMap|(address ⇨ medicalData)|患者のアドレスと医療データを紐付けるMap|
-|patientMap|(address → String)|患者のアドレスと名前を紐づけるMap|
-|doctorMap|(address → String)|医者のアドレスと名前を紐づけるMap|
-|doctorRoleMap|(address → boolean)|アドレスが医者であることを紐づけるMap|
-|doctors|[address]|医療機関に所属する医者のアドレスを格納する|
-|approveMap|(address ⇨ (address ⇨ boolean))|患者のデータに対して医者側が閲覧権限を所有しているか保持するためのMap|
-|requireMap|(address ⇨ (address ⇨ boolean))|患者のデータに対して医者側が閲覧権限を要求している状態を保持するためのMap|
+| 変数名          | タイプ                          | 内容                                                                       |
+| --------------- | ------------------------------- | -------------------------------------------------------------------------- |
+| doctorName      | String                          | 医者の名前                                                                 |
+| patientName     | String                          | 患者の名前                                                                 |
+| bloodYype       | String                          | 血液型                                                                     |
+| lastUpdate      | String                          | 最終更新日時(yyyy/mm/dd HH:mm:ss 形式)                                     |
+| MedicalInsDatas | Struct                          | 最終更新日時、最終更新医療機関                                             |
+| medicalData     | Struct                          | 患者の医療データ用の Struct 型の変数                                       |
+| medicalMap      | (address ⇨ medicalData)         | 患者のアドレスと医療データを紐付ける Map                                   |
+| patientMap      | (address → String)              | 患者のアドレスと名前を紐づける Map                                         |
+| doctorMap       | (address → String)              | 医者のアドレスと名前を紐づける Map                                         |
+| doctorRoleMap   | (address → boolean)             | アドレスが医者であることを紐づける Map                                     |
+| doctors         | [address]                       | 医療機関に所属する医者のアドレスを格納する                                 |
+| approveMap      | (address ⇨ (address ⇨ boolean)) | 患者のデータに対して医者側が閲覧権限を所有しているか保持するための Map     |
+| requireMap      | (address ⇨ (address ⇨ boolean)) | 患者のデータに対して医者側が閲覧権限を要求している状態を保持するための Map |
 
+| メソッド名               | 内容                                     |
+| ------------------------ | ---------------------------------------- |
+| approve                  | 医者側に閲覧・編集権限を付与するメソッド |
+| changeStatus             | 閲覧・編集権限を停止するメソッド         |
+| createMedicalData        | 医療データを新規で登録するメソッド       |
+| editMedicalData          | 医療データを編集するメソッド             |
+| deleteMedicalData        | 医療データを削除するメソッド             |
+| selectMedicalData        | 自分の医療データを取得するメソッド       |
+| selectPatientMedicalData | 患者の医療データを取得するメソッド       |
 
-|メソッド名|内容|
-|---|---|
-|approve|医者側に閲覧・編集権限を付与するメソッド|
-|changeStatus|閲覧・編集権限を停止するメソッド|
-|createMedicalData|医療データを新規で登録するメソッド|
-|editMedicalData|医療データを編集するメソッド|
-|deleteMedicalData|医療データを削除するメソッド|
-|selectMedicalData|自分の医療データを取得するメソッド|
-|selectPatientMedicalData|患者の医療データを取得するメソッド|
+### SBT について
 
+これは SBT にあたるのではないか？？
 
-### SBTについて
-これはSBTにあたるのではないか？？
+⇨ SBT コントラクトを作ったはいいけど後はどうする？？  
+⇨ Medical データを生データのままブロックチェーン上に載せるのは当然 NG  
+⇨ 暗号化が必要？？  
+⇨ 乗っける時点でアウトなので本体はどこかのストレージに乗っけてクレデンシャルを付与するかゼロ知識証明を使って防ぐ？？
 
-### DIDについて
+### DID について
+
 今回は開発用ということもあり、直接ブロックチェーンに医療データを書き込んでいるが、本運用ではそうはいかないはず・・。  
-もし、didを作成して医療データをipfsなどに暗号化して保存しておきその情報をdidドキュメントとして格納しておけばDIDの実装例になるのではないか？？  
-⇨ ipfsにどうやって暗号化しておく？？ (秘密鍵は誰が預かるのか？？)
+もし、did を作成して医療データを ipfs などに暗号化して保存しておきその情報を did ドキュメントとして格納しておけば DID の実装例になるのではないか？？  
+⇨ ipfs にどうやって暗号化しておく？？ (秘密鍵は誰が預かるのか？？)
+
+### ファイル名を指定してテストを実行する場合
+
+`npx truffle test ./test/SBT.test.js`
