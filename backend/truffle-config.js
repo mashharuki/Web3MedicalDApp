@@ -11,7 +11,8 @@ const HDWalletProvider = require('truffle-hdwallet-provider');
 const { 
   MNEMONIC, 
   ALCHEMY_APIKEY,
-  ALCHEMY_GOERLI_APIKEY
+  ALCHEMY_GOERLI_APIKEY,
+  ALCHEMY_MUNBAI_APIKEY
 } = process.env;
 
 module.exports = {
@@ -58,6 +59,19 @@ module.exports = {
         );
       },
       network_id: 81,
+      gas: 500000,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    },
+    munbai: {
+      provider: () => {
+        return new HDWalletProvider(
+          MNEMONIC,
+          ALCHEMY_MUNBAI_APIKEY
+        );
+      },
+      network_id: 80001,
       gas: 500000,
       confirmations: 2,
       timeoutBlocks: 200,
