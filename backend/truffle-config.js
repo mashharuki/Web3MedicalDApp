@@ -7,8 +7,9 @@
 const path = require("path");
 require('dotenv').config();
 const HDWalletProvider = require('truffle-hdwallet-provider');
+const HDWalletProvider2 = require("@truffle/hdwallet-provider");
 // .envファイルから読み込み
-const { 
+const {
   MNEMONIC, 
   ALCHEMY_APIKEY,
   ALCHEMY_GOERLI_APIKEY,
@@ -65,12 +66,7 @@ module.exports = {
       skipDryRun: true
     },
     munbai: {
-      provider: () => {
-        return new HDWalletProvider(
-          MNEMONIC,
-          `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_MUNBAI_APIKEY}`
-        );
-      },
+      provider: new HDWalletProvider2(MNEMONIC,`https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_MUNBAI_APIKEY}`),
       network_id: 80001,
       // gas: 500000,
       confirmations: 2,
