@@ -27,6 +27,8 @@ function App() {
 
   // 接続するチェーンIDが変化したタイミングで再読み込みを実行する。
   ethereum.on('chainChanged', (_chainId) => window.location.reload());
+  // アカウントが切り替わったタイミングで再読み込みを実行する。
+  ethereum.on('accountsChanged', () => window.location.reload());
 
   /**
    * 接続されているネットワークが想定されているものかチェックする。
