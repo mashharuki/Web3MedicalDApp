@@ -60,6 +60,7 @@ function App() {
         // インストールされている場合
         // MetaMaskのアカウント情報を取得する。
         const accounts = await ethereum.request({ method: "eth_accounts" });
+        setIsLoading(true);
         // アカウントの情報を主とする。
         if (accounts.length !== 0) {
           const account = accounts[0];
@@ -71,6 +72,7 @@ function App() {
       }
     } catch(error) {
       console.error(error);
+      setIsLoading(false);
     }
     setIsLoading(false);
   };
@@ -91,12 +93,15 @@ function App() {
       checkIfWalletIsConnected();
       // ウォレットアドレスに対してアクセスをリクエストする。
       const accounts = await ethereum.request({method: "eth_requestAccounts",});
+      setIsLoading(true);
       // ステート変数にアカウント情報を格納する。
       setCurrentAccount(accounts[0]);
       // goreliネットワークに接続されていることをチェックする。
       checkNetwork();
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -142,7 +147,13 @@ function App() {
             </Toolbar>
           </AppBar>
           { /* ローディング中に表示するプログレスバー */ }
-          { isLoading ? <LoadingIndicator/> : <></>}
+          { isLoading ? (
+            <header className="App-header">
+              <p><LoadingIndicator/></p>
+            </header>
+          ) : 
+            <></>
+          }
           { /* ウォレットに接続し、アカウント情報が取得できていなければウォレットへの接続を促す。 */ }
           { currentAccount === null ? (
             <header className="App-header">
