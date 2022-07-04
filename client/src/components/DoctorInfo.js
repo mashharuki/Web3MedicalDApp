@@ -156,16 +156,34 @@ function DoctorInfo() {
         try {
             // 治療費を用意する。
             const value = Web3.utils.toWei('0.01');
-            // registDoctorメソッドを呼び出して医師を新しく登録する。
-            await contract.methods.pay(doctorAddr).send({
+            // payメソッドを呼び出して支払い処理を実行する。
+            await contract.methods.pay(doctorAddr, value).send({
                 from: account,
-                value: value,
-                gas: 300000
+                value: value
             });
             // popUpメソッドの呼び出し
             popUp(true);
         } catch (error) {
             console.error("pay err:", error);
+            // popUpメソッドの呼び出し
+            popUp(false);
+        }
+    };
+
+    /**
+     * 「Withdraw」ボタンを押した時に処理するボタン
+     */
+    const withdrawAction = async () => {
+        try {
+            // withdrawメソッドを呼び出して医師を新しく登録する。
+            await contract.methods.withdraw().send({
+                from: account,
+                gas: 210000
+            });
+            // popUpメソッドの呼び出し
+            popUp(true);
+        } catch (error) {
+            console.error("withdraw err:", error);
             // popUpメソッドの呼び出し
             popUp(false);
         }
@@ -308,6 +326,18 @@ function DoctorInfo() {
                                     name：　{doctorName}
                                 </Paper>
                             </Grid>
+                            <Grid 
+                                container 
+                                justifyContent="center"
+                                sx={{ 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    m: 1,
+                                    marginTop: 4
+                                }}
+                            >
+                                <ActionButton2 buttonName="Withdraw" color="error" clickAction={withdrawAction} />
+                            </Grid> 
                         </Grid>
                     ) : (
                         <>
