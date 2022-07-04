@@ -15,6 +15,15 @@
 
 スマートコントラクトのテスト結果は、<a href="./docs/testResult.md">こちら</a>
 
+## デプロイしているスマートコントラクトの情報
+
+| No  | ネットワーク | コントラクト名 | アドレス                                                                                                                                   |
+| --- | ------------ | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | goreli       | MedicalData    | <a href="https://goerli.etherscan.io/address/0x177acf501eF7d2b090d94fd3bd2BE773736598E1">0x177acf501eF7d2b090d94fd3bd2BE773736598E1</a>    |
+| 2   | goreli       | SBT            | <a href="https://goerli.etherscan.io/address/0xd18d0D5c3C8f915865069Fe11b25228a737E9925">0xd18d0D5c3C8f915865069Fe11b25228a737E9925</a>    |
+| 3   | munbai       | MedicalData    | <a href="https://mumbai.polygonscan.com/address/0x83f15ccdD1278908dF5bC646E903afE2f342deC1">0x83f15ccdD1278908dF5bC646E903afE2f342deC1</a> |
+| 4   | munbai       | SBT            | <a href="https://mumbai.polygonscan.com/address/0x808B72a2868D1201FCE18609fC51725DF2eDd845">0x808B72a2868D1201FCE18609fC51725DF2eDd845</a> |
+
 ## マイグレーションの結果
 
 ローカルでマイグレーションした時の結果
