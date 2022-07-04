@@ -8,41 +8,65 @@ Using network 'development'.
 
 Compiling your contracts...
 ===========================
-> Everything is up to date, there is nothing to compile.
+> Compiling ./contracts/MedicalData.sol
+> Artifacts written to /var/folders/0c/vbkwk57s4lb21y1ts4ndr9zh0000gn/T/test--2339-yBPTyliYIpnH
+> Compiled successfully using:
+   - solc: 0.8.0+commit.c7dfd78e.Emscripten.clang
 
 
 
   Contract: MedicalData Contract tests!!
     initialization
       ✓ confirm owner address
-      ✓ confirm doctor's address (59ms)
-      ✓ confirm doctor's name (84ms)
+      ✓ confirm doctor's address (40ms)
+      ✓ confirm doctor's name (116ms)
     get doctor info tests
-      ✓ get doctor info (82ms)
+      ✓ get doctor info
     add a new doctor
-      ✓ confirm doctor's address and name (222ms)
-      ✓ Should revert when contract is called from invalid address (340ms)
+      ✓ confirm doctor's address and name (231ms)
+      ✓ Should revert when contract is called from invalid address (421ms)
     approve method tests
-      ✓ approve (105ms)
-      ✓ chageStatus (126ms)
-      ✓ should revert when contract is called from invalid role address (133ms)
-      ✓ should revert when contract is called from invalid role address (83ms)
+      ✓ approve (99ms)
+      ✓ chageStatus (60ms)
+      ✓ should revert when contract is called from invalid role address (135ms)
+      ✓ should revert when contract is called from invalid role address (47ms)
     claim approve method tests
-      ✓ require approvement (152ms)
-      ✓ should revert when contract is called from invalid role address (92ms)
+      ✓ require approvement (88ms)
+      ✓ should revert when contract is called from invalid role address (48ms)
     create a new medical data!!
-      ✓ create (407ms)
+      ✓ create (289ms)
       ✓ should revert when contract is called from invalid role address
-      ✓ get patient's medical data (410ms)
-      ✓ should revert when contract is called from invalid role address (403ms)
-      ✓ should revert when contract is called from invalid role address (259ms)
+      ✓ get patient's medical data (318ms)
+      ✓ should revert when contract is called from invalid role address (367ms)
+      ✓ should revert when contract is called from invalid role address (143ms)
     update a medical data!!
-      ✓ edit (887ms)
-      ✓ should revert when contract is called from invalid role address (741ms)
+      ✓ edit (589ms)
+      ✓ should revert when contract is called from invalid role address (420ms)
     delete a medical data!!
-      ✓ delete (745ms)
-      ✓ should revert when contract is called from invalid role address (444ms)
+      ✓ delete (528ms)
+      ✓ should revert when contract is called from invalid role address (305ms)
+    test for paying Treatment costs!!
+value: 10000000000000000
+contractBalance: 20000000000000000
+      ✓ pay !! (393ms)
+value: 10000000000000000
+      ✓ should revert when contract is called from invalid role address (57ms)
+value: 10000000000000000
+contractBalance: 20000000000000000
+      ✓ should revert when contract is called from invalid role address (172ms)
+
+  Contract: SBT Contract tests!!
+    initialization
+      ✓ confirm SBT Name
+      ✓ confirm SBT Symbol
+      ✓ check SBT TotalSupply
+    Mint SBT !!
+      ✓ mintSBT (117ms)
+      ✓ mintSBT * 10 (1006ms)
+      ✓ mintSBT * 10 (2086ms)
+    burn SBT !!
+      ✓ mintSBT (248ms)
 
 
-  21 passing (9s)
+  31 passing (12s)
 ```

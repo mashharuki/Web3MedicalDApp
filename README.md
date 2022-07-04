@@ -74,39 +74,65 @@ Starting migrations...
 ======================
 > Network name:    'goreli'
 > Network id:      5
-> Block gas limit: 29970705 (0x1c95111)
+> Block gas limit: 29941438 (0x1c8debe)
 
 
 1_deploy_medicalData.js
 =======================
 
-   Deploying 'MedicalData'
+   Replacing 'MedicalData'
    -----------------------
-   > transaction hash:    0x90cf05a516c99d6aee1a9fa812cc065e3bdee7e703ce5108c7e5602c6138fe53
-   > Blocks: 1            Seconds: 9
-   > contract address:    0xD41E1A91876c237521522DbD5ef2985e6afE1AD9
-   > block number:        7126434
-   > block timestamp:     1656310962
+   > transaction hash:    0xa61e32c48809c85415ad3dd6a4e435cfa47f20c67b13d2e4777dd9661a5e587f
+   > Blocks: 1            Seconds: 13
+   > contract address:    0x177acf501eF7d2b090d94fd3bd2BE773736598E1
+   > block number:        7167274
+   > block timestamp:     1656926735
    > account:             0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072
-   > balance:             73.8605369695272885
-   > gas used:            3085531 (0x2f14db)
-   > gas price:           1.299999998 gwei
+   > balance:             63.85409451098500174
+   > gas used:            3527517 (0x35d35d)
+   > gas price:           1.500000011 gwei
    > value sent:          0 ETH
-   > total cost:          0.004011190293828938 ETH
+   > total cost:          0.005291275538802687 ETH
 
    Pausing for 2 confirmations...
    ------------------------------
-   > confirmation number: 1 (block: 7126435)
-   > confirmation number: 2 (block: 7126436)
+   > confirmation number: 1 (block: 7167275)
+   > confirmation number: 2 (block: 7167276)
    > Saving artifacts
    -------------------------------------
-   > Total cost:     0.004011190293828938 ETH
+   > Total cost:     0.005291275538802687 ETH
+
+
+2_deploy_SBT.js
+===============
+
+   Deploying 'SBT'
+   ---------------
+   > transaction hash:    0x98e6a0b872675175a9713808980b14ffa67ee6cde4befc03afa45f9ddbc9b046
+   > Blocks: 1            Seconds: 9
+   > contract address:    0xd18d0D5c3C8f915865069Fe11b25228a737E9925
+   > block number:        7167277
+   > block timestamp:     1656926784
+   > account:             0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072
+   > balance:             63.852992720476187416
+   > gas used:            734527 (0xb353f)
+   > gas price:           1.500000012 gwei
+   > value sent:          0 ETH
+   > total cost:          0.001101790508814324 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 7167278)
+   > confirmation number: 2 (block: 7167279)
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.001101790508814324 ETH
 
 
 Summary
 =======
-> Total deployments:   1
-> Final cost:          0.004011190293828938 ETH
+> Total deployments:   2
+> Final cost:          0.006393066047617011 ETH
 ```
 
 それ以外のマイグレーションの記録は<a href="./docs/deploy.md">こちら</a>

@@ -44,6 +44,8 @@ contract MedicalData {
     mapping(address => string) public doctorMap;
     // アドレスが医者であることを紐づけるMap
     mapping(address => bool) public doctorRoleMap;
+    // 医者のアドレスと受け取る治療費を紐づける Map
+    mapping(address => uint256) public doctorBalanceMap;
     // 患者のデータに対して医者側が閲覧権限を所有しているか保持するためのMap
     mapping(address => mapping(address => bool)) public approveMap;
     // 患者のデータに対して医者側が閲覧権限を要求している状態を保持するためのMap
@@ -82,6 +84,13 @@ contract MedicalData {
         _;
     }
 
+    // 呼び出し元のウォレットアドレスの残高が0ではないことをチェックする修飾子
+    modifier zeroAmount(uint256 amount) {
+        uint256 balance = address(msg.sender).balance;
+        require(balance > amount, "No ether left to withdraw");
+        _;
+    }
+
     // 各種メソッドが呼び出された時に発するイベントの定義
     event Approved(address patient, address doctor);
     event ChangedStatus(address patient, address doctor);
@@ -102,6 +111,8 @@ contract MedicalData {
         string doctorName
     );
     event DeleteMedicalData(address patientAddr);
+    event Pay(address patientAddr, uint256 amount);
+    event Withdraw(address doctorAddr, uint256 amount);
 
     /**
      * コンストラクター
@@ -131,7 +142,7 @@ contract MedicalData {
         approveMap[msg.sender][doctor] = true;
         // 権限付与を要求するマップをfalseにする。
         requireMap[doctor][msg.sender] = false;
-
+        // イベントの発行
         emit Approved(msg.sender, doctor);
     }
 
@@ -142,7 +153,7 @@ contract MedicalData {
     function changeStatus(address doctor) public onlyPatient {
         // 権限を剥奪する。
         approveMap[msg.sender][doctor] = false;
-
+        // イベントの発行
         emit ChangedStatus(msg.sender, doctor);
     }
 
@@ -186,7 +197,7 @@ contract MedicalData {
         );
         // 患者の医療データとアドレスを紐付けて登録する。
         medicalMap[patientAddr] = patientMedicalData;
-
+        // イベントの発行
         emit CreateMedicalData(
             patientAddr,
             patientName,
@@ -225,7 +236,7 @@ contract MedicalData {
         );
         // 患者の医療データとアドレスを紐付けて新しい医療データとして登録する。(更新)
         medicalMap[patientAddr] = newPatientMedicalData;
-
+        // イベントの発行
         emit EditMedicalData(
             patientAddr,
             patientName,
@@ -250,7 +261,7 @@ contract MedicalData {
         for (uint256 i = 0; i < doctors.length; i++) {
             approveMap[patient][doctors[i]] = false;
         }
-
+        // イベントの発行
         emit DeleteMedicalData(patient);
     }
 
@@ -335,5 +346,43 @@ contract MedicalData {
         }
 
         return result;
+    }
+
+    /**
+     * 治療費を支払うためのメソッド
+     * @param doctorAddr 医者のアドレス
+     * @param amount 治療費
+     */
+    function pay(address doctorAddr, uint256 amount)
+        public
+        payable
+        onlyPatient
+        zeroAmount(amount)
+    {
+        // 現在の残高を取得する。
+        uint256 currentBalance = doctorBalanceMap[doctorAddr];
+        // 支払い後の値を算出する。
+        uint256 newBalance = currentBalance + amount;
+        // 残高の情報を更新する。
+        doctorBalanceMap[doctorAddr] = newBalance;
+        // イベントの発行
+        emit Pay(msg.sender, amount);
+    }
+
+    /**
+     * 治療費を引き出すメソッド
+     */
+    function withdraw() public payable onlyDoctor {
+        // 無理やり引き出そうとしていないかチェックする。
+        require(doctorBalanceMap[msg.sender] > 0, "balance is zero!!");
+        // 医者宛に送信される予定の残高を取得する。
+        uint256 amount = doctorBalanceMap[msg.sender];
+        // send amount to doctorAddress
+        (bool success, ) = payable(msg.sender).call{value: amount}("");
+        require(success, "withdraw failed.");
+        // 残高情報を0にする。
+        doctorBalanceMap[msg.sender] = 0;
+        // イベントの発行
+        emit Withdraw(msg.sender, amount);
     }
 }
