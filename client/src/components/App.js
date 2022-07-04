@@ -1,19 +1,19 @@
-import './App.css';
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Web3Menu from "./common/Web3Menu";
-import LoadingIndicator from "./common/LoadingIndicator";
-import Home from './Home';
-import Regist from './Regist';
-import DoctorInfo from './DoctorInfo';
-import NoPage from './common/NoPage';
+import StartIcon from '@mui/icons-material/Start';
 // mui関連をインポートする。
-import AppBar  from '@mui/material/AppBar';
-import Toolbar  from '@mui/material/Toolbar';
-import Typography  from '@mui/material/Typography';
+import AppBar from '@mui/material/AppBar';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import IconButton from '@mui/material/IconButton';
-import StartIcon from '@mui/icons-material/Start';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import './App.css';
+import LoadingIndicator from "./common/LoadingIndicator";
+import NoPage from './common/NoPage';
+import Web3Menu from "./common/Web3Menu";
+import DoctorInfo from './DoctorInfo';
+import Home from './Home';
+import Regist from './Regist';
 
 /**
  * Appコンポーネント
@@ -22,6 +22,11 @@ function App() {
   // ステート変数
   const [currentAccount, setCurrentAccount] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  // Metamaskのオブジェクトを取得する。
+  const { ethereum } = window;
+
+  // 接続するチェーンIDが変化したタイミングで再読み込みを実行する。
+  ethereum.on('chainChanged', (_chainId) => window.location.reload());
 
   /**
    * 接続されているネットワークが想定されているものかチェックする。
@@ -42,8 +47,6 @@ function App() {
    * ウォレットの接続状態を確認するメソッド
    */
   const checkIfWalletIsConnected = async () => {
-    // Metamaskのオブジェクトを取得する。
-    const { ethereum } = window;
 
     try {
       // インストールされていない場合
@@ -105,6 +108,7 @@ function App() {
   useEffect(() => {
     checkIfWalletIsConnected();
   }, [currentAccount]);
+
 
   return (
     <>

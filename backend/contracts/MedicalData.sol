@@ -38,8 +38,6 @@ contract MedicalData {
     address public owner;
     // 医療機関に所属する医者のアドレスを格納する配列
     address[] public doctors;
-    // 治療費 (このアプリでは0.01ETHで固定とする。)
-    uint256 public constant PRICE = 0.01 ether;
     // 患者のアドレスと医療データを紐付けるMap
     mapping(address => PatientMedicalData) public medicalMap;
     // 医者のアドレスと名前を紐づけるMap
@@ -85,9 +83,9 @@ contract MedicalData {
     }
 
     // 呼び出し元のウォレットアドレスの残高が0ではないことをチェックする修飾子
-    modifier zeroAmount() {
+    modifier zeroAmount(uint256 amount) {
         uint256 balance = address(msg.sender).balance;
-        require(balance > PRICE, "No ether left to withdraw");
+        require(balance > amount, "No ether left to withdraw");
         _;
     }
 
@@ -111,7 +109,7 @@ contract MedicalData {
         string doctorName
     );
     event DeleteMedicalData(address patientAddr);
-    event Pay(address patientAddr, address doctorAddr);
+    event Pay(address patientAddr, uint256 amount);
 
     /**
      * コンストラクター
@@ -349,13 +347,13 @@ contract MedicalData {
 
     /**
      * 治療費を支払うためのメソッド
-     * @param doctorAddress 医者のアドレス
+     * @param amount 治療費
      */
-    function pay(address doctorAddress) public payable onlyPatient zeroAmount {
+    function pay(uint256 amount) public payable onlyPatient zeroAmount(amount) {
         // send 0.01 ETH to doctorAddress
-        (bool success, ) = payable(doctorAddress).call{value: PRICE}("");
+        (bool success, ) = payable(msg.sender).call{value: amount}("");
         require(success, "Payment failed.");
         // イベントの発行
-        emit Pay(msg.sender, doctorAddress);
+        emit Pay(msg.sender, amount);
     }
 }

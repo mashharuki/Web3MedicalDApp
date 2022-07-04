@@ -561,17 +561,21 @@ contract ("MedicalData Contract tests!!", accounts => {
             const doctorAddr = _doctorAddrs[1];
             // 支払い前の治療費を取得する。
             const beforebalance = await web3.eth.getBalance(patientAddr);
+            console.log("beforebalance:", beforebalance)
             // 治療費を定義する。
             const value = web3.utils.toWei('0.01');
+            console.log("value:", value);
             // payメソッドの呼び出す。
-            await medicalData.pay(doctorAddr, {
+            await medicalData.pay(value, {
                 from: patientAddr,
                 value: value
             });
             // 支払い後の残高を取得する。
             const afterBalance = await web3.eth.getBalance(patientAddr);
-            // 残高をチェックする。
-            // assert.equal(web3.utils.toWei(afterBalance), web3.utils.toWei(beforebalance - 0.01), "balance should match");
+            console.log("after:", afterBalance);
+            // コントラクトの残高をチェックする。
+            const contractBalance = await web3.eth.getBalance(medicalData.address);
+            assert.equal(value, await web3.utils.toWei(contractBalance), "balance should match");
          });
     });
 });
