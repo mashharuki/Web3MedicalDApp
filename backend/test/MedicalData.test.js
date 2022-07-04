@@ -557,25 +557,81 @@ contract ("MedicalData Contract tests!!", accounts => {
         it("pay !!", async() => {
             // 患者のアドレスを用意する。
             const patientAddr = accounts[3];
+            // 2人目の患者のアドレスを用意する。
+            const patientAddr2 = accounts[5];
             // 医者のアドレスを用意する。
             const doctorAddr = _doctorAddrs[1];
-            // 支払い前の治療費を取得する。
-            const beforebalance = await web3.eth.getBalance(patientAddr);
-            console.log("beforebalance:", beforebalance)
             // 治療費を定義する。
             const value = web3.utils.toWei('0.01');
             console.log("value:", value);
             // payメソッドの呼び出す。
-            await medicalData.pay(value, {
+            await medicalData.pay(doctorAddr, value, {
                 from: patientAddr,
                 value: value
             });
-            // 支払い後の残高を取得する。
-            const afterBalance = await web3.eth.getBalance(patientAddr);
-            console.log("after:", afterBalance);
+            // 2人目の支払い
+            await medicalData.pay(doctorAddr, value, {
+                from: patientAddr2,
+                value: value
+            });
             // コントラクトの残高をチェックする。
             const contractBalance = await web3.eth.getBalance(medicalData.address);
-            assert.equal(value, await web3.utils.toWei(contractBalance), "balance should match");
-         });
+            console.log("contractBalance:", contractBalance);    
+            assert.equal(value * 2, contractBalance, "balance should match");
+            // 治療費を引き出す。
+            await medicalData.withdraw({from: doctorAddr});
+            // 残高が無いのに引き出そうとした時にエラーになることを確認する。
+            await truffleAssert.reverts(
+                medicalData.withdraw({from: doctorAddr})
+            );
+        });
+        // 異常系 医者のアドレスから支払いを実行しようとした場合
+        it("should revert when contract is called from invalid role address", async() => {
+            // 患者のアドレスを用意する。
+            const patientAddr = accounts[4];
+            // 医者のアドレスを用意する。
+            const doctorAddr = _doctorAddrs[1];
+            // 治療費を定義する。
+            const value = web3.utils.toWei('0.01');
+            console.log("value:", value);
+            // payメソッドの呼び出す。
+            await truffleAssert.reverts(
+                medicalData.pay(doctorAddr, value, {
+                    from: doctorAddr,
+                    value: value
+                })
+            );
+        });
+        // 異常系 患者のアドレスから残高を引き出そうとした場合
+        it("should revert when contract is called from invalid role address", async() => {
+            // 患者のアドレスを用意する。
+            const patientAddr = accounts[3];
+            // 2人目の患者のアドレスを用意する。
+            const patientAddr2 = accounts[5];
+            // 医者のアドレスを用意する。
+            const doctorAddr = _doctorAddrs[1];
+            // 治療費を定義する。
+            const value = web3.utils.toWei('0.01');
+            console.log("value:", value);
+            // payメソッドの呼び出す。
+            await medicalData.pay(doctorAddr, value, {
+                from: patientAddr,
+                value: value
+            });
+            // 2人目の支払い
+            await medicalData.pay(doctorAddr, value, {
+                from: patientAddr2,
+                value: value
+            });
+            // コントラクトの残高をチェックする。
+            const contractBalance = await web3.eth.getBalance(medicalData.address);
+            console.log("contractBalance:", contractBalance);    
+            assert.equal(value * 2, contractBalance, "balance should match");
+
+            // 治療費を引き出してエラーになることを確認する。
+            await truffleAssert.reverts(
+                medicalData.withdraw({from: patientAddr2})
+            );
+        });
     });
 });

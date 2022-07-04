@@ -48,24 +48,26 @@ sequenceDiagram
 | 医師情報登録機能       | 医者の情報を新たに登録できる機能                                                                         |
 | 医師情報確認機能       | 医者又は患者が医師の情報を確認できる機能                                                                 |
 | 治療費支払い機能       | 患者が医者に治療費を支払う機能                                                                           |
+| 治療費受け取り機能     | 医者が治療費を受け取る機能                                                                               |
 
 ## 変数一覧
 
-| 変数名          | タイプ                          | 内容                                                                       |
-| --------------- | ------------------------------- | -------------------------------------------------------------------------- |
-| owner           | address                         | コントラクトの管理者                                                       |
-| patientName     | String                          | 患者の名前                                                                 |
-| bloodYype       | String                          | 血液型                                                                     |
-| lastUpdate      | String                          | 最終更新日時(yyyy/mm/dd HH:mm:ss 形式)                                     |
-| MedicalInsDatas | Struct                          | 最終更新日時、最終更新医療機関                                             |
-| medicalData     | Struct                          | 患者の医療データ用の Struct 型の変数                                       |
-| doctorInfo      | Struct                          | 患者が持つ医者についてのデータを保管する Struct 型の変数                   |
-| medicalMap      | (address ⇨ medicalData)         | 患者のアドレスと医療データを紐付ける Map                                   |
-| doctorMap       | (address → String)              | 医者のアドレスと名前を紐づける Map                                         |
-| doctorRoleMap   | (address → bool)                | アドレスが医者であることを紐づける Map                                     |
-| doctors         | [address]                       | 医療機関に所属する医者のアドレスを格納する                                 |
-| approveMap      | (address ⇨ (address ⇨ boolean)) | 患者のデータに対して医者側が閲覧権限を所有しているか保持するための Map     |
-| requireMap      | (address ⇨ (address ⇨ boolean)) | 患者のデータに対して医者側が閲覧権限を要求している状態を保持するための Map |
+| 変数名           | タイプ                          | 内容                                                                       |
+| ---------------- | ------------------------------- | -------------------------------------------------------------------------- |
+| owner            | address                         | コントラクトの管理者                                                       |
+| patientName      | String                          | 患者の名前                                                                 |
+| bloodYype        | String                          | 血液型                                                                     |
+| lastUpdate       | String                          | 最終更新日時(yyyy/mm/dd HH:mm:ss 形式)                                     |
+| MedicalInsDatas  | Struct                          | 最終更新日時、最終更新医療機関                                             |
+| medicalData      | Struct                          | 患者の医療データ用の Struct 型の変数                                       |
+| doctorInfo       | Struct                          | 患者が持つ医者についてのデータを保管する Struct 型の変数                   |
+| medicalMap       | (address ⇨ medicalData)         | 患者のアドレスと医療データを紐付ける Map                                   |
+| doctorMap        | (address → String)              | 医者のアドレスと名前を紐づける Map                                         |
+| doctorRoleMap    | (address → bool)                | アドレスが医者であることを紐づける Map                                     |
+| doctorBalanceMap | (address → uint256)             | 医者のアドレスと受け取る治療費を紐づける Map                               |
+| doctors          | [address]                       | 医療機関に所属する医者のアドレスを格納する                                 |
+| approveMap       | (address ⇨ (address ⇨ boolean)) | 患者のデータに対して医者側が閲覧権限を所有しているか保持するための Map     |
+| requireMap       | (address ⇨ (address ⇨ boolean)) | 患者のデータに対して医者側が閲覧権限を要求している状態を保持するための Map |
 
 ## メソッド一覧
 
@@ -83,3 +85,4 @@ sequenceDiagram
 | getDoctors               | 現在登録中の全ての医師のアドレスを取得するメソッド |
 | getDoctorInfo            | 患者に紐づく全て医師の情報を取得するメソッド       |
 | pay                      | 患者が医者に治療費を支払うためのメソッド           |
+| withdraw                 | 医者が治療費を受け取るためのメソッド               |
