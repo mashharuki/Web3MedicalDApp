@@ -128,6 +128,7 @@ function DoctorInfo() {
             // popUpメソッドの呼び出し
             popUp(true);
         } catch (error) {
+            setIsLoading(false);
             console.error("approve err:", error);
             // popUpメソッドの呼び出し
             popUp(false);
@@ -150,6 +151,7 @@ function DoctorInfo() {
             // popUpメソッドの呼び出し
             popUp(true);
         } catch (error) {
+            setIsLoading(false);
             console.error("deprive err:", error);
             // popUpメソッドの呼び出し
             popUp(false);
@@ -174,6 +176,7 @@ function DoctorInfo() {
             popUp(true);
         } catch (error) {
             console.error("pay err:", error);
+            setIsLoading(false);
             // popUpメソッドの呼び出し
             popUp(false);
         }
@@ -194,6 +197,7 @@ function DoctorInfo() {
             // popUpメソッドの呼び出し
             popUp(true);
         } catch (error) {
+            setIsLoading(false);
             console.error("withdraw err:", error);
             // popUpメソッドの呼び出し
             popUp(false);

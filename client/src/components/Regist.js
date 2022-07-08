@@ -98,6 +98,7 @@ function Regist() {
             }, 5000);
         } catch (error) {
             console.error("regist err:", error);
+            setIsLoading(false);
             // ステート変数を更新する。
             setFailFlg(true);
             setShowToast(true);

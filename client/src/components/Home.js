@@ -134,6 +134,7 @@ const Home = () => {
             // 編集モードをONにする。
             setEditer(true);
         } catch (error) {
+            setIsLoading(false);
             console.error("fail:", error);
             // popUpメソッドの呼び出し
             popUp(false, "failed....");
@@ -155,6 +156,7 @@ const Home = () => {
             // popUpメソッドを呼び出す。
             popUp(true, "Trasaction Successful!!");
         } catch (error) {
+            setIsLoading(false);
             console.error("require approvement fail:", error);
             // popUpメソッドの呼び出し
             popUp(false, "Require approvement failed....");
@@ -184,6 +186,7 @@ const Home = () => {
             // popUpメソッドを呼び出す。
             popUp(true, "Trasaction Successful!!");
         } catch (error) {
+            setIsLoading(false);
             console.error("Create medical datas fail:", error);
             // popUpメソッドの呼び出し
             popUp(false, "Create medical datas failed....");
@@ -213,6 +216,7 @@ const Home = () => {
             // popUpメソッドを呼び出す。
             popUp(true, "Trasaction Successful!!");
         } catch (error) {
+            setIsLoading(false);
             console.error("Update medical datas fail:", error);
             // popUpメソッドの呼び出し
             popUp(false, "Update medical datas failed....");
@@ -235,6 +239,7 @@ const Home = () => {
             popUp(true, "Trasaction Successful!!");
         } catch (error) {
             console.error("delete medical datas fail:", error);
+            setIsLoading(false);
             // popUpメソッドの呼び出し
             popUp(false, "Delete medical datas failed....");
         }
