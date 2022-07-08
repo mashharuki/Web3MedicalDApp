@@ -1,4 +1,10 @@
 import detectEthereumProvider from '@metamask/detect-provider';
+import React, { useEffect, useState } from "react";
+import Web3 from "web3";
+import MedicalDataContract from "./../contracts/MedicalData.json";
+import './App.css';
+import ActionButton2 from './common/ActionButton2';
+import LoadingIndicator from './common/LoadingIndicator/LoadingIndicator';
 // mui関連のコンポーネントのインポート
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -11,11 +17,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import React, { useEffect, useState } from "react";
-import Web3 from "web3";
-import MedicalDataContract from "./../contracts/MedicalData.json";
-import './App.css';
-import ActionButton2 from './common/ActionButton2';
 
 /**
  * 表の最上位ヘッダー部の配列
@@ -63,6 +64,8 @@ function DoctorInfo() {
     const [page, setPage] = useState(0);
     // 1ページに表示する上限数
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    // ローディングを表示するためのフラグ
+    const [isLoading, setIsLoading] = useState(false);
 
     /**
      * コンポーネントが描画されたタイミングで実行する初期化関数
@@ -115,11 +118,13 @@ function DoctorInfo() {
      */
     const approveAction = async (doctorAddr) => {
         try {
+            setIsLoading(true);
             // registDoctorメソッドを呼び出して医師を新しく登録する。
             await contract.methods.approve(doctorAddr).send({
                 from: account,
                 gas: 500000
             });
+            setIsLoading(false);
             // popUpメソッドの呼び出し
             popUp(true);
         } catch (error) {
@@ -135,11 +140,13 @@ function DoctorInfo() {
      */
     const depriveAction = async (doctorAddr) => {
         try {
+            setIsLoading(true);
             // registDoctorメソッドを呼び出して医師を新しく登録する。
             await contract.methods.changeStatus(doctorAddr).send({
                 from: account,
                 gas: 500000
             });
+            setIsLoading(false);
             // popUpメソッドの呼び出し
             popUp(true);
         } catch (error) {
@@ -156,11 +163,13 @@ function DoctorInfo() {
         try {
             // 治療費を用意する。
             const value = Web3.utils.toWei('0.01');
+            setIsLoading(true);
             // payメソッドを呼び出して支払い処理を実行する。
             await contract.methods.pay(doctorAddr, value).send({
                 from: account,
                 value: value
             });
+            setIsLoading(false);
             // popUpメソッドの呼び出し
             popUp(true);
         } catch (error) {
@@ -175,11 +184,13 @@ function DoctorInfo() {
      */
     const withdrawAction = async () => {
         try {
+            setIsLoading(true);
             // withdrawメソッドを呼び出して医師を新しく登録する。
             await contract.methods.withdraw().send({
                 from: account,
                 gas: 210000
             });
+            setIsLoading(false);
             // popUpメソッドの呼び出し
             popUp(true);
         } catch (error) {
@@ -255,8 +266,17 @@ function DoctorInfo() {
 
     // 副作用フック
     useEffect(() => {
+        setIsLoading(true);
         init();
+        setIsLoading(false);
     }, [account]);
+
+    // 副作用フック2
+    useEffect(() => {
+        setIsLoading(true);
+        init();
+        setIsLoading(false);
+    }, []);
 
     return(
         <Grid
@@ -267,167 +287,179 @@ function DoctorInfo() {
         >
             <Box sx={{ flexGrow: 1, overflow: "hidden", px: 3, mt: 10, height: '80vh'}}>
                 <StyledPaper sx={{my: 1, mx: "auto", p: 0, borderRadius: 4, marginTop: 4}}>
-                    <Grid container justifyContent="center">
-                        <Grid 
-                            container
-                            justifyContent="center"
-                            sx={{ 
-                                alignItems: 'center', 
-                                m: 1,
-                            }}
-                        >
-                            <p><strong>{isDoctor ? "Your Info" : "Doctor's Info" }</strong></p>
+                    {/* 処理実行時には、ローディングバーを表示させる。 */}
+                    {isLoading ? (
+                        <Grid container justifyContent="center">
+                            <header className="loading">
+                                <p><LoadingIndicator/></p>
+                                <h3>Please Wait・・・・</h3>
+                            </header>
                         </Grid>
-                    </Grid>
-                    {/* 医者の場合と患者の場合で表示を切り替える。 */}
-                    {isDoctor ? (
-                        <Grid 
-                            container
-                            justifyContent="center" 
-                            direction="row"
-                        >
-                            <Grid 
-                                container
-                                justifyContent="center" 
-                                direction="row"
-                            >
-                                <Paper
-                                    elevation={0}
-                                    sx={{ 
-                                        p: '2px 4px', 
-                                        display: 'flex', 
-                                        alignItems: 'center', 
-                                        backgroundColor: '#fde9e8',
-                                        width: 600, 
-                                        marginTop: 1,
-                                        marginBottom: 1
-                                    }}
-                                >  
-                                    address：　{account}
-                                </Paper>
-                            </Grid>
-                            <Grid 
-                                container
-                                justifyContent="center" 
-                                direction="row"
-                            >
-                                <Paper
-                                    elevation={0}
-                                    sx={{ 
-                                        p: '2px 4px', 
-                                        display: 'flex', 
-                                        alignItems: 'center', 
-                                        backgroundColor: '#fde9e8',
-                                        width:600, 
-                                        marginTop: 1,
-                                        marginBottom: 4
-                                    }}
-                                >  
-                                    name：　{doctorName}
-                                </Paper>
-                            </Grid>
-                            <Grid 
-                                container 
-                                justifyContent="center"
-                                sx={{ 
-                                    display: 'flex', 
-                                    alignItems: 'center', 
-                                    m: 1,
-                                    marginTop: 4
-                                }}
-                            >
-                                <ActionButton2 buttonName="Withdraw" color="error" clickAction={withdrawAction} />
-                            </Grid> 
-                        </Grid>
-                    ) : (
+                    ) : ( 
                         <>
-                            {/* 以下、医者の情報を表示する一覧表部分 */}
-                            <TableContainer sx={{ maxHeight: 600 }}>
-                                <Table stickyHeader aria-label="sticky table">
-                                    <TableHead>
-                                        <TableRow>
-                                            {columns.map((column) => (
-                                                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                                                    {column.label}
-                                                </TableCell>
-                                            ))}
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        { doctorInfo
-                                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                            .map((row, i) => {
-                                                return (
-                                                    <TableRow hover role="checkbox" tabIndex={-1}>
-                                                        {columns.map((column) => {
-                                                            // セルに格納する値用の変数
-                                                            let value = row; 
-                                                            // カラムの値により、セットする値を変更する。
-                                                            if(column.label === "No.") {
-                                                                return (
-                                                                    <TableCell key={column.id} align={column.align}>
-                                                                        {i + 1}
-                                                                    </TableCell>
-                                                                );
-                                                            }
-                                                            if(column.label === "Address") {
-                                                                return (
-                                                                    <TableCell key={column.id} align={column.align}>
-                                                                        {value.doctorAddr}
-                                                                    </TableCell>
-                                                                );
-                                                            }
-                                                            /* NameとStatusについては個別に条件が異なってくるので別関数で条件を整理して描画する。 */
-                                                            if(column.label === "Name") {
-                                                                return (
-                                                                    <TableCell key={column.id} align={column.align}>
-                                                                        {value.doctorName}
-                                                                    </TableCell>
-                                                                )
-                                                            } 
-                                                            /* 医者の場合は表示しない */
-                                                            if(!isDoctor) {
-                                                                if(column.label === "Status") {
-                                                                    return (
-                                                                        <TableCell key={column.id} align={column.align}>
-                                                                            {/* 承認状態によって表示するボタンを変更する。 */}
-                                                                            {value.isApprove ? 
-                                                                                <ActionButton2 buttonName="Deprive" color="secondary" clickAction={(e) => {depriveAction(value.doctorAddr); init();}} />
-                                                                            :
-                                                                                renderStatus(value.isRequire, value.doctorAddr)
-                                                                            }
-                                                                        </TableCell>
-                                                                    )
-                                                                }
-                                                            } else {
-                                                                if(column.label === "Status") {
-                                                                    return <></>;
-                                                                }
-                                                            }   
-                                                            /* 治療費支払い用のボタン出力する。 */
-                                                            if(column.label === "Cost") {
-                                                                return (
-                                                                    <TableCell key={column.id} align={column.align}>
-                                                                        <ActionButton2 buttonName="0.01ETH Pay" color="primary" clickAction={(e) => {payAction(value.doctorAddr); init();}} />
-                                                                    </TableCell>
-                                                                )
-                                                            }        
-                                                        })}
-                                                    </TableRow>
-                                                );
-                                        })}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                            <TablePagination
-                                rowsPerPageOptions={[10, 25, 100]}
-                                component="div"
-                                count={doctors.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                onPageChange={handleChangePage}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                            />
+                            <Grid container justifyContent="center">
+                                <Grid 
+                                    container
+                                    justifyContent="center"
+                                    sx={{ 
+                                        alignItems: 'center', 
+                                        m: 1,
+                                    }}
+                                >
+                                    <p><strong>{isDoctor ? "Your Info" : "Doctor's Info" }</strong></p>
+                                </Grid>
+                            </Grid>
+                            {/* 医者の場合と患者の場合で表示を切り替える。 */}
+                            {isDoctor ? (
+                                <Grid 
+                                    container
+                                    justifyContent="center" 
+                                    direction="row"
+                                >
+                                    <Grid 
+                                        container
+                                        justifyContent="center" 
+                                        direction="row"
+                                    >
+                                        <Paper
+                                            elevation={0}
+                                            sx={{ 
+                                                p: '2px 4px', 
+                                                display: 'flex', 
+                                                alignItems: 'center', 
+                                                backgroundColor: '#fde9e8',
+                                                width: 600, 
+                                                marginTop: 1,
+                                                marginBottom: 1
+                                            }}
+                                        >  
+                                            address：　{account}
+                                        </Paper>
+                                    </Grid>
+                                    <Grid 
+                                        container
+                                        justifyContent="center" 
+                                        direction="row"
+                                    >
+                                        <Paper
+                                            elevation={0}
+                                            sx={{ 
+                                                p: '2px 4px', 
+                                                display: 'flex', 
+                                                alignItems: 'center', 
+                                                backgroundColor: '#fde9e8',
+                                                width:600, 
+                                                marginTop: 1,
+                                                marginBottom: 4
+                                            }}
+                                        >  
+                                            name：　{doctorName}
+                                        </Paper>
+                                    </Grid>
+                                    <Grid 
+                                        container 
+                                        justifyContent="center"
+                                        sx={{ 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            m: 1,
+                                            marginTop: 4
+                                        }}
+                                    >
+                                        <ActionButton2 buttonName="Withdraw" color="error" clickAction={withdrawAction} />
+                                    </Grid> 
+                                </Grid>
+                            ) : (
+                                <>
+                                    {/* 以下、医者の情報を表示する一覧表部分 */}
+                                    <TableContainer sx={{ maxHeight: 600 }}>
+                                        <Table stickyHeader aria-label="sticky table">
+                                            <TableHead>
+                                                <TableRow>
+                                                    {columns.map((column) => (
+                                                        <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
+                                                            {column.label}
+                                                        </TableCell>
+                                                    ))}
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                { doctorInfo
+                                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                    .map((row, i) => {
+                                                        return (
+                                                            <TableRow hover role="checkbox" tabIndex={-1}>
+                                                                {columns.map((column) => {
+                                                                    // セルに格納する値用の変数
+                                                                    let value = row; 
+                                                                    // カラムの値により、セットする値を変更する。
+                                                                    if(column.label === "No.") {
+                                                                        return (
+                                                                            <TableCell key={column.id} align={column.align}>
+                                                                                {i + 1}
+                                                                            </TableCell>
+                                                                        );
+                                                                    }
+                                                                    if(column.label === "Address") {
+                                                                        return (
+                                                                            <TableCell key={column.id} align={column.align}>
+                                                                                {value.doctorAddr}
+                                                                            </TableCell>
+                                                                        );
+                                                                    }
+                                                                    /* NameとStatusについては個別に条件が異なってくるので別関数で条件を整理して描画する。 */
+                                                                    if(column.label === "Name") {
+                                                                        return (
+                                                                            <TableCell key={column.id} align={column.align}>
+                                                                                {value.doctorName}
+                                                                            </TableCell>
+                                                                        )
+                                                                    } 
+                                                                    /* 医者の場合は表示しない */
+                                                                    if(!isDoctor) {
+                                                                        if(column.label === "Status") {
+                                                                            return (
+                                                                                <TableCell key={column.id} align={column.align}>
+                                                                                    {/* 承認状態によって表示するボタンを変更する。 */}
+                                                                                    {value.isApprove ? 
+                                                                                        <ActionButton2 buttonName="Deprive" color="secondary" clickAction={(e) => {depriveAction(value.doctorAddr); init();}} />
+                                                                                    :
+                                                                                        renderStatus(value.isRequire, value.doctorAddr)
+                                                                                    }
+                                                                                </TableCell>
+                                                                            )
+                                                                        }
+                                                                    } else {
+                                                                        if(column.label === "Status") {
+                                                                            return <></>;
+                                                                        }
+                                                                    }   
+                                                                    /* 治療費支払い用のボタン出力する。 */
+                                                                    if(column.label === "Cost") {
+                                                                        return (
+                                                                            <TableCell key={column.id} align={column.align}>
+                                                                                <ActionButton2 buttonName="0.01ETH Pay" color="primary" clickAction={(e) => {payAction(value.doctorAddr); init();}} />
+                                                                            </TableCell>
+                                                                        )
+                                                                    }        
+                                                                })}
+                                                            </TableRow>
+                                                        );
+                                                })}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                    <TablePagination
+                                        rowsPerPageOptions={[10, 25, 100]}
+                                        component="div"
+                                        count={doctors.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                    />
+                                </>
+                            )}
                         </>
                     )} 
                 </StyledPaper>

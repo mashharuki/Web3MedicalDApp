@@ -23,6 +23,15 @@
   color: white;
 }
 
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: rgba(29, 26, 26, 0.402);
+}
+
 .App-link {
   color: #61dafb;
 }

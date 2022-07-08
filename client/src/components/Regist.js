@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import detectEthereumProvider from '@metamask/detect-provider';
 import MedicalDataContract from "./../contracts/MedicalData.json";
 import ActionButton from './common/ActionButton';
+import LoadingIndicator from './common/LoadingIndicator/LoadingIndicator';
 // muiコンポーネント
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
@@ -41,6 +42,8 @@ function Regist() {
     const [failFlg, setFailFlg] = useState(false);
     // ポップアップの表示を管理するフラグ
     const [showToast, setShowToast] = useState(false);
+    // ローディングを表示するためのフラグ
+    const [isLoading, setIsLoading] = useState(false);
 
     /**
      * コンポーネントが描画されたタイミングで実行する初期化関数
@@ -78,11 +81,13 @@ function Regist() {
      */
     const registAction = async() => {
         try {
+            setIsLoading(true);
             // registDoctorメソッドを呼び出して医師を新しく登録する。
             await contract.methods.registDoctor(doctorAddr, doctorName).send({
                 from: account,
                 gas: 500000
             });
+            setIsLoading(false);
             // ステート変数を更新する。
             setSuccessFlg(true);
             setShowToast(true);
@@ -120,74 +125,85 @@ function Regist() {
                 <Box sx={{ flexGrow: 1, overflow: "hidden", px: 3, mt: 10, height: '80vh'}}>
                     {/* ownerである場合に描画する内容 */}
                     <StyledPaper sx={{my: 1, mx: "auto", p: 0, borderRadius: 4, marginTop: 4}}>
-                        <Grid container justifyContent="center">
-                            <Grid 
-                                container
-                                justifyContent="center"
-                                sx={{ 
-                                    alignItems: 'center', 
-                                    m: 1,
-                                }}
-                            >
-                                <p><strong>Please etner a new doctor's address & name</strong></p>
+                        {isLoading ? ( 
+                            <Grid container justifyContent="center">
+                                <header className="loading">
+                                    <p><LoadingIndicator/></p>
+                                    <h3>Please Wait・・・・</h3>
+                                </header>
                             </Grid>
-                            <Paper
-                                elevation={0}
-                                sx={{ 
-                                    p: '2px 4px', 
-                                    display: 'flex', 
-                                    alignItems: 'center', 
-                                    backgroundColor: '#fde9e8',
-                                    width: 450, 
-                                    marginTop: 1
-                                }}
-                            >  
-                                <label>doctor Address：</label>
-                                <TextField 
-                                    id="doctorAddress" 
-                                    placeholder="doctor address" 
-                                    margin="normal" 
-                                    required
-                                    onChange={ (e) => setDoctorAddr(e.target.value) } 
-                                    variant="outlined" 
-                                    inputProps={{ 'aria-label': 'doctorAddress' }} 
-                                />
-                            </Paper>
-                            <Paper
-                                elevation={0}
-                                sx={{ 
-                                    p: '2px 4px', 
-                                    display: 'flex', 
-                                    alignItems: 'center', 
-                                    backgroundColor: '#fde9e8',
-                                    width: 450, 
-                                    marginTop: 4
-                                }}
-                            >  
-                                <label>doctor Name：　</label>
-                                <TextField 
-                                    id="doctorName" 
-                                    placeholder="doctor name" 
-                                    margin="normal" 
-                                    required
-                                    onChange={ (e) => setDoctorName(e.target.value) } 
-                                    variant="outlined" 
-                                    inputProps={{ 'aria-label': 'doctoName' }} 
-                                />
-                            </Paper>
-                        </Grid>
-                        <Grid 
-                            container 
-                            justifyContent="center"
-                            sx={{ 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                m: 1,
-                                marginTop: 4
-                            }}
-                        >
-                            <ActionButton buttonName="Regist" color="error" clickAction={registAction} />
-                        </Grid> 
+                        ) : (
+                            <>
+                                <Grid container justifyContent="center">
+                                    <Grid 
+                                        container
+                                        justifyContent="center"
+                                        sx={{ 
+                                            alignItems: 'center', 
+                                            m: 1,
+                                        }}
+                                    >
+                                        <p><strong>Please etner a new doctor's address & name</strong></p>
+                                    </Grid>
+                                    <Paper
+                                        elevation={0}
+                                        sx={{ 
+                                            p: '2px 4px', 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            backgroundColor: '#fde9e8',
+                                            width: 450, 
+                                            marginTop: 1
+                                        }}
+                                    >  
+                                        <label>doctor Address：</label>
+                                        <TextField 
+                                            id="doctorAddress" 
+                                            placeholder="doctor address" 
+                                            margin="normal" 
+                                            required
+                                            onChange={ (e) => setDoctorAddr(e.target.value) } 
+                                            variant="outlined" 
+                                            inputProps={{ 'aria-label': 'doctorAddress' }} 
+                                        />
+                                    </Paper>
+                                    <Paper
+                                        elevation={0}
+                                        sx={{ 
+                                            p: '2px 4px', 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            backgroundColor: '#fde9e8',
+                                            width: 450, 
+                                            marginTop: 4
+                                        }}
+                                    >  
+                                        <label>doctor Name：　</label>
+                                        <TextField 
+                                            id="doctorName" 
+                                            placeholder="doctor name" 
+                                            margin="normal" 
+                                            required
+                                            onChange={ (e) => setDoctorName(e.target.value) } 
+                                            variant="outlined" 
+                                            inputProps={{ 'aria-label': 'doctoName' }} 
+                                        />
+                                    </Paper>
+                                </Grid>
+                                <Grid 
+                                    container 
+                                    justifyContent="center"
+                                    sx={{ 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        m: 1,
+                                        marginTop: 4
+                                    }}
+                                >
+                                    <ActionButton buttonName="Regist" color="error" clickAction={registAction} />
+                                </Grid>
+                            </>
+                        )} 
                     </StyledPaper>
                 </Box>
             ) : (

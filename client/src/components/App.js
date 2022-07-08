@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
-import LoadingIndicator from "./common/LoadingIndicator";
 import NoPage from './common/NoPage';
 import Web3Menu from "./common/Web3Menu";
 import DoctorInfo from './DoctorInfo';
@@ -146,14 +145,6 @@ function App() {
               </Typography>
             </Toolbar>
           </AppBar>
-          { /* ローディング中に表示するプログレスバー */ }
-          { isLoading ? (
-            <header className="App-header">
-              <p><LoadingIndicator/></p>
-            </header>
-          ) : 
-            <></>
-          }
           { /* ウォレットに接続し、アカウント情報が取得できていなければウォレットへの接続を促す。 */ }
           { currentAccount === null ? (
             <header className="App-header">

@@ -4,6 +4,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import MedicalDataContract from "./../contracts/MedicalData.json";
 import Web3 from "web3";
 import ActionButton from './common/ActionButton';
+import LoadingIndicator from './common/LoadingIndicator/LoadingIndicator';
 // mui関連のコンポーネントのインポート
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -56,6 +57,8 @@ const Home = () => {
     const [showToast, setShowToast] = useState(false);
     // ポップアップ時に表示する文言を格納する変数
     const [popUpDocs, setPopUpDocs] = useState("");
+    // ローディングを表示するためのフラグ
+    const [isLoading, setIsLoading] = useState(false);
 
     /**
      * コンポーネントが描画されたタイミングで実行する初期化関数
@@ -117,6 +120,7 @@ const Home = () => {
      */
     const viewAction = async () => {
         try {
+            setIsLoading(true);
             // 閲覧権限を患者から承認されているか確認する。
             var approved = await contract.methods.approveMap(patientAddr, account).call();
             // 承認されていれば医療データを取得し、そうでなければ未承認フラグをfalseにする。
@@ -126,6 +130,7 @@ const Home = () => {
             } else {
                 setIsApproved(false);
             }
+            setIsLoading(false);
             // 編集モードをONにする。
             setEditer(true);
         } catch (error) {
@@ -140,11 +145,13 @@ const Home = () => {
      */
     const requireAction = async () => {
         try {
+            setIsLoading(true);
             // claimApproveメソッドの呼び出し
             await contract.methods.claimApprove(patientAddr).send({
                 from: account,
                 gas: 500000
             });
+            setIsLoading(false);
             // popUpメソッドを呼び出す。
             popUp(true, "Trasaction Successful!!");
         } catch (error) {
@@ -161,6 +168,7 @@ const Home = () => {
         try {
             // 現在の時刻を取得する。
             var lastUpDate = getDate();
+            setIsLoading(true);
             // createMedicalDataメソッドを呼び出す。
             await contract.methods.createMedicalData(
                 patientAddr,
@@ -172,6 +180,7 @@ const Home = () => {
                     from: account,
                     gas: 500000
                 });
+            setIsLoading(false);
             // popUpメソッドを呼び出す。
             popUp(true, "Trasaction Successful!!");
         } catch (error) {
@@ -188,6 +197,7 @@ const Home = () => {
         try {
             // 現在の時刻を取得する。
             var lastUpDate = getDate();
+            setIsLoading(true);
             // editMedicalDataメソッドを呼び出す。
             await contract.methods.editMedicalData(
                 patientAddr,
@@ -199,6 +209,7 @@ const Home = () => {
                     from: account,
                     gas: 500000
                 });
+            setIsLoading(false);
             // popUpメソッドを呼び出す。
             popUp(true, "Trasaction Successful!!");
         } catch (error) {
@@ -213,11 +224,13 @@ const Home = () => {
      */
     const deleteAction = async () => {
         try {
+            setIsLoading(true);
             // deleteMedicalDataメソッドを呼び出す。
             await contract.methods.deleteMedicalData(patientAddr).send({
                 from: account,
                 gas: 500000
             });
+            setIsLoading(false);
             // popUpメソッドを呼び出す。
             popUp(true, "Trasaction Successful!!");
         } catch (error) {
@@ -658,7 +671,9 @@ const Home = () => {
 
     // 副作用フック
     useEffect(() => {
+        setIsLoading(true);
         init();
+        setIsLoading(false);
     }, [account]);
 
     return(
@@ -670,15 +685,24 @@ const Home = () => {
         >
             <Box sx={{ flexGrow: 1, overflow: "hidden", px: 3, mt: 10, height: '80vh'}}>
                 <StyledPaper sx={{my: 1, mx: "auto", p: 0, borderRadius: 4, marginTop: 4}}>
-                    <Grid container justifyContent="center">
-                        {isDoctor ? (
-                            /* 医師の場合描画する内容 */
-                            doctorRender()
-                        ) : (
-                            /* 患者の場合は描画する内容 */
-                            patientRender() 
-                        )}
-                    </Grid>
+                    {isLoading ? (
+                        <Grid container justifyContent="center">
+                            <header className="loading">
+                                <p><LoadingIndicator/></p>
+                                <h3>Please Wait・・・・</h3>
+                            </header>
+                        </Grid>
+                    ) : ( 
+                        <Grid container justifyContent="center">
+                            {isDoctor ? (
+                                /* 医師の場合描画する内容 */
+                                doctorRender()
+                            ) : (
+                                /* 患者の場合は描画する内容 */
+                                patientRender() 
+                            )}
+                        </Grid>
+                    )}
                 </StyledPaper>
             </Box>
             {successFlg && (
